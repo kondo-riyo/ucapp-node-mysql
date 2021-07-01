@@ -1,0 +1,10 @@
+a.btn-border-shadow--color {
+    border-radius: 0;
+    background: yellow;
+  }
+  
+  a.btn-border-shadow--color:before {
+    border-radius: 0;
+  }
+
+  /* <a href="" class="btn btn-border-shadow btn-border-shadow--color">PUSH！</a> */

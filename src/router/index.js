@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Adddata from '../views/Adddata.vue'
+import Inputform from '../views/Inputform.vue'
+import Waterchart from '../components/Waterchart.vue'
+import Gaschart from '../components/Gaschart.vue'
+import Elementchart from '../components/Elementchart.vue'
 
 Vue.use(VueRouter)
 
@@ -17,7 +22,39 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/adddata',
+    name: 'Adddata',
+    component: Adddata
+  },
+  {
+    path: '/inputform/:month_id?/edit',
+    name: 'month_edit',
+    component: Inputform
+    },
+  
+  {
+  path: '/inputform',
+  name:'Inputform',
+  component: Inputform
+  },
+  {
+    path:'/waterchart',
+    name:'Waterchart',
+    component:Waterchart
+  },
+  {
+    path:'/gaschart',
+    name:'Gaschart',
+    component:Gaschart
+  },
+  {
+    path:'/elementchart',
+    name:'Elementchart',
+    component:Elementchart
   }
+
 ]
 
 const router = new VueRouter({
