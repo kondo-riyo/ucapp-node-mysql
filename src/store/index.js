@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import firebase from 'firebase'
 
 Vue.use(Vuex)
 
@@ -61,55 +60,16 @@ export default new Vuex.Store({
     setLoginUser({commit} , user){
       commit('setLoginUser' ,user)
     },
-    login(){
-      const google_auth_provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithRedirect(google_auth_provider)
-    },
-    logout(){
-      firebase.auth().signOut()
-    },
     deleteLoginUser ({commit}){
       commit ('deleteLoginUser')
     },
     fetchMonths({getters,commit}){
-      firebase.firestore().collection(`users/${getters.uid}/costs`).get().then(snapshot=>{
-        snapshot.forEach(doc => commit('addMonth',{id:doc.id, month: doc.data()}))
-      })
     },
     addMonth({getters, commit},month){
-      if(getters.uid){
-        firebase
-        .firestore()
-        .collection(`users/${getters.uid}/costs`)
-        .add(month)
-        .then((doc) =>{
-          commit("addMonth", {id: doc.id, month})
-        })
-      }
     },
     updateMonth({getters,commit},{id,month}){
-      if(getters.uid){
-        firebase
-        .firestore()
-        .collection(`users/${getters.uid}/costs`)
-        .doc(id)
-        .update(month)
-        .then(()=>{
-          commit("updateMonth",{id,month})
-        })
-      }
     },
     deleteMonth({getters,commit},{id}){
-      if(getters.uid){
-        firebase
-        .firestore()
-        .collection(`users/${getters.uid}/costs`)
-        .doc(id)
-        .delete()
-        .then(()=>{
-          commit('deleteMonth',{id})
-        })
-      }
     }
   },
   modules: {

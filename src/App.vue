@@ -25,7 +25,6 @@
 </template>
 <script>
 // import {mapActions} from "vuex";
-// import firebase from 'firebase';
 import Header from './components/Header.vue'
 import Main from './components/Main.vue'
 export default {
@@ -34,22 +33,6 @@ export default {
    Header,
    Main
   },
-  // data: () => ({
-  //   //
-  // }),
-  // created(){
-  //   firebase.auth().onAuthStateChanged(user => {
-  //     if(user){
-  //       this.setLoginUser(user)
-  //       this.fetchMonths()
-  //     }else{
-  //       this.deleteLoginUser()
-  //     }
-  //   })
-  // },
-  // methods:{
-  //   ...mapActions(["login","setLoginUser","logout","deleteLoginUser","fetchMonths"])
-  // },
 };
 </script>
 <style scoped>

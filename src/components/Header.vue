@@ -40,7 +40,6 @@
 </template>
 <script>
 import {mapActions} from "vuex";
-import firebase from 'firebase';
 // import Logo from '../parts/Logo.vue';
 // import LoginButton from '../parts/LoginButton.vue'
 // import CostButton from '../parts/CostButton.vue'
@@ -55,16 +54,6 @@ export default {
       return{
           badgemsg:13
       }
-  },
-  created(){
-    firebase.auth().onAuthStateChanged(user => {
-      if(user){
-        this.setLoginUser(user)
-        this.fetchMonths()
-      }else{
-        this.deleteLoginUser()
-      }
-    })
   },
   methods:{
     ...mapActions(["login","setLoginUser","logout","deleteLoginUser","fetchMonths"])
