@@ -1,82 +1,108 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
+Vue.use(VueAxios, axios)
 
 export default new Vuex.Store({
   state: {
-    costs:[
-      // {
-      //   month:1,
-      //   water:1000,
-      //   gas:1200,
-      //   ele:2000
-      // },
-      // {
-      //   month:2,
-      //   water:1200,
-      //   gas:1100,
-      //   ele:2400
-      // },
-      // {
-      //   month:3,
-      //   water:1700,
-      //   gas:1200,
-      //   ele:2080
-      // },
-      // {
-      //   month:4,
-      //   water:1030,
-      //   gas:1900,
-      //   ele:1700
-      // }
-    ],
-    // month:[
-    //   1,2,3,4
-    // ]
-    login_user: null,
+    //usersテーブルの全て-----------------------------------
+    login_user:
+      // []
+      [{
+        userId: '123456789000',
+        userName: 'ベタ',
+        mail: 'beta@gmail.com',
+        password: 'betabeta'
+      },
+      {
+        userId: '111222333444',
+        userName: 'ベタ２',
+        mail: 'beta2@gmail.com',
+        password: 'beta2beta2'
+      }]
+    ,
+    //ログインしたユーザー---------------------------------------
+    setLogin_user:
+      // null
+      {
+        userId: '123456789000',
+        userName: 'ベタaaaaaaaaaaaaaaaaa',
+        mail: 'beta@gmail.com',
+        password: 'betabeta'
+      }
+      // costs:[],
+//     login_user: null,
   },
   mutations: {
-    setLoginUser(state, user) {
+    requestUsersMut(state, user) {
       state.login_user = user
     },
-    deleteLoginUser(state){
-      state.login_user = null
+    setLoginUserMut(state, user) {
+      state.setLogin_user = user
     },
-    addMonth(state, {id, month}){
-      month.id =id;
-      state.costs.push(month)
-    },
-    updateMonth(state,{id,month}){
-      const index =state.costs.findIndex((month)=>month.id ===id);
-      state.costs[index] = month;
-    },
-    deleteMonth(state, {id}){
-      const index = state.costs.findIndex(month => month.id === id)
-      state.costs.splice(index,1)
+    logoutMut(state) {
+      state.setLogin_user = null
     }
+//     deleteLoginUser(state){
+//       state.login_user = null
+//     },
+//     addMonth(state, {id, month}){
+//       month.id =id;
+//       state.costs.push(month)
+//     },
+//     updateMonth(state,{id,month}){
+//       const index =state.costs.findIndex((month)=>month.id ===id);
+//       state.costs[index] = month;
+//     },
+//     deleteMonth(state, {id}){
+//       const index = state.costs.findIndex(month => month.id === id)
+//       state.costs.splice(index,1)
+//     }
   },
   actions: {
-    setLoginUser({commit} , user){
-      commit('setLoginUser' ,user)
+    requestUsers({commit}) {
+      // let userData = []
+      axios.get('/api/users')
+        .then((res) => {
+          commit('requestUsersMut',  res.data )
+        })
+        .catch((e) => alert(e))
     },
-    deleteLoginUser ({commit}){
-      commit ('deleteLoginUser')
+    setLoginUser({ commit }, user) {
+      console.log('storeにいるよ')
+      commit('setLoginUserMut' , user)
     },
-    fetchMonths({getters,commit}){
-    },
-    addMonth({getters, commit},month){
-    },
-    updateMonth({getters,commit},{id,month}){
-    },
-    deleteMonth({getters,commit},{id}){
+    logout({ commit }) {
+      commit('logoutMut')
     }
+//     deleteLoginUser ({commit}){
+//       commit ('deleteLoginUser')
+//     },
+//     fetchMonths({getters,commit}){
+//     },
+//     addMonth({getters, commit},month){
+//     },
+//     updateMonth({getters,commit},{id,month}){
+//     },
+//     deleteMonth({getters,commit},{id}){
+//     }
   },
   modules: {
   },
   getters: {
-    uid: (state)=>(state.login_user ? state.login_user.uid : null),
-    getMonthById: (state => (id) =>
-    state.costs.find((month)=> month.id === id))
-  }
+//     uid: (state)=>(state.login_user ? state.login_user.uid : null),
+//     getMonthById: (state => (id) =>
+//     state.costs.find((month)=> month.id === id))
+  },
+  plugins: [createPersistedState(
+    { // ストレージのキーを指定
+      key: 'ucapp_node_mysql',
+      // ストレージの種類を指定
+      storage: window.sessionStorage
+    }
+)]
 })

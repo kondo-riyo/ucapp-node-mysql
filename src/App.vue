@@ -1,30 +1,16 @@
 <template>
 <div>
-  <!-- <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-    <router-link to="/" class='link'>Home</router-link>|
-    <router-link to="/inputform" class='link'>登録</router-link> |
-    <router-link to="/adddata" class='link'>一覧</router-link> 
-   
-       <v-btn v-show="!$store.state.login_user" @click="login">ログイン</v-btn>
-
-       <v-btn v-show="$store.state.login_user" @click="logout">ログアウト</v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <router-view/>
-    </v-main>
-  </v-app> -->
   <Header/>
   <Main class="center"/>
+  <button @click="reqLogin()">
+    クリック
+  </button>
+  <div>{{usersData}}</div>
+  <div>setLogin_user →{{setLogin_user}}</div>
   </div>
 </template>
 <script>
-// import {mapActions} from "vuex";
+import { mapState, mapActions } from 'vuex';
 import Header from './components/Header.vue'
 import Main from './components/Main.vue'
 export default {
@@ -32,6 +18,34 @@ export default {
   components:{
    Header,
    Main
+  },
+  data() {
+    return {
+      usersData:''
+    }
+  },
+  created() {
+    this.reqLogin()
+  },
+  computed: {
+    setLogin_user() {
+      return this.$store.state.setLogin_user
+    },
+    ...mapState(["login_user"]),
+  },
+  methods: {
+    reqLogin() {
+      this.usersData = this.$store.state.login_user
+    },
+    // request() {
+    //   this.axios.get('/api/users')
+    //   .then((res) => {
+    //     this.usersData = res.data
+    //   })
+    //   .catch((e) => alert(e))
+    // },
+
+    ...mapActions(["requestUsers"])
   },
 };
 </script>

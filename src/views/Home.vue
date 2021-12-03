@@ -82,17 +82,17 @@ export default {
       },
     }
   },
-  created(){
-    //labels[]取得
-    this.newCost()
-    this.labelsPush()
-    this.waterPush()
-    this.gasPush()
-    this.elePush()
-    this.totalPush()
-    this.colorPush()
-    // this.borderColorPush()
-  },
+  // created(){
+  //   //labels[]取得
+  //   this.newCost()
+  //   this.labelsPush()
+  //   this.waterPush()
+  //   this.gasPush()
+  //   this.elePush()
+  //   this.totalPush()
+  //   this.colorPush()
+  //   // this.borderColorPush()
+  // },
   computed:{
     ...mapState(["costs"]),
   },
