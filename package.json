@@ -12,10 +12,13 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
     "express": "^4.17.1",
+    "json-cyclic": "^1.0.2",
     "mysql": "^2.18.1",
+    "nodemon": "^2.0.15",
     "vee-validate": "^3.4.9",
     "vue": "^2.6.11",
     "vue-axios": "^3.4.0",
