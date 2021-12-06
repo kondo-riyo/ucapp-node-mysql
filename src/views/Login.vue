@@ -11,6 +11,11 @@
         <div>
             <button @click="login">LOGIN</button>
         </div>
+        <div>
+            <router-link to="/newmember">
+             新規会員登録はこちら
+            </router-link>
+        </div>
     </div>    
 </template>
 <script>

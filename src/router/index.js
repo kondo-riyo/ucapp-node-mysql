@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Adddata from '../views/Adddata.vue'
 import Inputform from '../views/Inputform.vue'
 import Login from '../views/Login.vue'
+import NewMember from '../views/NewMember.vue'
 import Waterchart from '../components/Waterchart.vue'
 import Gaschart from '../components/Gaschart.vue'
 import Elementchart from '../components/Elementchart.vue'
@@ -60,6 +61,11 @@ const routes = [
     path:'/login',
     name:'Login',
     component:Login
+  },
+  {
+    path:'/newmember',
+    name:'NewMember',
+    component: NewMember
   }
 
 

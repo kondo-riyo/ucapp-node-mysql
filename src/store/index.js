@@ -46,6 +46,9 @@ export default new Vuex.Store({
     },
     logoutMut(state) {
       state.setLogin_user = null
+    },
+    sendNewMemberMut() {
+      console.log('sendNewMemberMut')
     }
 //     deleteLoginUser(state){
 //       state.login_user = null
@@ -78,6 +81,18 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       commit('logoutMut')
+    },
+    sendNewMember({ commit }, params) {
+      console.log('userInfo=> ' + params)
+      axios.post('/api/signIn',  {
+        userId: params.userId,
+        userName: params.userName,
+        mail: params.mail,
+        password: params.password
+    }).then((res) => {
+        console.log('res= ' + JSON.stringify(res))
+        commit('sendNewMemberMut')
+      })
     }
 //     deleteLoginUser ({commit}){
 //       commit ('deleteLoginUser')
@@ -106,3 +121,32 @@ export default new Vuex.Store({
     }
 )]
 })
+// {
+//   "data": "",
+//   "status": 200,
+//   "statusText": "OK",
+//   "headers": {
+//     "connection": "keep-alive",
+//       "content-length": "0",
+//       "date": "Mon, 06 Dec 2021 04:20:03 GMT",
+//       "keep-alive": "timeout=5",
+//       "x-powered-by": "Express"
+//   },
+//   "config": {
+//     "url": "/api/signIn",
+//     "method": "post",
+//     "data": "{\"userId\":\"111222333445\",\"userName\":\"サーバーストア\",\"mail\":\"server_store@gmail.com\",\"password\":\"serverstore\"}",
+//     "headers": {
+//     "Accept": "application/json, text/plain, */*",
+//     "Content-Type": "application/json;charset=utf-8"
+//    },
+  //   "transformRequest": [null],
+  //   "transformResponse": [null],
+  //   "timeout": 0,
+  //   "xsrfCookieName": "XSRF-TOKEN",
+  //   "xsrfHeaderName": "X-XSRF-TOKEN",
+  //   "maxContentLength": -1,
+  //   "maxBodyLength": -1
+//   },
+//   "request": { }
+// }
