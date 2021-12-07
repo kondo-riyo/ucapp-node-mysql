@@ -12,10 +12,11 @@
             <div>PassWord</div>
             <input v-model="password">
         </div>
-        <div>
+        <!-- <div>
             <button @click="login">LOGIN</button>
-        </div>
+        </div> -->
         <button @click="sendNewMember">送信</button>
+        <!-- <button @click="deleteUser">ユーザー削除</button> -->
     </div>
 </template>
 <script>
@@ -35,10 +36,6 @@ export default {
             //ランダムな文字列を作成してuserIdを与える------------------------------
             this.user_id = Math.floor(100000000000 + Math.random() * 900000000000)
             const userInfo = {
-                // userId: "111222333445",
-                // userName: "ニュー",
-                // mail: "new@gmail.com",
-                // password: "newnew"
                 userId: this.user_id,
                 userName: this.user_name,
                 mail: this.mail,
@@ -46,7 +43,11 @@ export default {
             }
             // console.log(userInfo)
             this.$store.dispatch('sendNewMember', userInfo)
-        }
+        },
+        // deleteUser() {
+        //     //引数にuserIdべたがきで消せるよ----------------------
+        //     this.$store.dispatch('deleteUser')
+        // }
     },
 }
 </script>
