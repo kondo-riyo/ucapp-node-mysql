@@ -51,10 +51,21 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
     //usersテーブルに追加---------------------------------------
     app.post('/api/signIn', (req, res) => {
         const params = req.body;
-        const sqlInsert= `INSERT INTO users VALUES (?,?,?,?)`
+        const sqlInsert = `INSERT INTO users VALUES (?,?,?,?)`;
         connection.query(sqlInsert, [params.userId, params.userName, params.mail, params.password], (err,result)=>{
             res.send(result);
     });
+    });
+
+    //usersテーブルからuser削除--------------------------------------
+app.delete('/api/deleteUser', (req, res) => {
+    const params = req.query;
+    console.log(req.query)
+    const sqlDelete = `DELETE FROM users WHERE userId=?`;
+    connection.query(sqlDelete, params.id, (err, result) => {
+    // connection.query(sqlDelete, (err, result) => {
+        res.send(result);
+    })
     })
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))

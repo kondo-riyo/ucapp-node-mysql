@@ -15,8 +15,15 @@
             </div>
             <div v-if="loginUserFromStore">
                 <!-- <div class="header__text">{{loginUserFromStore.userName}}</div> -->
+                <div @click="modalOpen(loginUserFromStore)">
+                    <img src="../assets/account.png" class="iconsize">
+                </div>
                 <div>
-                    <img src="../assets/account.png" @click="logout" class="iconsize">
+                    <account-modal
+                        :orderInfo="mordalOrderInfo"
+                        v-show="showContent"
+                        @close="closeModal"
+                    ></account-modal>
                 </div>
             </div>
         </div>
@@ -50,6 +57,7 @@
     </div>
 </template>
 <script>
+import accountModal from '../components/accountModal.vue';
 import {mapActions} from "vuex";
 // import Logo from '../parts/Logo.vue';
 // import LoginButton from '../parts/LoginButton.vue'
@@ -61,9 +69,15 @@ export default {
 //     LoginButton,
 //     CostButton
 //   },
+  components:{
+      accountModal
+  },
   data(){
       return{
-          badgemsg:13
+        //   badgemsg:13,
+          showContent: false,
+          mordalOrderInfo: '',
+        //   mordalStatus: 1,
       }
   },
   computed:{
@@ -75,6 +89,14 @@ export default {
     logout() {
         this.$store.dispatch('logout')
     },
+    modalOpen(loginUser) {
+        this.showContent = true
+        this.mordalOrderInfo = loginUser
+    },
+    closeModal() {
+      this.showContent = false;
+    },
+
     // ...mapActions(["login","setLoginUser","logout","deleteLoginUser","fetchMonths"])
     ...mapActions(["requestUsers"])
   },

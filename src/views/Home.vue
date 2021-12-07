@@ -4,6 +4,7 @@
   <Barchart :data="chartdata" :options="options" class="chart"/>
     <!-- <Chart :chart-data="datacollection"></Chart>
     <button @click="fillData()">Randomize</button> -->
+    <button @click="deleteUser">ユーザー削除</button>
 </div>
 </template>
 
@@ -144,17 +145,17 @@ export default {
     colorPush(){
           // let colorArray=[]
           this.newcosts.forEach((el) => {
-          // colorArray=[]
-          // let r=Math.round(Math.random() * 255)
-          // let g=Math.round(Math.random() * 255)
-          // let b=Math.round(Math.random() * 255)
-          // colorArray = [218,165,22]
-          // colorArray=`${r},${g},${b}`
           this.chartdata.datasets[3].backgroundColor.push('rgba('+el.color+',0.2)')
           this.chartdata.datasets[3].borderColor.push('rgba('+el.color+',1)')
         })
         return this.chartdata.datasets[2].data
+    },
+    deleteUser() {
+      //引数にuserIdべたがきで消せるよ----------------------
+      
+      this.$store.dispatch('deleteUser')
     }
+
   }
   }
 

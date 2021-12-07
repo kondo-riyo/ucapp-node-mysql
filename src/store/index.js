@@ -26,14 +26,13 @@ export default new Vuex.Store({
       }]
     ,
     //ログインしたユーザー---------------------------------------
-    setLogin_user:
-      // null
-      {
-        userId: '123456789000',
-        userName: 'ベタaaaaaaaaaaaaaaaaa',
-        mail: 'beta@gmail.com',
-        password: 'betabeta'
-      }
+    setLogin_user: null
+      // {
+      //   userId: '123456789000',
+      //   userName: 'ベタaaaaaaaaaaaaaaaaa',
+      //   mail: 'beta@gmail.com',
+      //   password: 'betabeta'
+      // }
       // costs:[],
 //     login_user: null,
   },
@@ -49,6 +48,9 @@ export default new Vuex.Store({
     },
     sendNewMemberMut() {
       console.log('sendNewMemberMut')
+    },
+    deleteUserMut() {
+      console.log('deleteUserMut')
     }
 //     deleteLoginUser(state){
 //       state.login_user = null
@@ -91,7 +93,19 @@ export default new Vuex.Store({
         password: params.password
     }).then((res) => {
         console.log('res= ' + JSON.stringify(res))
-        commit('sendNewMemberMut')
+      commit('sendNewMemberMut')
+      this.dispatch('requestUsers')
+      this.$router.push('/login')
+      })
+    },
+    deleteUser({ commit, state }) {
+      console.log('state.setLogin_user'+state.setLogin_user)
+      const userId = state.setLogin_user.userId
+      axios.delete('/api/deleteUser?id='+ userId)
+        .then((res) => {
+          console.log('res= ' + JSON.stringify(res))
+          commit('deleteUsermut')
+          this.dispatch('logout')
       })
     }
 //     deleteLoginUser ({commit}){
