@@ -1,16 +1,13 @@
 <template>
-<v-app>
+<!-- <v-app>
     <v-form v-model="valid">
         <v-container class="basecard">
-            <!-- <v-row> -->
         <v-col>
-        <!-- <div> -->
             <div>登録月</div>
             <v-select :items="selectyear" v-model="month.year" @change="yearPush()">
             </v-select>
             <v-select :items="care_selectmonth" v-model="month.month" ></v-select>
         </v-col>
-        <!-- </div> -->
         <v-col>
             <div>水道</div>
           <v-text-field
@@ -45,38 +42,85 @@
         <v-col>
        <v-btn color="" class="" @click="submit()">追加</v-btn>
        </v-col>
-      <!-- </v-row> -->
         </v-container>
     </v-form>
-</v-app>
+</v-app> -->
+<div>
+  <div>
+    <div>
+      <div>Utility Costs 光熱費登録</div>
+      <div class="cp_iptxt">
+        <input v-model="costs.year" class="ef " type="text" placeholder="">
+        <label>Year</label>
+        <span class="focus_line"></span>
+      </div>
+      <div class="cp_iptxt">
+        <input v-model="costs.month" class="ef " type="text" placeholder="">
+        <label>Month</label>
+        <span class="focus_line"></span>
+      </div>
+      <div class="cp_iptxt">
+        <input v-model="costs.waterCost" class="ef " type="text" placeholder="">
+        <label>Water Cost</label>
+        <span class="focus_line"></span>
+      </div>
+      <div class="cp_iptxt">
+        <input v-model="costs.gasCost" class="ef " type="text" placeholder="">
+        <label>Gas Cost</label>
+        <span class="focus_line"></span>
+      </div>
+      <div class="cp_iptxt">
+        <input v-model="costs.eleCost" class="ef " type="text" placeholder="">
+        <label>Electricity Cost</label>
+        <span class="focus_line"></span>
+      </div>
+      <div>
+        <button @click="submit" class="button button__red">
+          登録
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 <script>
 // import VeeValidate, { Validator } from 'vee-validate'
-import {mapActions, mapState} from 'vuex'
-import Vue from 'vue' 
-import vSelect from 'vue-select'
-import 'vue-select/dist/vue-select.css'; 
-Vue.component("v-select", vSelect);
+// import {mapActions, mapState} from 'vuex'
+// import Vue from 'vue' 
+// import vSelect from 'vue-select'
+// import 'vue-select/dist/vue-select.css'; 
+// Vue.component("v-select", vSelect);
   export default {
     data (){
         return{
-      valid: false,
-      month:{
+          costs: {
+            costId: '',
+            year: '',
+            month: '',
+            color: '',
+            waterCost: null,
+            eleCost: null,
+            gasCost: null,
+            totalCost: null,
+            addDate: '',
+          },
+      // valid: false,
+      // month:{
         //   month:'',
         //   watercost:null,
         //   gascost:null,
         //   elecost:null,
-      },
-      selectyear:[2018,2019,2020,2021],
-      selectmonth:[1,2,3,4,5,6,7,8,9,10,11,12],
-      care_selectmonth:[],
-      removemoon:[],
-      costRules: [
-        v => !!v || '入力必須です',
+      // },
+      // selectyear:[2018,2019,2020,2021],
+      // selectmonth:[1,2,3,4,5,6,7,8,9,10,11,12],
+      // care_selectmonth:[],
+      // removemoon:[],
+      // costRules: [
+        // v => !!v || '入力必須です',
         // v => v.length <= 10 || '正しい入力をしてください',
         
         // v => v=String || '数字を入力してください'
-      ],
+      // ],
     }
     // console.log(this.month)
     },
@@ -96,32 +140,43 @@ Vue.component("v-select", vSelect);
     //     });
     //     },
     // },
-    computed:{
-        ...mapState(["costs"])
-    },
+    // computed:{
+    //     ...mapState(["costs"])
+    // },
     methods:{
         submit(){
-            if(this.$route.params.month_id){
-                this.updateMonth({
-                    id:this.$route.params.month_id,
-                    month:this.month
-                })
-            }else{
-            this.colorPush()
-            this.month.totalcost=this.month.watercost + this.month.gascost + this.month.elecost
-            this.addMonth(this.month);
-            }
-            this.$router.push({name: "Home"});
-            console.log(this.month)
-            this.month={};
+          this.colorPush()
+          //totalCost--------------------------------
+          this.costs.totalCost = this.costs.waterCost + this.costs.gasCost + this.costs.eleCost
+          //costId-----------------------------------
+          this.costs.costId = Math.floor(100000000000 + Math.random() * 900000000000)
+          //addDate----------------------------------
+          this.costs.addDate = new Date()
+          console.log(this.costs)
+          //storeのactionのaddCostsに送る------------------------------
+          this.$store.dispatch('addCosts',this.costs)
+          this.$router.push('/')
+          
+          //過去の遺物---------------------------------
+            // if(this.$route.params.month_id){
+            //     this.updateMonth({
+            //         id:this.$route.params.month_id,
+            //         month:this.month
+            //     })
+            // }else{
+            // this.colorPush()
+            // this.month.totalcost=this.month.watercost + this.month.gascost + this.month.elecost
+            // this.addMonth(this.month);
+            // }
+            // this.$router.push({name: "Home"});
+            // console.log(this.month)
+            // this.month={};
         },
         colorPush(){
-        //   let colorArray=[]
           let r=Math.round(Math.random() * 255)
           let g=Math.round(Math.random() * 255)
           let b=Math.round(Math.random() * 255)
-          // colorArray = [218,165,22]
-          this.month.color=`${r},${g},${b}`
+          this.costs.color=`${r},${g},${b}`
         },
         yearPush(){
             this.costs.forEach(el =>{
@@ -178,19 +233,19 @@ Vue.component("v-select", vSelect);
     //       return this.month.totalvalue
     // },
 
-        ...mapActions(["addMonth","updateMonth"]),
+        // ...mapActions(["addMonth","updateMonth"]),
     }
 }
 // console.log(this.month)
 
 </script>
-<style scoped>
-.basecard {
-    display: flex;
-    align-content: center;
-    /* width: 1000px;
-    min-width: 500px; */
-    flex-direction:column;
-    justify-content: center; 
-}
+<style lang="scss" scoped>
+// .basecard {
+//     display: flex;
+//     align-content: center;
+//     /* width: 1000px;
+//     min-width: 500px; */
+//     flex-direction:column;
+//     justify-content: center; 
+// }
 </style>

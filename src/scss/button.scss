@@ -1,0 +1,36 @@
+.button__circle__stitch {
+  display: inline-block;
+  text-decoration: none;
+  font: sans-serif;
+  font-weight: bold;
+  background: #ef6258d4;
+  color: #fff;
+  width: 80px;
+  height: auto;
+  line-height: 80px;
+  border-radius: 50%;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0px 0px 0px 5px #ef6258d4;
+  border: dashed 2px #fff;
+  transition: 0.4s;
+}
+
+.button__circle__stitch:hover {
+  background: #ef6258;
+  box-shadow: 0px 0px 0px 5px #ef6258;
+}
+
+.button {
+  border-radius: 20px;
+  padding: 5px 15px 5px 15px;
+  margin: 5px;
+}
+.button__brown {
+  background-color: #673a15;
+  color: white;
+}
+.button__red {
+  background-color: #ef6158;
+  color: white;
+}
