@@ -58,14 +58,51 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
     });
 
     //usersテーブルからuser削除--------------------------------------
-app.delete('/api/deleteUser', (req, res) => {
-    const params = req.query;
-    console.log(req.query)
-    const sqlDelete = `DELETE FROM users WHERE userId=?`;
-    connection.query(sqlDelete, params.id, (err, result) => {
-    // connection.query(sqlDelete, (err, result) => {
-        res.send(result);
-    })
-    })
+    app.delete('/api/deleteUser', (req, res) => {
+        const params = req.query;
+        // console.log(req.query)
+        const sqlDelete = `DELETE FROM users WHERE userId=?`;
+        connection.query(sqlDelete, params.id, (err, result) => {
+            // connection.query(sqlDelete, (err, result) => {
+            res.send(result);
+        });
+    });
+    
+    //usersテーブルの何か変更(update)-------------------------------
+    app.post('/api/updateUser', (req, res) => {
+        const params = req.body;
+        // console.log(params);
+        const sqlUpdate = `UPDATE users SET userName=? WHERE userId=?`;
+        connection.query(sqlUpdate, [params.userName, params.userId], (err, result) => {
+            res.send(result);
+        })
+    });
+    //costsテーブルの中身を取得---------------------------------------
+    app.get('/api/costs', (req, res) => {
+        connection.query('SELECT * FROM costs',
+            (error, results) => {
+                console.log(results);
+                res.send(results);
+            }
+        );
+    });
+    //costsテーブルに追加----------------------------------------------
+    app.post('/api/addCosts', (req, res) => {
+        const params = req.body;
+        const sqlInsert = `INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)`;
+        connection.query(sqlInsert, [
+            params.costId,
+            params.year,
+            params.month,
+            params.color,
+            params.waterCost,
+            params.eleCost,
+            params.gasCost,
+            params.totalCost,
+            params.addDate
+        ], (err, result) => {
+            res.send(result);
+    });
+    });
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))

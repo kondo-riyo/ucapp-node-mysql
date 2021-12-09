@@ -13,7 +13,12 @@
                     <img src="../assets/login.png" class="iconsize">
                 </router-link>
             </div>
-            <div v-if="loginUserFromStore">
+            <div v-if="loginUserFromStore" class="flex">
+                <div>
+                    <router-link to="/inputform">
+                        <img src="../assets/inputicon2.png" class="iconsize">
+                    </router-link>
+                </div>
                 <!-- <div class="header__text">{{loginUserFromStore.userName}}</div> -->
                 <div @click="modalOpen(loginUserFromStore)">
                     <img src="../assets/account.png" class="iconsize">
@@ -122,6 +127,9 @@ export default {
     height: 100%;
     min-width: 100px;
     margin-left: 10px;
+}
+.flex {
+    display: flex;
 }
 // .flex_wge {
 //     display: flex;

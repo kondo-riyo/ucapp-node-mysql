@@ -2,11 +2,11 @@
 <div>
   <Header/>
   <Main class="center"/>
-  <button @click="reqLogin()">
+  <!-- <button @click="reqLogin()">
     クリック
   </button>
   <div>{{usersData}}</div>
-  <div>setLogin_user →{{setLogin_user}}</div>
+  <div>setLogin_user →{{setLogin_user}}</div> -->
   </div>
 </template>
 <script>
@@ -45,21 +45,21 @@ export default {
     //   .catch((e) => alert(e))
     // },
 
-    ...mapActions(["requestUsers"])
+    ...mapActions(["requestUsers", "requestCosts"])
   },
 };
 </script>
-<style scoped>
-.link {
-  color:white;
-}
-.app {
-  margin-top: 100px;
-}
-.center{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  /* align-items: center; */
-}
+<style lang="scss" scoped >
+// .link {
+//   color:white;
+// }
+// .app {
+//   margin-top: 100px;
+// }
+// .center{
+//   display: block;
+//   margin-left: auto;
+//   margin-right: auto;
+//   align-items: center;
+// }
 </style>

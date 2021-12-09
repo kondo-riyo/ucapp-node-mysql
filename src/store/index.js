@@ -26,13 +26,48 @@ export default new Vuex.Store({
       }]
     ,
     //ログインしたユーザー---------------------------------------
-    setLogin_user: null
+    setLogin_user: null,
       // {
       //   userId: '123456789000',
       //   userName: 'ベタaaaaaaaaaaaaaaaaa',
       //   mail: 'beta@gmail.com',
       //   password: 'betabeta'
       // }
+    costs: [
+      {
+            costId: '123456789000',
+            year: '2021',
+            month: '10',
+            color: '185,155,0',
+            waterCost: 1200,
+            eleCost: 1500,
+            gasCost: 2000,
+            totalCost: 4700,
+            addDate: '2021/11/11',
+      },
+      {
+            costId: '123456789100',
+            year: '2021',
+            month: '11',
+            color: '185,0,0',
+            waterCost: 1000,
+            eleCost: 1000,
+            gasCost: 3000,
+            totalCost: 5000,
+            addDate: '2021/11/11',
+      },
+      {
+            costId: '123456789110',
+            year: '2021',
+            month: '12',
+            color: '185,120,0',
+            waterCost: 1800,
+            eleCost: 1600,
+            gasCost: 2000,
+            totalCost: 5400,
+            addDate: '2021/11/11',
+      }
+    ],
       // costs:[],
 //     login_user: null,
   },
@@ -51,6 +86,16 @@ export default new Vuex.Store({
     },
     deleteUserMut() {
       console.log('deleteUserMut')
+    },
+    updateUserNameMut(state, userName) {
+      state.setLogin_user.userName = userName
+      console.log('updateUserNameMut')
+    },
+    requestCostsMut(state, costs) {
+      state.costs = costs
+    },
+    addCostsMut(state, costs) {
+      state.costs.push(costs)
     }
 //     deleteLoginUser(state){
 //       state.login_user = null
@@ -69,6 +114,7 @@ export default new Vuex.Store({
 //     }
   },
   actions: {
+    //userテーブルの中身を全て取得-------------------------------
     requestUsers({commit}) {
       // let userData = []
       axios.get('/api/users')
@@ -77,13 +123,16 @@ export default new Vuex.Store({
         })
         .catch((e) => alert(e))
     },
+    //使用するアカウントをstateに保持---------------------------------
     setLoginUser({ commit }, user) {
       console.log('storeにいるよ')
       commit('setLoginUserMut' , user)
     },
+    //ログアウト---------------------------------------------------
     logout({ commit }) {
       commit('logoutMut')
     },
+    //usersテーブルにユーザー追加------------------------------------
     sendNewMember({ commit }, params) {
       console.log('userInfo=> ' + params)
       axios.post('/api/signIn',  {
@@ -98,6 +147,7 @@ export default new Vuex.Store({
       this.$router.push('/login')
       })
     },
+    //Usersテーブルから完全削除-------------------------------------
     deleteUser({ commit, state }) {
       console.log('state.setLogin_user'+state.setLogin_user)
       const userId = state.setLogin_user.userId
@@ -107,7 +157,45 @@ export default new Vuex.Store({
           commit('deleteUsermut')
           this.dispatch('logout')
       })
+    },
+    //Usersテーブルのデータを編集・更新------------------------------
+    updateUserName({ commit }, params) {
+      console.log('store/params=> '+params)
+      axios.post('/api/updateUser', {
+        userId: params.userId,
+        userName: params.userName
+      }).then((res) => {
+        console.log(res)
+        commit('updateUserNameMut', params.userName)
+      })
+    },
+    //Costsテーブルの中身を全て取得------------------------------------
+    requestCosts({ commit }) {
+      axios.get('/api/costs')
+        .then((res) => {
+          commit('requestCostsMut',  res.data )
+        })
+        .catch((e) => alert(e))
+    },
+    //Costsテーブルのデータを追加-----------------------------------
+    addCosts({ commit }, costs) {
+      axios.post('/api/addCosts', {
+            costId: costs.costId,
+            year: costs.year,
+            month: costs.month,
+            color: costs.color,
+            waterCost: costs.waterCost,
+            eleCost: costs.eleCost,
+            gasCost: costs.gasCost,
+            totalCost: costs.totalCost,
+            addDate: costs.addDate,
+      }).then((res) => {
+        console.log(res)
+        commit('addCostsMut', costs)
+        this.dispatch('requestCosts')
+      })
     }
+
 //     deleteLoginUser ({commit}){
 //       commit ('deleteLoginUser')
 //     },
@@ -135,32 +223,3 @@ export default new Vuex.Store({
     }
 )]
 })
-// {
-//   "data": "",
-//   "status": 200,
-//   "statusText": "OK",
-//   "headers": {
-//     "connection": "keep-alive",
-//       "content-length": "0",
-//       "date": "Mon, 06 Dec 2021 04:20:03 GMT",
-//       "keep-alive": "timeout=5",
-//       "x-powered-by": "Express"
-//   },
-//   "config": {
-//     "url": "/api/signIn",
-//     "method": "post",
-//     "data": "{\"userId\":\"111222333445\",\"userName\":\"サーバーストア\",\"mail\":\"server_store@gmail.com\",\"password\":\"serverstore\"}",
-//     "headers": {
-//     "Accept": "application/json, text/plain, */*",
-//     "Content-Type": "application/json;charset=utf-8"
-//    },
-  //   "transformRequest": [null],
-  //   "transformResponse": [null],
-  //   "timeout": 0,
-  //   "xsrfCookieName": "XSRF-TOKEN",
-  //   "xsrfHeaderName": "X-XSRF-TOKEN",
-  //   "maxContentLength": -1,
-  //   "maxBodyLength": -1
-//   },
-//   "request": { }
-// }
