@@ -79,6 +79,7 @@ export default {
         },
         logout() {
             this.$store.dispatch('logout')
+            this.showContent = false
         },
         openInput(orderInfo) {
             this.userInfo.userId = orderInfo.userId

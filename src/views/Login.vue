@@ -1,25 +1,40 @@
 <template>
     <div class="">
         <div class="card__login">
-            <div class="flex">
-                <div class="input__group">
-                    <div class="cp_iptxt">
-                        <input v-model="mail" class="ef" type="text" placeholder="">
-                        <label>MailAddress</label>
-                        <span class="focus_line"></span>
+            <!-- <ValidationObserver v-slot="{ invalid }"> -->
+                <div class="flex">
+                    <div class="input__group">
+                        <div class="cp_iptxt">
+                            <!-- <ValidationProvider
+                            v-slot="{ errors }"
+                            name="メールアドレス"
+                            rules="required|email"
+                            > -->
+                                <input v-model="mail" class="ef" type="text" placeholder="">
+                                <label>MailAddress</label>
+                                <span class="focus_line"></span>
+                                <!-- <span>
+                                    {{ errors[0] }}
+                                </span> -->
+                            <!-- </ValidationProvider> -->
+                        </div>
+                        <div class="cp_iptxt">
+                            <input v-model="password" class="ef" type="password" placeholder="">
+                            <label>PassWord</label>
+                            <span class="focus_line"></span>
+                        </div>
                     </div>
-                    <div class="cp_iptxt">
-                        <input v-model="password" class="ef" type="password" placeholder="">
-                        <label>PassWord</label>
-                        <span class="focus_line"></span>
+                    <div>
+                        <button 
+                         @click="login" 
+                         :disabled="invalid"
+                         class="button__circle__stitch"
+                        >
+                            LOGIN
+                        </button>
                     </div>
                 </div>
-                <div>
-                    <button @click="login" class="button__circle__stitch">
-                        LOGIN
-                    </button>
-                </div>
-            </div>
+            <!-- </ValidationObserver> -->
             <div class="link__newmember">
                 <router-link to="/newmember">
                 新規会員登録はこちら
@@ -30,6 +45,8 @@
     </div>    
 </template>
 <script>
+// import { ValidationProvider, ValidationObserver } from 'vee-validate';
+
 export default {
     name: 'Login',
     data() {
@@ -39,6 +56,10 @@ export default {
             messagePass: ''
         }
     },
+    // components: {
+    //     ValidationProvider,
+    //     ValidationObserver,
+    // },
     computed:{
         login_user() {
             return this.$store.state.login_user
@@ -53,6 +74,7 @@ export default {
                     this.password === user.password
                 ){
                     this.$store.dispatch('setLoginUser',user)
+                    // this.$store.dispatch('requestCosts')
                     this.$router.push('/')
                 }else if(
                     this.mail ===user.mail

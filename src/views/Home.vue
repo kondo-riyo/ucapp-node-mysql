@@ -1,6 +1,13 @@
 <template>
 <div>
   <!-- <Chart class="chart"/> -->
+  <div>
+    <select v-model="choiceYear" @change="newCost">
+      <option v-for="(year, index) in selectYears" :value="year" :key="index">
+        {{year}}
+      </option>
+    </select>
+  </div>
   <Barchart :data="chartdata" :options="options" class="chart"/>
     <!-- <Chart :chart-data="datacollection"></Chart>
     <button @click="fillData()">Randomize</button> -->
@@ -8,9 +15,10 @@
 </template>
 
 <script>
+// import { mapActions } from 'vuex'
   // import Chart from '@/components/Chart.vue'
 import Barchart from '../components/Barchart.js'
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 import store from '../store'
 export default {
     name: 'Home',
@@ -23,6 +31,8 @@ export default {
     // let newcosts=[...this.costs].sort((a, b) => a.month - b.month);
     //   console.log(this.newcosts)
     return {
+      selectYears: [],
+      choiceYear: '',
       newcosts:[],
       chartdata: {
         // labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -82,8 +92,13 @@ export default {
       },
     }
   },
-  created(){
+  created() {
+    this.$store.dispatch('requestCosts')
+  },
+  // created(){
+  beforeMount() {
   //   //labels[]取得
+    // this.selectYear()
     this.newCost()
     this.labelsPush()
     this.waterPush()
@@ -91,16 +106,53 @@ export default {
     this.elePush()
     this.totalPush()
     this.colorPush()
-    // this.borderColorPush()
   },
-  computed:{
-    ...mapState(["costs"]),
-  },
+  // computed:{
+  //   ...mapActions('requestCosts')
+  // },
   methods:{
+    //yearを監視--------------------------------------------------------
+    selectYear() {
+      let selectYear = []
+      this.$store.state.costs.forEach(cost => {
+        if(selectYear.length===0) {
+            selectYear.push(cost.year)
+        }else {
+        selectYear.forEach(year => {
+          if(cost.year != year) {
+            selectYear.push(cost.year)
+          }else {
+            console.log('弾かれた！')
+          }
+        })
+        }
+      })
+
+      this.selectYears = selectYear
+      console.log(this.selectYears)
+    },
     //costsを順番通りにnewcostsにpush-------------------------------------
     newCost(){
-      this.newcosts=[...this.costs].sort((a, b) => a.month - b.month);
-      console.log(this.newcosts)
+      console.log('newCost')
+      console.log('this.choiceYear=> '+this.choiceYear)
+      let allCosts = []
+      allCosts.push([...this.$store.state.costs].sort((a, b) => a.month - b.month));
+      allCosts.forEach(costs => {
+        costs.forEach( cost => {
+        if(this.choiceYear == cost.year) {
+          this.newcosts.push(cost)
+        }
+        })
+      })
+      // this.labelsPush()
+      // this.waterPush()
+      // this.gasPush()
+      // this.elePush()
+      // this.totalPush()
+      // this.colorPush()
+
+      // console.log('chart=> '+JSON.stringify(this.chartdata))
+      // console.log('/home/newCost()=> '+this.newcosts)
       return this.newcosts
     },
     //横軸のラベルをlabelsにpush-------------------------------------------
