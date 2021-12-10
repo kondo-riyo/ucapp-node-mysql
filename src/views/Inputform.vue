@@ -124,15 +124,15 @@
     }
     // console.log(this.month)
     },
-    created(){
-        // this.hankaku()
-        const month = this.$store.getters.getMonthById(
-            this.$route.params.month_id
-        );
-        if (month){
-            this.month = month
-        }
-    },
+    // created(){
+    //     // this.hankaku()
+    //     const month = this.$store.getters.getMonthById(
+    //         this.$route.params.month_id
+    //     );
+    //     if (month){
+    //         this.month = month
+    //     }
+    // },
     // methods:{
     //     hankaku(str){
     //     str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
@@ -147,7 +147,8 @@
         submit(){
           this.colorPush()
           //totalCost--------------------------------
-          this.costs.totalCost = this.costs.waterCost + this.costs.gasCost + this.costs.eleCost
+          this.costs.totalCost = Number(this.costs.waterCost) + Number(this.costs.gasCost) + Number(this.costs.eleCost)
+          console.log(this.costs.totalCost)
           //costId-----------------------------------
           this.costs.costId = Math.floor(100000000000 + Math.random() * 900000000000)
           //addDate----------------------------------
@@ -156,7 +157,7 @@
           //storeのactionのaddCostsに送る------------------------------
           this.$store.dispatch('addCosts',this.costs)
           this.$router.push('/')
-          
+
           //過去の遺物---------------------------------
             // if(this.$route.params.month_id){
             //     this.updateMonth({

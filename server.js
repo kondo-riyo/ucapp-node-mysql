@@ -38,16 +38,16 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
         );
     });
 
-    const jsonWrite = function(res, ret) {
-        if(typeof ret === 'undefined') {
-            res.json({
-                code: '1',
-                msg: '操作失败'
-            });
-        } else {
-            res.json(ret);
-        }
-    };
+    // const jsonWrite = function(res, ret) {
+    //     if(typeof ret === 'undefined') {
+    //         res.json({
+    //             code: '1',
+    //             msg: '操作失败'
+    //         });
+    //     } else {
+    //         res.json(ret);
+    //     }
+    // };
     //usersテーブルに追加---------------------------------------
     app.post('/api/signIn', (req, res) => {
         const params = req.body;
@@ -89,7 +89,8 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
     //costsテーブルに追加----------------------------------------------
     app.post('/api/addCosts', (req, res) => {
         const params = req.body;
-        const sqlInsert = `INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)`;
+        console.log('req.body=> '+req.body)
+        const sqlInsert = `INSERT INTO costs VALUES (?,?,?,?,?,?,?,?,?)`;
         connection.query(sqlInsert, [
             params.costId,
             params.year,
@@ -102,6 +103,7 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
             params.addDate
         ], (err, result) => {
             res.send(result);
+            console.log(result)
     });
     });
 

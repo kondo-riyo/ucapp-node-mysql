@@ -103,7 +103,7 @@ export default {
     },
 
     // ...mapActions(["login","setLoginUser","logout","deleteLoginUser","fetchMonths"])
-    ...mapActions(["requestUsers"])
+    ...mapActions(["requestUsers","requestCosts"])
   },
 };
 
