@@ -78,12 +78,17 @@
         <button @click="submit" class="button button__red">
           登録
         </button>
+        <push-modal
+          v-show="showContent"
+          @close="closeModal"
+        ></push-modal>
       </div>
     </div>
   </div>
 </div>
 </template>
 <script>
+import PushModal from '../components/pushModal.vue'
 // import VeeValidate, { Validator } from 'vee-validate'
 // import {mapActions, mapState} from 'vuex'
 // import Vue from 'vue' 
@@ -93,17 +98,18 @@
   export default {
     data (){
         return{
+          showContent: false,
           costs: {
-            costId: '',
-            year: '',
-            month: '',
-            color: '',
-            waterCost: null,
-            eleCost: null,
-            gasCost: null,
-            totalCost: null,
-            addDate: '',
-          },
+              costId: '',
+              year: '',
+              month: '',
+              color: '',
+              waterCost: null,
+              eleCost: null,
+              gasCost: null,
+              totalCost: null,
+              addDate: '',
+            },
       // valid: false,
       // month:{
         //   month:'',
@@ -123,6 +129,9 @@
       // ],
     }
     // console.log(this.month)
+    },
+    components: {
+      PushModal
     },
     // created(){
     //     // this.hankaku()
@@ -145,6 +154,8 @@
     // },
     methods:{
         submit(){
+          //modalをオープンする-------------------------
+          this.showContent = true
           this.colorPush()
           //totalCost--------------------------------
           this.costs.totalCost = Number(this.costs.waterCost) + Number(this.costs.gasCost) + Number(this.costs.eleCost)
@@ -156,7 +167,7 @@
           console.log(this.costs)
           //storeのactionのaddCostsに送る------------------------------
           this.$store.dispatch('addCosts',this.costs)
-          this.$router.push('/')
+          // this.$router.push('/')
 
           //過去の遺物---------------------------------
             // if(this.$route.params.month_id){
@@ -172,6 +183,14 @@
             // this.$router.push({name: "Home"});
             // console.log(this.month)
             // this.month={};
+        },
+        // modalOpen() {
+        //     this.showContent = true
+        //     // this.mordalOrderInfo = loginUser
+        // },
+        closeModal() {
+          this.showContent = false;
+          this.$router.push('/')
         },
         colorPush(){
           let r=Math.round(Math.random() * 255)

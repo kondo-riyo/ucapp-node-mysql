@@ -27,7 +27,6 @@
                     <div>
                         <button 
                          @click="login" 
-                         :disabled="invalid"
                          class="button__circle__stitch"
                         >
                             LOGIN

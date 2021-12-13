@@ -11,7 +11,21 @@ const getDefaultState = () => {
   return {
     login_user: [],
     setLogin_user: null,
-    costs: []
+    costs: [],
+    newPushCost:
+    null
+      //     {
+      //       costId: '123456789000',
+      //       year: '2021',
+      //       month: '10',
+      //       color: '185,155,0',
+      //       waterCost: 1200,
+      //       eleCost: 1500,
+      //       gasCost: 2000,
+      //       totalCost: 4700,
+      //       addDate: '2021/11/11',
+      // },
+
   }
 }
 
@@ -35,48 +49,48 @@ export default new Vuex.Store({
 //       }]
 //     ,
 //     //ログインしたユーザー---------------------------------------
-//     setLogin_user: null,
-//       // {
-//       //   userId: '123456789000',
-//       //   userName: 'ベタaaaaaaaaaaaaaaaaa',
-//       //   mail: 'beta@gmail.com',
-//       //   password: 'betabeta'
-//       // }
-//     costs: [
+//     setLogin_user: //null,
 //       {
-//             costId: '123456789000',
-//             year: '2021',
-//             month: '10',
-//             color: '185,155,0',
-//             waterCost: 1200,
-//             eleCost: 1500,
-//             gasCost: 2000,
-//             totalCost: 4700,
-//             addDate: '2021/11/11',
+//         userId: '123456789000',
+//         userName: 'ベタaaaaaaaaaaaaaaaaa',
+//         mail: 'beta@gmail.com',
+//         password: 'betabeta'
 //       },
-//       {
-//             costId: '123456789100',
-//             year: '2021',
-//             month: '11',
-//             color: '185,0,0',
-//             waterCost: 1000,
-//             eleCost: 1000,
-//             gasCost: 3000,
-//             totalCost: 5000,
-//             addDate: '2021/11/11',
-//       },
-//       {
-//             costId: '123456789110',
-//             year: '2021',
-//             month: '12',
-//             color: '185,120,0',
-//             waterCost: 1800,
-//             eleCost: 1600,
-//             gasCost: 2000,
-//             totalCost: 5400,
-//             addDate: '2021/11/11',
-//       }
-//     ],
+//     // costs: [
+//     //   {
+//     //         costId: '123456789000',
+//     //         year: '2021',
+//     //         month: '10',
+//     //         color: '185,155,0',
+//     //         waterCost: 1200,
+//     //         eleCost: 1500,
+//     //         gasCost: 2000,
+//     //         totalCost: 4700,
+//     //         addDate: '2021/11/11',
+//     //   },
+//     //   {
+//     //         costId: '123456789100',
+//     //         year: '2021',
+//     //         month: '11',
+//     //         color: '185,0,0',
+//     //         waterCost: 1000,
+//     //         eleCost: 1000,
+//     //         gasCost: 3000,
+//     //         totalCost: 5000,
+//     //         addDate: '2021/11/11',
+//     //   },
+//     //   {
+//     //         costId: '123456789110',
+//     //         year: '2021',
+//     //         month: '12',
+//     //         color: '185,120,0',
+//     //         waterCost: 1800,
+//     //         eleCost: 1600,
+//     //         gasCost: 2000,
+//     //         totalCost: 5400,
+//     //         addDate: '2021/11/11',
+//     //   }
+//     // ],
 //       // costs:[],
 // //     login_user: null,
 //   },
@@ -109,6 +123,7 @@ export default new Vuex.Store({
     },
     addCostsMut(state, costs) {
       state.costs.push(costs)
+      state.newPushCost = costs
       console.log('addCostsMut=> '+state.costs)
     }
 //     deleteLoginUser(state){
