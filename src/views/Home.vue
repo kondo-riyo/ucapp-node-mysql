@@ -32,7 +32,7 @@ export default {
     //   console.log(this.newcosts)
     return {
       selectYears: [],
-      choiceYear: '',
+      choiceYear: '2021',
       newcosts:[],
       chartdata: {
         // labels: ['January', 'February', 'March', 'April', 'May', 'June'],
