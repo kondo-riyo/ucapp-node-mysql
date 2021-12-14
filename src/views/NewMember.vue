@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card__login">
+        <div class="card__login fadeIn__base">
             <div class="flex">
                 <div class="input__group">
                     <div class="cp_iptxt">
@@ -8,22 +8,30 @@
                         <label>Name</label>
                         <span class="focus_line"></span>
                     </div>
+                    <div v-show="validate_name">名前は3~10文字で入力してください</div>
                     <div class="cp_iptxt">
                         <input v-model="mail" class="ef" type="text" placeholder="">
                         <label>MailAddress</label>
                         <span class="focus_line"></span>
                     </div>
+                    <div v-show="validate_mail">メールアドレスを入力してください</div>
                     <div class="cp_iptxt">
                         <input v-model="password" class="ef" type="password" placeholder="">
                         <label>PassWord</label>
                         <span class="focus_line"></span>
                     </div>
+                    <div v-show="validate_pass">半角英数字６桁以上を入力してください</div>
                 </div>
                 <div>
                     <button @click="sendNewMember" class="button__circle__stitch">
                         登録
                     </button>
                 </div>
+            </div>
+            <div @click="sendLogin" class="link__newmember">
+                <button>
+                    会員登録がお済みの方はこちら
+                </button>
             </div>
         </div>
     </div>
@@ -37,22 +45,64 @@ export default {
             user_name: '',
             mail: '',
             password: '',
-            messagePass: ''
+            messagePass: '',
+            validate_name: false,
+            validate_mail: false,
+            validate_pass: false
         }
     },
+    // computed: {
+    //     validate(user) {
+    //         console.log(user)
+    //         return user.match(/[0-9]{3,10}/g)
+    //     }
+    // },
     methods: {
         sendNewMember() {
-            //ランダムな文字列を作成してuserIdを与える------------------------------
-            this.user_id = Math.floor(100000000000 + Math.random() * 900000000000)
-            const userInfo = {
-                userId: this.user_id,
-                userName: this.user_name,
-                mail: this.mail,
-                password: this.password
+            //バリデーション----------------------------------------------------
+            this.validate_name = false;
+            this.validate_mail = false;
+            this.validate_pass = false;
+            let name_check = this.user_name.match(/[0-9]{3,10}/g)
+            let mail_check = this.mail.match(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}.[A-Za-z0-9]{1,}$/)
+            let pass_check = this.password.match(/[A-Za-z0-9]{6,}/g)
+            if(name_check) {
+                if(mail_check) {
+                    if(pass_check) {
+                        //ランダムな文字列を作成してuserIdを与える------------------------------
+                        this.user_id = Math.floor(100000000000 + Math.random() * 900000000000)
+                        const userInfo = {
+                            userId: this.user_id,
+                            userName: this.user_name,
+                            mail: this.mail,
+                            password: this.password
+                        }
+                        // console.log(userInfo)
+                        this.$store.dispatch('sendNewMember', userInfo)
+                    }else {
+                        this.validate_pass = true
+                    }
+                }else {
+                    this.validate_mail = true
+                }
+            }else {
+                this.validate_name = true
             }
-            // console.log(userInfo)
-            this.$store.dispatch('sendNewMember', userInfo)
+
         },
+        sendLogin() {
+            this.$router.push('/login')
+        },
+        // validate(user) {
+        //     console.log(user)
+        //     return user.match(/[0-9]{3,10}/g)
+        // }
+        // validate_name() {
+        //     if(this.user_name.math(/[0-9]{3,10}/g)) {
+        //         ret
+        //     }
+            
+        // }
         // deleteUser() {
         //     //引数にuserIdべたがきで消せるよ----------------------
         //     this.$store.dispatch('deleteUser')
@@ -63,40 +113,46 @@ export default {
 <style lang="scss">
 @import '../scss/input.scss';
 @import '../scss/button.scss';
+@import '../scss/animation.scss';
+@import '../scss/card.scss';
 
-.card__login {
-    width: 50%;
-    min-width: 500px;
-    height: auto;
-    background-color: #c2baaf4a;
-    padding: 20px;
-    margin: 30px 10px;
-    //border---------------------------
-    border: 3px solid #c2baaf;
-    border-radius: 10px;
-}
 .flex {
     display: flex;
     align-items: center;
 }
 .link__newmember {
-    display: block;
     text-align: center;
-    font: sans-serif #673a15;
+    color: #ef6158;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0px 70px;
+    padding: 5px 0px;
+    transition: 0.5s;
 }
-.link__newmember p:after {
-    content: '';
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 0;
-	height: 10px;
-	background-color: rgba(185,155,0,0.5);
-	transition: width 0.3s;
+.link__newmember:hover {
+    background-color: #ef625893;
+    color: white;
+    border-radius: 10px;
 }
-.link__newmember p:hover::after {
-    width: 100%;
-}
+
+// .link__newmember {
+//     display: block;
+//     text-align: center;
+//     font: sans-serif #673a15;
+// }
+// .link__newmember p:after {
+//     content: '';
+// 	position: absolute;
+// 	bottom: 0;
+// 	left: 0;
+// 	width: 0;
+// 	height: 10px;
+// 	background-color: rgba(185,155,0,0.5);
+// 	transition: width 0.3s;
+// }
+// .link__newmember p:hover::after {
+//     width: 100%;
+// }
 .input__group {
     width: 80%;
 }

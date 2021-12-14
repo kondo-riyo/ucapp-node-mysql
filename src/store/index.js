@@ -7,10 +7,28 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 
-const getDefaultState = () => {
+let getDefaultState = () => {
   return {
-    login_user: [],
-    setLogin_user: null,
+    login_user: [
+      // {
+      //   userId: '123456789000',
+      //   userName: 'ベタ',
+      //   mail: 'beta@gmail.com',
+      //   password: 'betabeta'
+      // },
+      // {
+      //   userId: '111222333444',
+      //   userName: 'ベタ２',
+      //   mail: 'beta2@gmail.com',
+      //   password: 'beta2beta2'
+      // }
+    ],
+    setLogin_user:  null,//{
+      //   userId: '123456789000',
+      //   userName: 'ベタaaaaaaaaaaaaaaaaa',
+      //   mail: 'beta@gmail.com',
+      //   password: 'betabeta'
+      // },
     costs: [],
     newPushCost:
     null
@@ -31,69 +49,65 @@ const getDefaultState = () => {
 
 export default new Vuex.Store({
   state: getDefaultState(),
-//   {
-//     //usersテーブルの全て-----------------------------------
-//     login_user:
-//       // []
-//       [{
-//         userId: '123456789000',
-//         userName: 'ベタ',
-//         mail: 'beta@gmail.com',
-//         password: 'betabeta'
-//       },
-//       {
-//         userId: '111222333444',
-//         userName: 'ベタ２',
-//         mail: 'beta2@gmail.com',
-//         password: 'beta2beta2'
-//       }]
-//     ,
-//     //ログインしたユーザー---------------------------------------
-//     setLogin_user: //null,
-//       {
-//         userId: '123456789000',
-//         userName: 'ベタaaaaaaaaaaaaaaaaa',
-//         mail: 'beta@gmail.com',
-//         password: 'betabeta'
-//       },
-//     // costs: [
-//     //   {
-//     //         costId: '123456789000',
-//     //         year: '2021',
-//     //         month: '10',
-//     //         color: '185,155,0',
-//     //         waterCost: 1200,
-//     //         eleCost: 1500,
-//     //         gasCost: 2000,
-//     //         totalCost: 4700,
-//     //         addDate: '2021/11/11',
-//     //   },
-//     //   {
-//     //         costId: '123456789100',
-//     //         year: '2021',
-//     //         month: '11',
-//     //         color: '185,0,0',
-//     //         waterCost: 1000,
-//     //         eleCost: 1000,
-//     //         gasCost: 3000,
-//     //         totalCost: 5000,
-//     //         addDate: '2021/11/11',
-//     //   },
-//     //   {
-//     //         costId: '123456789110',
-//     //         year: '2021',
-//     //         month: '12',
-//     //         color: '185,120,0',
-//     //         waterCost: 1800,
-//     //         eleCost: 1600,
-//     //         gasCost: 2000,
-//     //         totalCost: 5400,
-//     //         addDate: '2021/11/11',
-//     //   }
-//     // ],
-//       // costs:[],
-// //     login_user: null,
-//   },
+  // state: {
+  //   //usersテーブルの全て-----------------------------------
+  //   login_user:[{
+  //       userId: '123456789000',
+  //       userName: 'ベタ',
+  //       mail: 'beta@gmail.com',
+  //       password: 'betabeta'
+  //     },
+  //     {
+  //       userId: '111222333444',
+  //       userName: 'ベタ２',
+  //       mail: 'beta2@gmail.com',
+  //       password: 'beta2beta2'
+  //     }]
+  //   ,
+  //   //ログインしたユーザー---------------------------------------
+  //   setLogin_user: null,
+  //     // {
+  //     //   userId: '123456789000',
+  //     //   userName: 'ベタaaaaaaaaaaaaaaaaa',
+  //     //   mail: 'beta@gmail.com',
+  //     //   password: 'betabeta'
+  //     // },
+  //   costs: [
+  //     {
+  //           costId: '123456789000',
+  //           year: '2021',
+  //           month: '10',
+  //           color: '185,155,0',
+  //           waterCost: 1200,
+  //           eleCost: 1500,
+  //           gasCost: 2000,
+  //           totalCost: 4700,
+  //           addDate: '2021/11/11',
+  //     },
+  //     {
+  //           costId: '123456789100',
+  //           year: '2021',
+  //           month: '11',
+  //           color: '185,0,0',
+  //           waterCost: 1000,
+  //           eleCost: 1000,
+  //           gasCost: 3000,
+  //           totalCost: 5000,
+  //           addDate: '2021/11/11',
+  //     },
+  //     {
+  //           costId: '123456789110',
+  //           year: '2021',
+  //           month: '12',
+  //           color: '185,120,0',
+  //           waterCost: 1800,
+  //           eleCost: 1600,
+  //           gasCost: 2000,
+  //           totalCost: 5400,
+  //           addDate: '2021/11/11',
+  //     }
+  //   ],
+  // },
   mutations: {
     reset(state) {
       Object.assign(state, getDefaultState())
@@ -249,9 +263,81 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
-//     uid: (state)=>(state.login_user ? state.login_user.uid : null),
-//     getMonthById: (state => (id) =>
-//     state.costs.find((month)=> month.id === id))
+    // login_user(state) {
+    //   return state.login_user
+    // },
+    login_user() {
+      return [{
+        userId: '123456789000',
+        userName: 'ベタ',
+        mail: 'beta@gmail.com',
+        password: 'betabeta'
+      },
+      {
+        userId: '111222333444',
+        userName: 'ベタ２',
+        mail: 'beta2@gmail.com',
+        password: 'beta2beta2'
+      }]
+    },
+    // setLogin_user(state) {
+    //   return state.setLogin_user
+    // }
+    setLogin_user() {
+      return    {userId: '123456789000',
+        userName: 'ベタaaaaaaaaaaaaaaaaa',
+        mail: 'beta@gmail.com',
+        password: 'betabeta'
+      }
+    },
+    getCosts() {
+      return [ {
+            costId: '123456789000',
+            year: '2021',
+            month: '10',
+            color: '185,155,0',
+            waterCost: 1200,
+            eleCost: 1500,
+            gasCost: 2000,
+            totalCost: 4700,
+            addDate: '2021/11/11',
+      },
+      {
+            costId: '123456789100',
+            year: '2021',
+            month: '11',
+            color: '185,0,0',
+            waterCost: 1000,
+            eleCost: 1000,
+            gasCost: 3000,
+            totalCost: 5000,
+            addDate: '2021/11/11',
+      },
+      {
+            costId: '123456789110',
+            year: '2021',
+            month: '12',
+            color: '185,120,0',
+            waterCost: 1800,
+            eleCost: 1600,
+            gasCost: 2000,
+            totalCost: 5400,
+            addDate: '2021/11/11',
+      }]
+    },
+    getNewPushCost() {
+        return  {
+            costId: '123456789000',
+            year: '2021',
+            month: '10',
+            color: '185,155,0',
+            waterCost: 1200,
+            eleCost: 1500,
+            gasCost: 2000,
+            totalCost: 4700,
+            addDate: '2021/11/11',
+      }
+    }
   },
   plugins: [createPersistedState(
     { // ストレージのキーを指定

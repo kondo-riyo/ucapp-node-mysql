@@ -2,7 +2,7 @@
 .cp_iptxt {
   position: relative;
   width: 80%;
-  margin: 40px 3%;
+  margin: 40px 3% 10px 3%;
 }
 .cp_iptxt input[type="text"] {
   font: 12px/20px sans-serif #673a15;
@@ -60,4 +60,15 @@
   top: -16px;
   transition: 0.3s;
   color: #da3c41;
+}
+
+//エラー文----------------------------
+.err__text {
+  font-size: small;
+  color: #da3c41;
+  font-weight: bold;
+  //   transition: 1s;
+  //   animation: errText 20s ease 0s infinite normal;
+  //   animation-name: errText ;
+  //   animation-: ;
 }

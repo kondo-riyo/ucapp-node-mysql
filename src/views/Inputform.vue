@@ -1,54 +1,9 @@
 <template>
-<!-- <v-app>
-    <v-form v-model="valid">
-        <v-container class="basecard">
-        <v-col>
-            <div>登録月</div>
-            <v-select :items="selectyear" v-model="month.year" @change="yearPush()">
-            </v-select>
-            <v-select :items="care_selectmonth" v-model="month.month" ></v-select>
-        </v-col>
-        <v-col>
-            <div>水道</div>
-          <v-text-field
-            v-model.number="month.watercost"
-            :rules="costRules"
-            :counter="10"
-            label="水道"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col>
-            <div>ガス</div>
-          <v-text-field
-            v-model.number="month.gascost"
-            :rules="costRules"
-            :counter="10"
-            label="ガス"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col>
-            <div>電気</div>
-          <v-text-field
-            v-model.number="month.elecost"
-            :rules="costRules"
-            :counter="10"
-            label="電気"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col>
-       <v-btn color="" class="" @click="submit()">追加</v-btn>
-       </v-col>
-        </v-container>
-    </v-form>
-</v-app> -->
 <div>
   <div>
-    <div>
-      <div>Utility Costs 光熱費登録</div>
+    <div class="card__login fadeIn__base">
+      <div class="center title__base">Utility Costs 光熱費登録</div>
+      <div>
       <div class="cp_iptxt">
         <input v-model="costs.year" class="ef " type="text" placeholder="">
         <label>Year</label>
@@ -74,7 +29,8 @@
         <label>Electricity Cost</label>
         <span class="focus_line"></span>
       </div>
-      <div>
+      </div>
+      <div class="center">
         <button @click="submit" class="button button__red">
           登録
         </button>
@@ -260,6 +216,7 @@ import PushModal from '../components/pushModal.vue'
 
 </script>
 <style lang="scss" scoped>
+  // @import '../scss/card.scss';
 // .basecard {
 //     display: flex;
 //     align-content: center;
@@ -268,4 +225,12 @@ import PushModal from '../components/pushModal.vue'
 //     flex-direction:column;
 //     justify-content: center; 
 // }
+.center {
+  text-align: center;
+}
+.title__base {
+  font-size: 18px;
+  color: #673a15;
+  font-weight: bold;
+}
 </style>
