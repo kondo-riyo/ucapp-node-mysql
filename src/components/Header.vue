@@ -87,7 +87,7 @@ export default {
   },
   computed:{
     loginUserFromStore() {
-        return this.$store.state.setLogin_user
+        return this.$store.getters.setLogin_user
     }
   },
   methods:{

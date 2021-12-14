@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <div class="card__login">
+        <div class="card__login fadeIn__base">
             <!-- <ValidationObserver v-slot="{ invalid }"> -->
                 <div class="flex">
                     <div class="input__group">
@@ -18,11 +18,13 @@
                                 </span> -->
                             <!-- </ValidationProvider> -->
                         </div>
+                        <div class="err__text">{{messageMail}}</div>
                         <div class="cp_iptxt">
                             <input v-model="password" class="ef" type="password" placeholder="">
                             <label>PassWord</label>
                             <span class="focus_line"></span>
                         </div>
+                        <div class="err__text">{{messagePass}}</div>
                     </div>
                     <div>
                         <button 
@@ -34,10 +36,10 @@
                     </div>
                 </div>
             <!-- </ValidationObserver> -->
-            <div class="link__newmember">
-                <router-link to="/newmember">
-                新規会員登録はこちら
-                </router-link>
+            <div @click="sendNewMember" class="link__login">
+                <button>
+                    新規会員登録はこちら
+                </button>
             </div>
         </div>
 
@@ -52,6 +54,7 @@ export default {
         return {
             mail:'',
             password:'',
+            messageMail: '',
             messagePass: ''
         }
     },
@@ -61,75 +64,94 @@ export default {
     // },
     computed:{
         login_user() {
-            return this.$store.state.login_user
+            return this.$store.getters.login_user
         }
     },
     methods: {
         login() {
+            console.log('ログイン')
             // this.$router.push('/')
-            this.$store.state.login_user.forEach(user => {
+            // this.messageMail = ''
+            // this.messagePass = ''
+            console.log(this.login_user)
+            this.$store.getters.login_user.forEach(user => {
                 if(
-                    this.mail === user.mail &&
-                    this.password === user.password
+                    this.mail === user.mail
                 ){
-                    this.$store.dispatch('setLoginUser',user)
-                    // this.$store.dispatch('requestCosts')
-                    this.$router.push('/')
+                    this.messageMail =''
+                    if(this.password === user.password) {
+                        this.$store.dispatch('setLoginUser',user)
+                        this.$router.push('/')
+                    }else if(this.password ==='') {
+                        this.messagePass = 'パスワードを入力してください'
+                    }else if(this.password != user.password) {
+                        this.messagePass = 'パスワードが違います'
+                        console.log(this.messagePass)
+                    }
                 }else if(
-                    this.mail ===user.mail
+                    this.mail === ''
                 ){
-                    this.messagePass = 'パスワードが違います'
-                    console.log(this.messagePass)
+                    this.messageMail = 'メールアドレスの入力が必要です'
                 }else{
                     console.log('アカウントがありません(usersテーブルに一致するものがないです)')
                 }
             });
+        },
+        sendNewMember() {
+            this.$router.push('/newmember')
         }
+        // mailValidation() {
+        //     // console.log(this.mail.length)
+        //     if(this.mail.length === 0) {
+        //         this.messageMail = 'メールアドレスの入力が必要です'
+        //     } else {
+        //         this.messageMail = ''
+        //     }
+        // }
     },
 }
 </script>
 <style lang="scss">
 @import '../scss/input.scss';
 @import '../scss/button.scss';
+@import '../scss/animation.scss';
+@import '../scss/animation.scss';
 
 // .bg__flower {
 //     background-image: url(../assets/bg_orange.webp);
 //     width: 100%;
 //     height: auto;
 // }
-.card__login {
-    width: 50%;
-    min-width: 500px;
-    height: auto;
-    background-color: #c2baaf4a;
-    padding: 20px;
-    // margin: 30px 10px;
-    margin:0 auto;
-    //border---------------------------
-    border: 3px solid #c2baaf;
-    border-radius: 10px;
-}
+// .card__login {
+//     width: 50%;
+//     min-width: 500px;
+//     height: auto;
+//     background-color: #c2baaf4a;
+//     padding: 20px;
+//     // margin: 30px 10px;
+//     margin:0 auto;
+//     //border---------------------------
+//     border: 3px solid #c2baaf;
+//     border-radius: 10px;
+// }
+
 .flex {
     display: flex;
     align-items: center;
 }
-.link__newmember {
-    display: block;
+.link__login {
     text-align: center;
-    font: sans-serif #673a15;
+    color: #ef6158;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0px 70px;
+    padding: 5px 0px;
+    border-radius: 10px;
+    transition: 0.5s;
 }
-.link__newmember p:after {
-    content: '';
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 0;
-	height: 10px;
-	background-color: rgba(185,155,0,0.5);
-	transition: width 0.3s;
-}
-.link__newmember p:hover::after {
-    width: 100%;
+.link__login:hover {
+    background-color: #ef625893;
+    color: white;
 }
 .input__group {
     width: 80%;

@@ -126,7 +126,7 @@ export default {
   min-width: 350px;
   height: auto;
   padding: 1em;
-  background-color: rgba(194, 186, 175, 0.24);
+  background-color: rgba(240, 233, 224, 0.727);
   color: #673A15;
 //   font-weight: bold;
   box-sizing: border-box;

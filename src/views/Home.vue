@@ -1,14 +1,19 @@
 <template>
 <div>
   <!-- <Chart class="chart"/> -->
-  <div>
+  <div v-show="!setlogin_userFromStore">
+    <Login/>
+  </div>
+  <!-- <div>
     <select v-model="choiceYear" @change="newCost">
       <option v-for="(year, index) in selectYears" :value="year" :key="index">
         {{year}}
       </option>
     </select>
+  </div> -->
+  <div v-show="setlogin_userFromStore" class="fadeIn__base">
+    <Barchart :data="chartdata" :options="options" class="chart"/>
   </div>
-  <Barchart :data="chartdata" :options="options" class="chart"/>
     <!-- <Chart :chart-data="datacollection"></Chart>
     <button @click="fillData()">Randomize</button> -->
 </div>
@@ -18,13 +23,15 @@
 // import { mapActions } from 'vuex'
   // import Chart from '@/components/Chart.vue'
 import Barchart from '../components/Barchart.js'
+import Login from '../views/Login.vue'
 // import { mapState } from 'vuex'
 import store from '../store'
 export default {
     name: 'Home',
     components: {
       // Chart,
-      Barchart
+      Barchart,
+      Login
     },
     store,
   data () {
@@ -107,14 +114,17 @@ export default {
     this.totalPush()
     this.colorPush()
   },
-  // computed:{
-  //   ...mapActions('requestCosts')
-  // },
+  computed:{
+    setlogin_userFromStore() {
+      return this.$store.getters.setLogin_user
+    }
+
+  },
   methods:{
     //yearを監視--------------------------------------------------------
     selectYear() {
       let selectYear = []
-      this.$store.state.costs.forEach(cost => {
+      this.$store.getters.getCosts.forEach(cost => {
         if(selectYear.length===0) {
             selectYear.push(cost.year)
         }else {
@@ -136,7 +146,7 @@ export default {
       console.log('newCost')
       console.log('this.choiceYear=> '+this.choiceYear)
       let allCosts = []
-      allCosts.push([...this.$store.state.costs].sort((a, b) => a.month - b.month));
+      allCosts.push([...this.$store.getters.getCosts].sort((a, b) => a.month - b.month));
       allCosts.forEach(costs => {
         costs.forEach( cost => {
         if(this.choiceYear == cost.year) {
@@ -208,10 +218,12 @@ export default {
 
 </script>
 <style scoped>
+@import '../scss/animation.scss';
+
 .chart{
-  width: 500px;
-  height: auto;
+  max-width: 700px;
 }
+
 </style>
 
 
