@@ -9,27 +9,34 @@
         <label>Year</label>
         <span class="focus_line"></span>
       </div>
+      <div v-show="validate_year">2000年からのデータを入力できます</div>
       <div class="cp_iptxt">
-        <input v-model="costs.month" class="ef " type="text" placeholder="">
+        <input v-model="costs.month" @change="monthMessage" class="ef " type="text" placeholder="">
         <label>Month</label>
         <span class="focus_line"></span>
       </div>
+      <div v-show="validate_month_a">正しい月を入力してください</div>
+      <div v-show="validate_month_b">{{costs.year}}年{{costs.month}}月の光熱費は入力済みです</div>
       <div class="cp_iptxt">
+        <!-- <div><img src="../assets/watericon.png"></div> -->
         <input v-model="costs.waterCost" class="ef " type="text" placeholder="">
-        <label>Water Cost</label>
+        <label><img src="../assets/watericon.png" class="input__icon__size">Water Cost</label>
         <span class="focus_line"></span>
       </div>
+      <div v-show="validate_waterCost">10桁以下の数字を入力してください</div>
       <div class="cp_iptxt">
         <input v-model="costs.gasCost" class="ef " type="text" placeholder="">
-        <label>Gas Cost</label>
+        <label><img src="../assets/fireicon.png" class="input__icon__size">Gas Cost</label>
         <span class="focus_line"></span>
       </div>
+      <div v-show="validate_gasCost">10桁以下の数字を入力してください</div>
       <div class="cp_iptxt">
         <input v-model="costs.eleCost" class="ef " type="text" placeholder="">
-        <label>Electricity Cost</label>
+        <label><img src="../assets/eleicon.png" class="input__icon__size">Electricity Cost</label>
         <span class="focus_line"></span>
       </div>
       </div>
+      <div v-show="validate_eleCost">10桁以下の数字を入力してください</div>
       <div class="center">
         <button @click="submit" class="button button__red">
           登録
@@ -45,12 +52,6 @@
 </template>
 <script>
 import PushModal from '../components/pushModal.vue'
-// import VeeValidate, { Validator } from 'vee-validate'
-// import {mapActions, mapState} from 'vuex'
-// import Vue from 'vue' 
-// import vSelect from 'vue-select'
-// import 'vue-select/dist/vue-select.css'; 
-// Vue.component("v-select", vSelect);
   export default {
     data (){
         return{
@@ -66,64 +67,77 @@ import PushModal from '../components/pushModal.vue'
               totalCost: null,
               addDate: '',
             },
-      // valid: false,
-      // month:{
-        //   month:'',
-        //   watercost:null,
-        //   gascost:null,
-        //   elecost:null,
-      // },
-      // selectyear:[2018,2019,2020,2021],
-      // selectmonth:[1,2,3,4,5,6,7,8,9,10,11,12],
-      // care_selectmonth:[],
-      // removemoon:[],
-      // costRules: [
-        // v => !!v || '入力必須です',
-        // v => v.length <= 10 || '正しい入力をしてください',
-        
-        // v => v=String || '数字を入力してください'
-      // ],
+          validate_year: false,
+          validate_month_a: false,
+          validate_month_b: false,
+          validate_waterCost: false,
+          validate_gasCost: false,
+          validate_eleCost: false,
     }
-    // console.log(this.month)
     },
     components: {
       PushModal
     },
-    // created(){
-    //     // this.hankaku()
-    //     const month = this.$store.getters.getMonthById(
-    //         this.$route.params.month_id
-    //     );
-    //     if (month){
-    //         this.month = month
-    //     }
-    // },
-    // methods:{
-    //     hankaku(str){
-    //     str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
-    //     return String.fromCharCode(s.charCodeAt(0) - 65248);
-    //     });
-    //     },
-    // },
-    // computed:{
-    //     ...mapState(["costs"])
-    // },
+    computed: {
+      costsFromStore() {
+        return this.$store.getters.getCosts
+      }
+    },
     methods:{
+      monthMessage() {
+        this.validate_month_b = false
+      },
         submit(){
-          //modalをオープンする-------------------------
-          this.showContent = true
-          this.colorPush()
-          //totalCost--------------------------------
-          this.costs.totalCost = Number(this.costs.waterCost) + Number(this.costs.gasCost) + Number(this.costs.eleCost)
-          console.log(this.costs.totalCost)
-          //costId-----------------------------------
-          this.costs.costId = Math.floor(100000000000 + Math.random() * 900000000000)
-          //addDate----------------------------------
-          this.costs.addDate = new Date()
-          console.log(this.costs)
-          //storeのactionのaddCostsに送る------------------------------
-          this.$store.dispatch('addCosts',this.costs)
-          // this.$router.push('/')
+          this.validate_year = false;
+          this.validate_month_a = false;
+          this.validate_month_b = false;
+          this.validate_waterCost = false;
+          this.validate_gasCost = false;
+          this.validate_eleCost = false;
+          let year_check = this.costs.year.match(/20[0-9]{2}/g)
+          //yearが一致しているデータを取得-----
+          let yearPull = this.costsFromStore.filter(cost => cost.year === this.costs.year)
+          //yearとmonthが不一致か調べる-------
+          let monthMatch = yearPull.map(cost => cost.month != this.costs.month)
+          // let month_check = this.costs.month.match(/^[1-9]{1}[012]{0,1}/g)
+          let water_check = this.costs.waterCost.match(/^[1-9]{1}[0-9]{1,9}/g)
+          let gas_check = this.costs.gasCost.match(/^[1-9]{1}[0-9]{1,9}/g)
+          let ele_check = this.costs.eleCost.match(/^[1-9]{1}[0-9]{1,9}/g)
+          if( year_check ) {
+            if( this.costs.month >= 1 && this.costs.month <=12) {
+              if( !monthMatch.includes(false) ) {
+                if(water_check && gas_check && ele_check) {
+                  console.log('送信成功')
+                }else if(!water_check){
+                  this.validate_waterCost = true
+                }else if(!gas_check) {
+                  this.validate_gasCost = true
+                }else if(!ele_check) {
+                  this.validate_eleCost = true
+                }else{console.log('cost errorですよ')}
+              }else {
+                this.validate_month_b = true
+              }
+            }else {
+              this.validate_month_a = true
+            }
+          }else {
+            this.validate_year = true
+            console.log(year_check)
+          }
+          // //modalをオープンする-------------------------
+          // this.showContent = true
+          // this.colorPush()
+          // //totalCost--------------------------------
+          // this.costs.totalCost = Number(this.costs.waterCost) + Number(this.costs.gasCost) + Number(this.costs.eleCost)
+          // console.log(this.costs.totalCost)
+          // //costId-----------------------------------
+          // this.costs.costId = Math.floor(100000000000 + Math.random() * 900000000000)
+          // //addDate----------------------------------
+          // this.costs.addDate = new Date()
+          // console.log(this.costs)
+          // //storeのactionのaddCostsに送る------------------------------
+          // this.$store.dispatch('addCosts',this.costs)
 
           //過去の遺物---------------------------------
             // if(this.$route.params.month_id){
@@ -140,10 +154,6 @@ import PushModal from '../components/pushModal.vue'
             // console.log(this.month)
             // this.month={};
         },
-        // modalOpen() {
-        //     this.showContent = true
-        //     // this.mordalOrderInfo = loginUser
-        // },
         closeModal() {
           this.showContent = false;
           this.$router.push('/')
@@ -189,30 +199,8 @@ import PushModal from '../components/pushModal.vue'
                         console.log('remove'+this.care_selectmonth)
                     })
         },
-
-        // total(){
-        //   let totalvalue=0
-        //     totalvalue = totalvalue+(this.month.watercost + this.month.gascost + this.month.elecost)
-        //     // this.month.totalvalue.push(totalvalue)
-        //     // console.log(el.month+'月は、'+totalvalue+'円です')
-          
-        //   return totalvalue
-        // },
-    //     totalPush(){
-    //       let totalvalue=0
-    //       this.newcosts.forEach(el=>{
-    //         totalvalue=0
-    //         totalvalue = totalvalue+(el.watercost + el.gascost + el.elecost)
-    //         this.month.totalvalue.push(totalvalue)
-    //         console.log(el.month+'月は、'+totalvalue+'円です')
-    //       })
-    //       return this.month.totalvalue
-    // },
-
-        // ...mapActions(["addMonth","updateMonth"]),
     }
 }
-// console.log(this.month)
 
 </script>
 <style lang="scss" scoped>
@@ -232,5 +220,8 @@ import PushModal from '../components/pushModal.vue'
   font-size: 18px;
   color: #673a15;
   font-weight: bold;
+}
+.input__icon__size {
+  width: 20px;
 }
 </style>
