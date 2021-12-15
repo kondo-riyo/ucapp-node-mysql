@@ -20,7 +20,7 @@ export default {
     // },
     computed: {
         newPushCost() {
-            return this.$store.state.newPushCost
+            return this.$store.getters.newPushCost
         }
     },
     // methods: {

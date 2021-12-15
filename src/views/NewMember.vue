@@ -8,7 +8,7 @@
                         <label>Name</label>
                         <span class="focus_line"></span>
                     </div>
-                    <div v-show="validate_name">名前は3~10文字で入力してください</div>
+                    <div v-show="validate_name">名前は10文字以下で入力してください</div>
                     <div class="cp_iptxt">
                         <input v-model="mail" class="ef" type="text" placeholder="">
                         <label>MailAddress</label>
@@ -63,10 +63,9 @@ export default {
             this.validate_name = false;
             this.validate_mail = false;
             this.validate_pass = false;
-            let name_check = this.user_name.match(/[0-9]{3,10}/g)
             let mail_check = this.mail.match(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}.[A-Za-z0-9]{1,}$/)
             let pass_check = this.password.match(/[A-Za-z0-9]{6,}/g)
-            if(name_check) {
+            if(this.user_name.length > 0 && this.user_name.length <= 10) {
                 if(mail_check) {
                     if(pass_check) {
                         //ランダムな文字列を作成してuserIdを与える------------------------------
