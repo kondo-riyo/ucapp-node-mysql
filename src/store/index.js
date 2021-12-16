@@ -7,6 +7,8 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 
+// const bcrypt = require('bcrypt');
+
 let getDefaultState = () => {
   return {
     login_user: [
@@ -31,7 +33,7 @@ let getDefaultState = () => {
       // },
     costs: [],
     newPushCost:
-    null
+      null,
       //     {
       //       costId: '123456789000',
       //       year: '2021',
@@ -43,7 +45,7 @@ let getDefaultState = () => {
       //       totalCost: 4700,
       //       addDate: '2021/11/11',
       // },
-
+    messagePass: ''
   }
 }
 
@@ -118,6 +120,9 @@ export default new Vuex.Store({
     setLoginUserMut(state, user) {
       state.setLogin_user = user
     },
+    loginPassMessage( state, messagePass) {
+      state.messagePass = messagePass
+    },
     // logoutMut(state) {
     //   state.setLogin_user = null
     // },
@@ -166,10 +171,50 @@ export default new Vuex.Store({
         })
         .catch((e) => alert(e))
     },
-    //使用するアカウントをstateに保持---------------------------------
-    setLoginUser({ commit }, user) {
-      console.log('storeにいるよ')
-      commit('setLoginUserMut' , user)
+    //ログイン・使用するアカウントをstateに保持---------------------------------
+    setLoginUser({ commit, state }, loginUser) {
+      //vueファイルから移動-------------
+      state.login_user.forEach(user => {
+                if(
+                    loginUser.mail === user.mail
+                ) {
+                  console.log('storeのloginUser=> '+JSON.stringify(loginUser.mail))
+                  axios.post('/api/login', {
+                    mail: loginUser.mail,
+                    password: loginUser.password
+                  })
+                    .then((res) => {
+                      console.log('ログインres=> ' + JSON.stringify(res))
+                      if (res.data.msg != '') {
+                        let messagePass = res.data.msg
+                        commit('loginPassMessage', messagePass)
+                        // commit('setLoginUserMut', res.data.user)
+                        // console.log('res.data.user=> '+ JSON.stringify(res.data.user))
+                      } else if(res.data.msg == '') {
+                        // let messagePass = res.data.msg
+                        // commit('loginPassMessage', messagePass)
+                        commit('setLoginUserMut', res.data.user)
+                        console.log('res.data.user=> '+ JSON.stringify(res.data.user))
+                      } else {
+                        console.log('失敗！！！')
+                      }
+                    })
+                    .catch((e) => alert('storeのエラーだよ=> '+e))
+                  
+                  // if (bcrypt.compareSync(loginUser.password, user.password)) {
+                  //       console.log('ログイン成功')
+                  //       commit('setLoginUserMut' , loginUser)
+
+                  //       // this.$store.dispatch('setLoginUser',user)
+                  //       // this.$router.push('/')
+                  // }else {
+                  //   let messagePass = 'パスワードが違います'
+                  //   commit('loginPassMessage', messagePass)
+                  // }
+                }else{
+                    console.log('アカウントがありません(usersテーブルに一致するものがないです)')
+                }
+            });
     },
     //ログアウト---------------------------------------------------
     logout({ commit, dispatch }) {
@@ -263,80 +308,89 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
-    // login_user(state) {
-    //   return state.login_user
+    login_user(state) {
+      return state.login_user
+    },
+    // login_user() {
+    //   return [{
+    //     userId: '123456789000',
+    //     userName: 'ベタ',
+    //     mail: 'beta@gmail.com',
+    //     password: 'betabeta'
+    //   },
+    //   {
+    //     userId: '111222333444',
+    //     userName: 'ベタ２',
+    //     mail: 'beta2@gmail.com',
+    //     password: 'beta2beta2'
+    //   }]
     // },
-    login_user() {
-      return [{
-        userId: '123456789000',
-        userName: 'ベタ',
-        mail: 'beta@gmail.com',
-        password: 'betabeta'
-      },
-      {
-        userId: '111222333444',
-        userName: 'ベタ２',
-        mail: 'beta2@gmail.com',
-        password: 'beta2beta2'
-      }]
+    setLogin_user(state) {
+      return state.setLogin_user
     },
-    // setLogin_user(state) {
-    //   return state.setLogin_user
+    // setLogin_user() {
+    //   return    {userId: '123456789000',
+    //     userName: 'ベタaaaaaaaaaaaaaaaaa',
+    //     mail: 'beta@gmail.com',
+    //     password: 'betabeta'
+    //   }
+    // },
+    getCosts(state) {
+      return state.costs;
+    },
+    // getCosts() {
+    //   return [ {
+    //         costId: '123456789000',
+    //         year: '2021',
+    //         month: '10',
+    //         color: '185,155,0',
+    //         waterCost: 1200,
+    //         eleCost: 1500,
+    //         gasCost: 2000,
+    //         totalCost: 4700,
+    //         addDate: '2021/11/11',
+    //   },
+    //   {
+    //         costId: '123456789100',
+    //         year: '2021',
+    //         month: '11',
+    //         color: '185,0,0',
+    //         waterCost: 1000,
+    //         eleCost: 1000,
+    //         gasCost: 3000,
+    //         totalCost: 5000,
+    //         addDate: '2021/11/11',
+    //   },
+    //   {
+    //         costId: '123456789110',
+    //         year: '2021',
+    //         month: '12',
+    //         color: '185,120,0',
+    //         waterCost: 1800,
+    //         eleCost: 1600,
+    //         gasCost: 2000,
+    //         totalCost: 5400,
+    //         addDate: '2021/11/11',
+    //   }]
+    // },
+    getNewPushCost(state) {
+      return state.newPushCost;
+    },
+    // getNewPushCost() {
+    //     return  {
+    //         costId: '123456789000',
+    //         year: '2021',
+    //         month: '10',
+    //         color: '185,155,0',
+    //         waterCost: 1200,
+    //         eleCost: 1500,
+    //         gasCost: 2000,
+    //         totalCost: 4700,
+    //         addDate: '2021/11/11',
+    //   }
     // }
-    setLogin_user() {
-      return    {userId: '123456789000',
-        userName: 'ベタaaaaaaaaaaaaaaaaa',
-        mail: 'beta@gmail.com',
-        password: 'betabeta'
-      }
-    },
-    getCosts() {
-      return [ {
-            costId: '123456789000',
-            year: '2021',
-            month: '10',
-            color: '185,155,0',
-            waterCost: 1200,
-            eleCost: 1500,
-            gasCost: 2000,
-            totalCost: 4700,
-            addDate: '2021/11/11',
-      },
-      {
-            costId: '123456789100',
-            year: '2021',
-            month: '11',
-            color: '185,0,0',
-            waterCost: 1000,
-            eleCost: 1000,
-            gasCost: 3000,
-            totalCost: 5000,
-            addDate: '2021/11/11',
-      },
-      {
-            costId: '123456789110',
-            year: '2021',
-            month: '12',
-            color: '185,120,0',
-            waterCost: 1800,
-            eleCost: 1600,
-            gasCost: 2000,
-            totalCost: 5400,
-            addDate: '2021/11/11',
-      }]
-    },
-    getNewPushCost() {
-        return  {
-            costId: '123456789000',
-            year: '2021',
-            month: '10',
-            color: '185,155,0',
-            waterCost: 1200,
-            eleCost: 1500,
-            gasCost: 2000,
-            totalCost: 4700,
-            addDate: '2021/11/11',
-      }
+    getMessagePass( state ) {
+      return state.messagePass;
     }
   },
   plugins: [createPersistedState(

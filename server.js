@@ -3,6 +3,7 @@ const mysql = require('mysql');
 // const bodyParser = require('body-parser')
 
 const app = express()
+const bcrypt = require('bcrypt');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -28,7 +29,7 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
         console.log('success');
     });
 
-    //usersテーブルを全て取得-----------------------------------------
+//usersテーブルの中身全て取得-----------------------------------------
     app.get('/api/users', (req, res) => {
         connection.query('SELECT * FROM users',
             (error, results) => {
@@ -37,6 +38,43 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
             }
         );
     });
+
+    //ログイン(vue側とdb側のパスワードが一致しているアカウントをdbから取得)--------------------
+app.post('/api/login', (req, res) => {
+        console.log(req.body.password)
+        const sqlGet = `select * from users where mail=?`;
+    // const params = req.body
+        connection.query(sqlGet,[req.body.mail],
+            async (error, results) => {
+                console.log(results);
+                // results.forEach(user => {
+                const user = results;
+                // const hash_result = bcrypt.compareSync(req.body.password, user.password)
+                const hash_result = await bcrypt.compare(req.body.password, user.password)
+                console.log('hash_result=> '+ hash_result)
+                // if (!hash_result ) {
+                //     res.send({
+                //         msg: 'パスワードが違います!!!!',
+                //         user: null
+                //     })
+                // } else {
+                    res.send({
+                        msg: '',
+                        user: results
+                //     });
+                // }
+                    // if (bcrypt.compareSync(req.body.password, user.password)) {
+                    //     res.send(results);
+                    // } else {
+                    //     res.send(error)
+                    // }
+                });
+            }
+        );
+    });
+// app.get('/api/login', (req, res) => {
+//         connection.query('SELECT * FROM users',)
+//     })
 
     // const jsonWrite = function(res, ret) {
     //     if(typeof ret === 'undefined') {
@@ -49,10 +87,14 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
     //     }
     // };
     //usersテーブルに追加---------------------------------------
-    app.post('/api/signIn', (req, res) => {
-        const params = req.body;
+app.post('/api/signIn', (req, res) => {
+        //パスワードのハッシュ化-------------
+    // const bcrypt = require('bcrypt');
+    const params = req.body;
+    let hashed_password = bcrypt.hashSync(params.password, 10);
+    console.log(hashed_password);
         const sqlInsert = `INSERT INTO users VALUES (?,?,?,?)`;
-        connection.query(sqlInsert, [params.userId, params.userName, params.mail, params.password], (err,result)=>{
+        connection.query(sqlInsert, [params.userId, params.userName, params.mail, hashed_password], (err,result)=>{
             res.send(result);
     });
     });
