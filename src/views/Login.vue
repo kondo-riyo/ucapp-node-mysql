@@ -65,6 +65,14 @@ export default {
     computed:{
         login_user() {
             return this.$store.getters.login_user
+        },
+        passMessage() {
+            return this.$store.getters.getMessagePass
+        }
+    },
+    updated() {
+        if(this.$store.getters.setLogin_user) {
+            return this.$router.push('/')
         }
     },
     methods: {
@@ -73,29 +81,46 @@ export default {
             // this.$router.push('/')
             // this.messageMail = ''
             // this.messagePass = ''
-            console.log(this.login_user)
-            this.$store.getters.login_user.forEach(user => {
-                if(
-                    this.mail === user.mail
-                ){
-                    this.messageMail =''
-                    if(this.password === user.password) {
-                        this.$store.dispatch('setLoginUser',user)
-                        this.$router.push('/')
-                    }else if(this.password ==='') {
-                        this.messagePass = 'パスワードを入力してください'
-                    }else if(this.password != user.password) {
-                        this.messagePass = 'パスワードが違います'
-                        console.log(this.messagePass)
-                    }
-                }else if(
-                    this.mail === ''
-                ){
-                    this.messageMail = 'メールアドレスの入力が必要です'
-                }else{
-                    console.log('アカウントがありません(usersテーブルに一致するものがないです)')
+            //メールとパスワードがからじゃない時のみstoreにdispatchする---------
+            if(this.mail != '' ) {
+                if(this.password != '') {
+                    let loginUser = {mail: this.mail, password: this.password}
+                    this.$store.dispatch('setLoginUser', loginUser)
+                }else {
+                    this.messagePass = 'パスワードを入力してください'
                 }
-            });
+            }else {
+                this.messageMail = 'メールアドレスの入力が必要です'
+            }
+
+            if(this.passMessage !='' ) {
+                this.messagePass = this.passMessage
+                console.log(this.passMessage)
+            }
+            // console.log(this.login_user)
+            //storeに移行-------------------
+            // this.$store.getters.login_user.forEach(user => {
+            //     if(
+            //         this.mail === user.mail
+            //     ){
+            //         this.messageMail =''
+            //         if(this.password === user.password) {
+            //             this.$store.dispatch('setLoginUser',user)
+            //             this.$router.push('/')
+            //         }else if(this.password ==='') {
+            //             this.messagePass = 'パスワードを入力してください'
+            //         }else if(this.password != user.password) {
+            //             this.messagePass = 'パスワードが違います'
+            //             console.log(this.messagePass)
+            //         }
+            //     }else if(
+            //         this.mail === ''
+            //     ){
+            //         this.messageMail = 'メールアドレスの入力が必要です'
+            //     }else{
+            //         console.log('アカウントがありません(usersテーブルに一致するものがないです)')
+            //     }
+            // });
         },
         sendNewMember() {
             this.$router.push('/newmember')
