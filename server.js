@@ -46,32 +46,24 @@ app.post('/api/login', (req, res) => {
     // const params = req.body
         connection.query(sqlGet,[req.body.mail],
             async (error, results) => {
-                console.log(results);
-                // results.forEach(user => {
-                const user = results;
-                // const hash_result = bcrypt.compareSync(req.body.password, user.password)
-                const hash_result = await bcrypt.compare(req.body.password, user.password)
-                console.log('hash_result=> '+ hash_result)
-                // if (!hash_result ) {
-                //     res.send({
-                //         msg: 'パスワードが違います!!!!',
-                //         user: null
-                //     })
-                // } else {
+                console.log(results[0].password);
+                const hash_result = await bcrypt.compare(req.body.password, results[0].password)
+                console.log(hash_result)
+                if (!hash_result ) {
+                    res.send({
+                        msg: 'パスワードが違います!!!!',
+                        user: null
+                    })
+                } else {
                     res.send({
                         msg: '',
                         user: results
-                //     });
-                // }
-                    // if (bcrypt.compareSync(req.body.password, user.password)) {
-                    //     res.send(results);
-                    // } else {
-                    //     res.send(error)
-                    // }
+                    });
+                }
                 });
             }
         );
-    });
+    // });
 // app.get('/api/login', (req, res) => {
 //         connection.query('SELECT * FROM users',)
 //     })

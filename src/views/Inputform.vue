@@ -11,7 +11,7 @@
       </div>
       <div v-show="validate_year">2000年からのデータを入力できます</div>
       <div class="cp_iptxt">
-        <input v-model="costs.month" @change="monthMessage" class="ef " type="text" placeholder="">
+        <input v-model="costs.month" class="ef " type="text" placeholder="">
         <label>Month</label>
         <span class="focus_line"></span>
       </div>
@@ -37,13 +37,16 @@
       </div>
       <div v-show="validate_eleCost">10桁以下の数字を入力してください</div>
       <div class="center">
-        <button @click="submit" class="button button__red">
+        <button @click="submit()" class="button button__red">
           登録
         </button>
         <push-modal
+          :orderInfo="pushModalInfo"
           v-show="showContent"
           @close="closeModal"
         ></push-modal>
+      </div>
+      <div>
       </div>
     </div>
   </div>
@@ -55,6 +58,7 @@ import PushModal from '../components/pushModal.vue'
     data (){
         return{
           showContent: false,
+          pushModalInfo: '',
           costs: {
               costId: '',
               year: '',
@@ -79,7 +83,7 @@ import PushModal from '../components/pushModal.vue'
     },
     computed: {
       costsFromStore() {
-        return this.$store.getters.getCosts
+        return this.$store.getters['costs/getCosts']
       }
     },
     methods:{
@@ -95,7 +99,6 @@ import PushModal from '../components/pushModal.vue'
           let yearPull = this.costsFromStore.filter(cost => cost.year === this.costs.year)
           //yearとmonthが不一致か調べる-------
           let monthMatch = yearPull.map(cost => cost.month != this.costs.month)
-          // let month_check = this.costs.month.match(/^[1-9]{1}[012]{0,1}/g)
           let water_check = this.costs.waterCost.match(/^[1-9]{1}[0-9]{1,9}/g)
           let gas_check = this.costs.gasCost.match(/^[1-9]{1}[0-9]{1,9}/g)
           let ele_check = this.costs.eleCost.match(/^[1-9]{1}[0-9]{1,9}/g)
@@ -104,7 +107,6 @@ import PushModal from '../components/pushModal.vue'
               if( !monthMatch.includes(false) ) {
                 if(water_check && gas_check && ele_check) {
                   //modalをオープンする-------------------------
-                  this.showContent = true
                   this.colorPush()
                   //totalCost--------------------------------
                   this.costs.totalCost = Number(this.costs.waterCost) + Number(this.costs.gasCost) + Number(this.costs.eleCost)
@@ -115,8 +117,11 @@ import PushModal from '../components/pushModal.vue'
                   this.costs.addDate = new Date()
                   console.log(this.costs)
                   //storeのactionのaddCostsに送る------------------------------
-                  this.$store.dispatch('addCosts',this.costs)
+                  this.$store.dispatch('costs/addCosts',this.costs)
                   console.log('送信成功')
+                  //modalをオープン-----------------------------
+                  this.showContent = true
+                  this.pushModalInfo = this.costs
                 }else if(!water_check){
                   this.validate_waterCost = true
                 }else if(!gas_check) {
@@ -134,6 +139,10 @@ import PushModal from '../components/pushModal.vue'
             this.validate_year = true
             console.log(year_check)
           }
+        },
+        openModal() {
+          this.showContent = true
+          console.log('this.showContent=> '+this.showContent)
         },
         closeModal() {
           this.showContent = false;

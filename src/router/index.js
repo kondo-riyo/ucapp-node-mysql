@@ -8,6 +8,8 @@ import NewMember from '../views/NewMember.vue'
 import Waterchart from '../components/Waterchart.vue'
 import Gaschart from '../components/Gaschart.vue'
 import Elementchart from '../components/Elementchart.vue'
+import accountModal from '../components/accountModal.vue'
+import pushModal from '../components/pushModal.vue'
 
 
 Vue.use(VueRouter)
@@ -31,11 +33,11 @@ const routes = [
     name: 'Adddata',
     component: Adddata
   },
-  {
-    path: '/inputform/:month_id?/edit',
-    name: 'month_edit',
-    component: Inputform
-    },
+  // {
+  //   path: '/inputform/:month_id?/edit',
+  //   name: 'month_edit',
+  //   component: Inputform
+  //   },
   
   {
   path: '/inputform',
@@ -66,6 +68,16 @@ const routes = [
     path:'/newmember',
     name:'NewMember',
     component: NewMember
+  },
+  {
+    path: '/accountModal',
+    name: 'accountModal',
+    component: accountModal
+  },
+  {
+    path: '/pushModal',
+    name: 'pushModal',
+    component: pushModal
   }
 
 

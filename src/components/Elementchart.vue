@@ -65,7 +65,7 @@ export default {
     // this.borderColorPush()
   },
   computed:{
-    ...mapState(["costs"]),
+    ...mapState(["costs/costs"]),
   },
   methods:{
     newCost(){

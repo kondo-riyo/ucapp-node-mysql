@@ -2,27 +2,22 @@
     <div>
         <div id="overlay" @click.self="$emit('close')">
             <div id="content">
-                <div>{{newPushCost.year}}年{{newPushCost.month}}月分の光熱費を登録しました</div>
-                <div>水道代 {{newPushCost.waterCost}}円</div>
-                <div>電気代 {{newPushCost.eleCost}}円</div>
-                <div>ガス代 {{newPushCost.gasCost}}円</div>
-                <div>合計 {{newPushCost.totalCost}}円</div>
+                <div>{{orderInfo.year}}年{{orderInfo.month}}月分の光熱費を登録しました</div>
+                <div>水道代 {{orderInfo.waterCost}}円</div>
+                <div>電気代 {{orderInfo.eleCost}}円</div>
+                <div>ガス代 {{orderInfo.gasCost}}円</div>
+                <div>合計 {{orderInfo.totalCost}}円</div>
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
-    // props: [ 'orderInfo' ],
+    props: [ 'orderInfo' ],
     // data() {
     //     return {
     //     };
     // },
-    computed: {
-        newPushCost() {
-            return this.$store.getters.newPushCost
-        }
-    },
     // methods: {
 
     // },
