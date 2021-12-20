@@ -1,11 +1,9 @@
 <template>
     <div class="header">
-        <div>
-          <p> 
-            <router-link to="/" class='link'>
+        <div class="link" @click="sendHome">
+            <!-- <router-link to="/" class='link'> -->
              <img src="../assets/brown.png" class="mainicon">
-            </router-link>
-          </p>
+            <!-- </router-link> -->
         </div>
         <div>
             <div v-if="!loginUserFromStore">
@@ -32,38 +30,11 @@
                 </div>
             </div>
         </div>
-        <!-- <tr>
-            <td rowspan="2">
-                <p> <router-link to="/" class='link'><img src="../assets/brown.png" class="mainicon"></router-link></p>
-            </td>
-            <td> </td>
-            <td class="left">
-                <div>
-                <p title="ログイン" v-show="!$store.state.login_user" @click="login"><a href="" class="btn-border btn--radius">LOGIN</a></p>
-                <p title="ログアウト" v-show="$store.state.login_user" @click="logout"><a href="" class="btn-border btn--radius">LOGOUT</a></p>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="flex_wge">
-                    <p title="水道料金の表示"><router-link to="/waterchart" class="link"><img src="../assets/watericon.png" class="iconsize"></router-link></p>
-                    <p title="ガス料金の表示"><router-link to="/gaschart" class="link"><img src="../assets/fireicon.png" class="iconsize"></router-link></p>
-                    <p title="電気料金の表示"><router-link to="/elementchart" class="link"><img src="../assets/eleicon.png" class="iconsize"></router-link></p>
-                </div>
-            </td>
-            <td>
-                <div class="flex_add">
-                <p title="登録"><router-link to="/inputform" class='link'><img src="../assets/inputicon.png" class="iconsize"></router-link></p>
-                <p title="一覧"><router-link to="/adddata" class='link'><img src="../assets/addicon.png" class="iconsize"></router-link></p>
-                </div>
-            </td>
-        </tr> -->
     </div>
 </template>
 <script>
 import accountModal from '../components/accountModal.vue';
-import {mapActions} from "vuex";
+// import {mapActions} from "vuex";
 // import Logo from '../parts/Logo.vue';
 // import LoginButton from '../parts/LoginButton.vue'
 // import CostButton from '../parts/CostButton.vue'
@@ -87,23 +58,28 @@ export default {
   },
   computed:{
     loginUserFromStore() {
-        return this.$store.getters.setLogin_user
+        return this.$store.getters['users/setLogin_user']
     }
   },
   methods:{
     logout() {
-        this.$store.dispatch('logout')
+        this.$store.dispatch('users/logout')
     },
     modalOpen(loginUser) {
         this.showContent = true
         this.mordalOrderInfo = loginUser
+        console.log('this.modalOrderInfo=> '+JSON.stringify(this.mordalOrderInfo))
     },
     closeModal() {
       this.showContent = false;
     },
-
-    // ...mapActions(["login","setLoginUser","logout","deleteLoginUser","fetchMonths"])
-    ...mapActions(["requestUsers","requestCosts"])
+    sendHome() {
+        // this.$store.dispatch('costs/requrequestCosts')
+        if(this.$route.name != '/'){
+            this.$router.push('/').catch(err => {console.log('error =>'+ err)})
+        }
+    },
+    // ...mapActions(["users/requestUsers","costs/requestCosts"])
   },
 };
 

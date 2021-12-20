@@ -1,6 +1,5 @@
 <template>
 <div>
-  <!-- <Chart class="chart"/> -->
   <div v-show="!setlogin_userFromStore">
     <Login/>
   </div>
@@ -100,11 +99,12 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('requestCosts')
+  // beforeMount() {
+    this.$store.dispatch('costs/requestCosts')
   },
-  // created(){
   beforeMount() {
-  //   //labels[]取得
+    // mounted() {
+    // this.$store.dispatch('costs/requestCosts')
     // this.selectYear()
     this.newCost()
     this.labelsPush()
@@ -116,15 +116,20 @@ export default {
   },
   computed:{
     setlogin_userFromStore() {
-      return this.$store.getters.setLogin_user
-    }
-
+      return this.$store.getters['users/setLogin_user']
+    },
   },
+  // watch:{
+  //   //初期の読み込み
+  //   startCost() {
+  //     this.newcosts = this.$store.getters['costs/getCosts']
+  //   }
+  // },
   methods:{
     //yearを監視--------------------------------------------------------
     selectYear() {
       let selectYear = []
-      this.$store.getters.getCosts.forEach(cost => {
+      this.$store.getters['costs/getCosts'].forEach(cost => {
         if(selectYear.length===0) {
             selectYear.push(cost.year)
         }else {
@@ -145,11 +150,13 @@ export default {
     newCost(){
       console.log('newCost')
       console.log('this.choiceYear=> '+this.choiceYear)
+      console.log('getters/getCosts=> '+JSON.stringify(this.$store.state.costs))
+      // let getCostsFromStore = this.$store.getters['costs/getCosts']
       let allCosts = []
-      allCosts.push([...this.$store.getters.getCosts].sort((a, b) => a.month - b.month));
+      allCosts.push([...this.$store.state.costs.sort((a, b) => a.month - b.month)]);
       allCosts.forEach(costs => {
         costs.forEach( cost => {
-        if(this.choiceYear == cost.year) {
+        if(this.choiceYear === cost.year) {
           this.newcosts.push(cost)
         }
         })
@@ -162,7 +169,7 @@ export default {
       // this.colorPush()
 
       // console.log('chart=> '+JSON.stringify(this.chartdata))
-      // console.log('/home/newCost()=> '+this.newcosts)
+      console.log('/home/newCost()=> '+this.newcosts)
       return this.newcosts
     },
     //横軸のラベルをlabelsにpush-------------------------------------------

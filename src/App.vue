@@ -19,6 +19,10 @@ export default {
    Header,
    Main
   },
+  // created() {
+  //   this.$store.dispatch('costs/requestCosts')
+  // },
+
   // data() {
   //   return {
   //     usersData:''

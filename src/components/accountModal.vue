@@ -17,9 +17,10 @@
                     <div class="text__a">PassWord</div>
                 </div>
                 <div v-show="!userStatus">
-                    <div class="text__b">{{orderInfo.userName}}</div>
-                    <div class="text__b">{{orderInfo.mail}}</div>
-                    <div class="text__b">{{orderInfo.password}}</div>
+                    <div class="text__b">{{orderInfo[0].userName}}</div>
+                    <div class="text__b">{{orderInfo[0].mail}}</div>
+                    <!-- <div class="text__b">{{orderInfo[0].password}}</div> -->
+                    <div class="text__b">表示できません</div>
                 </div>
                 <div v-show="userStatus">
                     <input class="text__b" v-model="userInfo.userName"/>
@@ -75,17 +76,18 @@ export default {
     methods: {
         deleteUser() {
             //ログインしているユーザーをデータベースから削除----------------------
-            this.$store.dispatch('deleteUser')
+            this.$store.dispatch('users/deleteUser')
         },
         logout() {
-            this.$store.dispatch('logout')
+            console.log('ログアウト')
+            this.$store.dispatch('users/logout')
             this.showContent = false
         },
         openInput(orderInfo) {
-            this.userInfo.userId = orderInfo.userId
-            this.userInfo.userName = orderInfo.userName
-            this.userInfo.mail = orderInfo.mail
-            this.userInfo.password = orderInfo.password
+            this.userInfo.userId = orderInfo[0].userId
+            this.userInfo.userName = orderInfo[0].userName
+            this.userInfo.mail = orderInfo[0].mail
+            this.userInfo.password = '変更できません'
             this.userStatus = true
             console.log('click!')
         },
@@ -95,7 +97,7 @@ export default {
             //     userName: this.userName
             // }
             console.log('sendUser=> '+ this.userInfo)
-            this.$store.dispatch('updateUserName', this.userInfo)
+            this.$store.dispatch('users/updateUserName', this.userInfo)
         },
         updateCancel() {
             this.userStatus = false

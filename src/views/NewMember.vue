@@ -77,7 +77,7 @@ export default {
                             password: this.password
                         }
                         // console.log(userInfo)
-                        this.$store.dispatch('sendNewMember', userInfo)
+                        this.$store.dispatch('users/sendNewMember', userInfo)
                     }else {
                         this.validate_pass = true
                     }
@@ -92,21 +92,7 @@ export default {
         sendLogin() {
             this.$router.push('/login')
         },
-        // validate(user) {
-        //     console.log(user)
-        //     return user.match(/[0-9]{3,10}/g)
-        // }
-        // validate_name() {
-        //     if(this.user_name.math(/[0-9]{3,10}/g)) {
-        //         ret
-        //     }
-            
-        // }
-        // deleteUser() {
-        //     //引数にuserIdべたがきで消せるよ----------------------
-        //     this.$store.dispatch('deleteUser')
-        // }
-    },
+    }
 }
 </script>
 <style lang="scss">

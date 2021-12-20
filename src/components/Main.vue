@@ -1,8 +1,17 @@
 <template>
     <div class="base">
-        <router-view/>
+        <div>
+            <router-view/>
+        </div>
     </div>
 </template>
+<script>
+export default {
+    created() {
+        this.$store.dispatch('costs/requestCosts')
+    }
+}
+</script>
 <style lang="scss">
 .base{
     max-width: 700px;
