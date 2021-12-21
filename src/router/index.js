@@ -10,6 +10,8 @@ import Gaschart from '../components/Gaschart.vue'
 import Elementchart from '../components/Elementchart.vue'
 import accountModal from '../components/accountModal.vue'
 import pushModal from '../components/pushModal.vue'
+import allList_year from '../views/allList/_year.vue'
+import allList_id from '../views/allList/_id.vue'
 
 
 Vue.use(VueRouter)
@@ -78,6 +80,16 @@ const routes = [
     path: '/pushModal',
     name: 'pushModal',
     component: pushModal
+  },
+  {
+    path: '/allList/:year',
+    name: 'allList_year',
+    component: allList_year
+  },
+  {
+    path: '/allList/:id',
+    name: 'allList_id',
+    component: allList_id
   }
 
 

@@ -6,7 +6,13 @@ Vue.use(VueAxios, axios)
 let usersDefaultState = () => {
     return {
         login_user: [],
-        setLogin_user: null,
+        // setLogin_user: null,
+        setLogin_user: {
+            userId: '123456789000',
+            userName: 'ベタaaaaaaaaaaaaaaaaa',
+            mail: 'beta@gmail.com',
+            password: 'betabeta'
+        },
         messagePass: ''
     }
 }
@@ -144,17 +150,17 @@ export default {
         //     password: 'beta2beta2'
         //   }]
         // },
-        setLogin_user(state) {
-        return state.setLogin_user
-        },
-        // setLogin_user() {
-        //     return{
-        //     userId: '123456789000',
-        //     userName: 'ベタaaaaaaaaaaaaaaaaa',
-        //     mail: 'beta@gmail.com',
-        //     password: 'betabeta'
-        //   }
+        // setLogin_user(state) {
+        // return state.setLogin_user
         // },
+        setLogin_user() {
+            return{
+            userId: '123456789000',
+            userName: 'ベタaaaaaaaaaaaaaaaaa',
+            mail: 'beta@gmail.com',
+            password: 'betabeta'
+          }
+        },
         getMessagePass( state ) {
         return state.messagePass;
         }
