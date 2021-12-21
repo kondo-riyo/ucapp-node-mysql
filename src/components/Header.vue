@@ -17,7 +17,16 @@
                         <img src="../assets/inputicon2.png" class="iconsize">
                     </router-link>
                 </div>
-                <!-- <div class="header__text">{{loginUserFromStore.userName}}</div> -->
+                <div @click="calendarOpen(costsFromStore)">
+                    <img src="../assets/calendar.png" class="iconsize">
+                </div>
+                <div>
+                    <year-select
+                        :orderInfo="calendarInfo"
+                        v-show="showCalendar"
+                        @close="closeModal"
+                    ></year-select>
+                </div>
                 <div @click="modalOpen(loginUserFromStore)">
                     <img src="../assets/account.png" class="iconsize">
                 </div>
@@ -34,6 +43,7 @@
 </template>
 <script>
 import accountModal from '../components/accountModal.vue';
+import yearSelect from '../components/yearSelect.vue';
 // import {mapActions} from "vuex";
 // import Logo from '../parts/Logo.vue';
 // import LoginButton from '../parts/LoginButton.vue'
@@ -46,19 +56,25 @@ export default {
 //     CostButton
 //   },
   components:{
-      accountModal
+      accountModal,
+      yearSelect
   },
   data(){
       return{
         //   badgemsg:13,
           showContent: false,
           mordalOrderInfo: '',
+          showCalendar: false,
+          calendarInfo: ''
         //   mordalStatus: 1,
       }
   },
   computed:{
     loginUserFromStore() {
         return this.$store.getters['users/setLogin_user']
+    },
+    costsFromStore() {
+        return this.$store.getters['costs/getCosts']
     }
   },
   methods:{
@@ -72,6 +88,7 @@ export default {
     },
     closeModal() {
       this.showContent = false;
+      this.showCalendar = false;
     },
     sendHome() {
         // this.$store.dispatch('costs/requrequestCosts')
@@ -79,6 +96,24 @@ export default {
             this.$router.push('/').catch(err => {console.log('error =>'+ err)})
         }
     },
+    calendarOpen(costsFromStore) {
+        this.showCalendar = true
+        //重複しない年をthis.calendarInfoに追加
+        let years = []
+        costsFromStore.forEach(cost => {
+                if(years.length === 0) {
+                    years.push(cost.year)
+                }else if(years.length != 0) {
+                    if( !years.includes(cost.year)) {
+                        years.push(cost.year)
+                    }else {
+                        console.log(cost.year+'は弾かれました')
+                    }
+                }
+        });
+        this.calendarInfo=[...years].sort((a, b) => b - a);
+        console.log('this.calendarInfo=> '+this.calendarInfo)
+    }
     // ...mapActions(["users/requestUsers","costs/requestCosts"])
   },
 };
