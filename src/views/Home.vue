@@ -1,8 +1,8 @@
 <template>
-<div>
-  <div v-show="!setlogin_userFromStore">
-    <Login/>
-  </div>
+<div class="h__100">
+  <!-- <div v-show="!setlogin_userFromStore"> -->
+    <Login v-show="!setlogin_userFromStore"/>
+  <!-- </div> -->
   <!-- <div>
     <select v-model="choiceYear" @change="newCost">
       <option v-for="(year, index) in selectYears" :value="year" :key="index">
@@ -226,7 +226,11 @@ export default {
 </script>
 <style scoped>
 @import '../scss/animation.scss';
-
+@import '../scss/space.scss';
+.h__100 {
+  height: 100%;
+  /* background-color: blanchedalmond; */
+}
 .chart{
   max-width: 700px;
 }

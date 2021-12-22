@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="">
         <div class="card__login fadeIn__base">
             <div class="flex">
                 <div class="input__group">
