@@ -1,7 +1,7 @@
 <template>
 <div>
   <div>
-    <div class="card__login fadeIn__base">
+    <div class="card__login fadeIn__base space__top__50">
       <div class="center title__base">Utility Costs 光熱費登録</div>
       <div>
       <div class="cp_iptxt">
@@ -171,11 +171,11 @@ import PushModal from '../components/pushModal.vue'
 .center {
   text-align: center;
 }
-.title__base {
-  font-size: 18px;
-  color: #673a15;
-  font-weight: bold;
-}
+// .title__base {
+//   font-size: 18px;
+//   color: #673a15;
+//   font-weight: bold;
+// }
 .input__icon__size {
   width: 20px;
 }

@@ -1,6 +1,6 @@
 <template>
-    <div class="base">
-        <div>
+    <div>
+        <div class="base">
             <router-view/>
         </div>
     </div>
@@ -14,7 +14,9 @@ export default {
 </script>
 <style lang="scss">
 .base{
-    max-width: 700px;
+    // background-color: aqua;
+    // max-width: 100%;
+    height: 700px;
     display: block;
     margin-left: auto;
     margin-right: auto;

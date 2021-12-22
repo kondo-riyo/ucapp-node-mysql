@@ -6,13 +6,13 @@ Vue.use(VueAxios, axios)
 let usersDefaultState = () => {
     return {
         login_user: [],
-        // setLogin_user: null,
-        setLogin_user: {
-            userId: '123456789000',
-            userName: 'ベタaaaaaaaaaaaaaaaaa',
-            mail: 'beta@gmail.com',
-            password: 'betabeta'
-        },
+        setLogin_user: null,
+        // setLogin_user: {
+        //     userId: '123456789000',
+        //     userName: 'ベタaaaaaaaaaaaaaaaaa',
+        //     mail: 'beta@gmail.com',
+        //     password: 'betabeta'
+        // },
         messagePass: ''
     }
 }

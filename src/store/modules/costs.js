@@ -97,7 +97,7 @@ export default {
                 addDate: '2021/11/11',
           },
           {
-                costId: '123456789100',
+                costId: '123456789200',
                 year: '2019',
                 month: '8',
                 color: '185,0,0',
@@ -108,7 +108,7 @@ export default {
                 addDate: '2021/11/11',
           },
           {
-                costId: '123456789100',
+                costId: '123456789300',
                 year: '2020',
                 month: '9',
                 color: '185,0,0',

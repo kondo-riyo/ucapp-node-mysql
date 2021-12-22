@@ -1,22 +1,12 @@
 <template>
-    <div class="">
+    <div class="bg__img flex">
         <div class="card__login fadeIn__base">
-            <!-- <ValidationObserver v-slot="{ invalid }"> -->
                 <div class="flex">
                     <div class="input__group">
                         <div class="cp_iptxt">
-                            <!-- <ValidationProvider
-                            v-slot="{ errors }"
-                            name="メールアドレス"
-                            rules="required|email"
-                            > -->
                                 <input v-model="mail" class="ef" type="text" placeholder="">
                                 <label>MailAddress</label>
                                 <span class="focus_line"></span>
-                                <!-- <span>
-                                    {{ errors[0] }}
-                                </span> -->
-                            <!-- </ValidationProvider> -->
                         </div>
                         <div class="err__text">{{messageMail}}</div>
                         <div class="cp_iptxt">
@@ -35,7 +25,6 @@
                         </button>
                     </div>
                 </div>
-            <!-- </ValidationObserver> -->
             <div @click="sendNewMember" class="link__login">
                 <button>
                     新規会員登録はこちら
@@ -46,7 +35,6 @@
     </div>    
 </template>
 <script>
-// import { ValidationProvider, ValidationObserver } from 'vee-validate';
 
 export default {
     name: 'Login',
@@ -103,29 +91,18 @@ export default {
 @import '../scss/input.scss';
 @import '../scss/button.scss';
 @import '../scss/animation.scss';
-@import '../scss/animation.scss';
 
-// .bg__flower {
-//     background-image: url(../assets/bg_orange.webp);
-//     width: 100%;
-//     height: auto;
-// }
-// .card__login {
-//     width: 50%;
-//     min-width: 500px;
-//     height: auto;
-//     background-color: #c2baaf4a;
-//     padding: 20px;
-//     // margin: 30px 10px;
-//     margin:0 auto;
-//     //border---------------------------
-//     border: 3px solid #c2baaf;
-//     border-radius: 10px;
-// }
-
+.bg__img {
+    background-image: url(../assets/bg_orange.webp);
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    // margin-top: -30px;
+}
 .flex {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .link__login {
     text-align: center;
