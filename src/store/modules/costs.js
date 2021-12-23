@@ -34,6 +34,7 @@ export default {
         state.allCosts = costs
         },
         addCostsMut(state, costs) {
+            console.log(state.costs)
         state.costs.push(costs)
         state.newPushCost = costs
         },
@@ -76,7 +77,7 @@ export default {
         }).then((res) => {
             console.log(res)
             commit('addCostsMut', costs)
-            this.dispatch('requestCosts')
+            // this.dispatch('requestCosts')
         })
         },
         updateCost({ commit }, params) {

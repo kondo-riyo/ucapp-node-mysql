@@ -38,7 +38,7 @@ export default {
     //   console.log(this.newcosts)
     return {
       selectYears: [],
-      choiceYear: '2019',
+      choiceYear: '2021',
       newcosts:[],
       chartdata: {
         // labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -102,8 +102,8 @@ export default {
   // // beforeMount() {
   //   this.$store.dispatch('costs/requestCosts')
   // },
-  // beforeMount() {
-    updated() {
+  beforeMount() {
+    // updated() {
     // mounted() {
     // this.$store.dispatch('costs/requestCosts')
     // this.selectYear()
