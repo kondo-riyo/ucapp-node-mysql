@@ -38,6 +38,7 @@
                     ></account-modal>
                 </div>
             </div>
+            {{loginUserFromStore}}
         </div>
     </div>
 </template>

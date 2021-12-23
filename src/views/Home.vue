@@ -38,7 +38,7 @@ export default {
     //   console.log(this.newcosts)
     return {
       selectYears: [],
-      choiceYear: '2021',
+      choiceYear: '2019',
       newcosts:[],
       chartdata: {
         // labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -98,11 +98,12 @@ export default {
       },
     }
   },
-  created() {
+  // created() {
+  // // beforeMount() {
+  //   this.$store.dispatch('costs/requestCosts')
+  // },
   // beforeMount() {
-    this.$store.dispatch('costs/requestCosts')
-  },
-  beforeMount() {
+    updated() {
     // mounted() {
     // this.$store.dispatch('costs/requestCosts')
     // this.selectYear()
@@ -118,6 +119,7 @@ export default {
     setlogin_userFromStore() {
       return this.$store.getters['users/setLogin_user']
     },
+
   },
   // watch:{
   //   //初期の読み込み
@@ -150,10 +152,12 @@ export default {
     newCost(){
       console.log('newCost')
       console.log('this.choiceYear=> '+this.choiceYear)
-      console.log('getters/getCosts=> '+JSON.stringify(this.$store.state.costs))
+      // console.log('getters/getCosts=> '+JSON.stringify(this.$store.state.costs))
       // let getCostsFromStore = this.$store.getters['costs/getCosts']
       let allCosts = []
-      allCosts.push([...this.$store.state.costs.sort((a, b) => a.month - b.month)]);
+      let sortCost = this.$store.state.costs.costs
+      console.log('sort=> '+JSON.stringify(sortCost))
+      allCosts.push([...sortCost.sort((a, b) => a.month - b.month)]);
       allCosts.forEach(costs => {
         costs.forEach( cost => {
         if(this.choiceYear === cost.year) {

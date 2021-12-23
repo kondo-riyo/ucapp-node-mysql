@@ -81,6 +81,7 @@ export default {
         logout() {
             console.log('ログアウト')
             this.$store.dispatch('users/logout')
+            this.$store.dispatch('costs/logout')
             this.showContent = false
         },
         openInput(orderInfo) {
@@ -92,10 +93,6 @@ export default {
             console.log('click!')
         },
         updateUserName(){
-            // const sendUser = {
-            //     userId: this.userId,
-            //     userName: this.userName
-            // }
             console.log('sendUser=> '+ this.userInfo)
             this.$store.dispatch('users/updateUserName', this.userInfo)
         },
