@@ -33,7 +33,6 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
     app.get('/api/users', (req, res) => {
         connection.query('SELECT * FROM users',
             (error, results) => {
-                console.log(results);
                 res.send(results);
             }
         );
@@ -41,14 +40,11 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
 
     //ログイン(vue側とdb側のパスワードが一致しているアカウントをdbから取得)--------------------
 app.post('/api/login', (req, res) => {
-        console.log(req.body.password)
         const sqlGet = `select * from users where mail=?`;
     // const params = req.body
         connection.query(sqlGet,[req.body.mail],
             async (error, results) => {
-                console.log(results[0].password);
                 const hash_result = await bcrypt.compare(req.body.password, results[0].password)
-                console.log(hash_result)
                 if (!hash_result ) {
                     res.send({
                         msg: 'パスワードが違います!!!!',
@@ -64,20 +60,6 @@ app.post('/api/login', (req, res) => {
             }
         );
     // });
-// app.get('/api/login', (req, res) => {
-//         connection.query('SELECT * FROM users',)
-//     })
-
-    // const jsonWrite = function(res, ret) {
-    //     if(typeof ret === 'undefined') {
-    //         res.json({
-    //             code: '1',
-    //             msg: '操作失败'
-    //         });
-    //     } else {
-    //         res.json(ret);
-    //     }
-    // };
     //usersテーブルに追加---------------------------------------
 app.post('/api/signIn', (req, res) => {
         //パスワードのハッシュ化-------------
@@ -94,10 +76,8 @@ app.post('/api/signIn', (req, res) => {
     //usersテーブルからuser削除--------------------------------------
     app.delete('/api/deleteUser', (req, res) => {
         const params = req.query;
-        // console.log(req.query)
         const sqlDelete = `DELETE FROM users WHERE userId=?`;
         connection.query(sqlDelete, params.id, (err, result) => {
-            // connection.query(sqlDelete, (err, result) => {
             res.send(result);
         });
     });
@@ -105,7 +85,6 @@ app.post('/api/signIn', (req, res) => {
     //usersテーブルの何か変更(update)-------------------------------
     app.post('/api/updateUser', (req, res) => {
         const params = req.body;
-        // console.log(params);
         const sqlUpdate = `UPDATE users SET userName=? WHERE userId=?`;
         connection.query(sqlUpdate, [params.userName, params.userId], (err, result) => {
             res.send(result);
@@ -115,7 +94,6 @@ app.post('/api/signIn', (req, res) => {
     app.get('/api/costs', (req, res) => {
         connection.query('SELECT * FROM costs',
             (error, results) => {
-                console.log(results);
                 res.send(results);
             }
         );
@@ -123,8 +101,7 @@ app.post('/api/signIn', (req, res) => {
     //costsテーブルに追加----------------------------------------------
     app.post('/api/addCosts', (req, res) => {
         const params = req.body;
-        console.log('req.body=> '+req.body)
-        const sqlInsert = `INSERT INTO costs VALUES (?,?,?,?,?,?,?,?,?)`;
+        const sqlInsert = `INSERT INTO costs VALUES (?,?,?,?,?,?,?,?,?,?)`;
         connection.query(sqlInsert, [
             params.costId,
             params.year,
@@ -134,11 +111,19 @@ app.post('/api/signIn', (req, res) => {
             params.eleCost,
             params.gasCost,
             params.totalCost,
-            params.addDate
+            params.addDate,
+            params.userId
         ], (err, result) => {
             res.send(result);
-            console.log(result)
+        });
     });
+    //costsテーブルの何かを変更(update)-----------------------------------
+    app.post('/api/updateCost', (req, res) => {
+        const params = req.body;
+        const sqlUpdate = `UPDATE costs SET waterCost=?, gasCost=?, eleCost=?, totalCost=?, addDate=? WHERE costId=?`;
+        connection.query(sqlUpdate, [params.waterCost, params.gasCost, params.eleCost, params.totalCost, params.addDate, params.costId], (err, result) => {
+            res.send(result);
+        })
     });
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))

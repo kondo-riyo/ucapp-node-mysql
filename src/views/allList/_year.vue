@@ -37,7 +37,8 @@ export default {
             // return fetchYear
             // let costs = this.$store.getters['costs/getCosts']
             let getYear = []
-            this.$store.getters['costs/getCosts'].forEach(cost => {
+            // this.$store.getters['costs/getCosts'].forEach(cost => {
+            this.$store.state.costs.costs.forEach(cost => {
                 if( cost.year == this.$route.params.year) {
                     getYear.push(cost)
                 }

@@ -56,28 +56,24 @@ export default {
                 .catch((e) => alert(e))
         },
         //ログイン・使用するアカウントをstateに保持---------------------------------
-        setLoginUser({ state, commit }, loginUser) {
+        setLoginUser({ state, commit, dispatch}, loginUser) {
             //vueファイルから移動-------------
             state.login_user.forEach(user => {
                 if (
                     loginUser.mail === user.mail
                 ) {
-                    console.log('storeのloginUser=> ' + JSON.stringify(loginUser.mail))
                     axios.post('/api/login', {
                         mail: loginUser.mail,
                         password: loginUser.password
                     })
                         .then((res) => {
-                            console.log('ログインres=> ' + JSON.stringify(res.data))
-                            console.log(loginUser.password + ' + ' + res.data.password)
                             if (res.data.msg != '') {
                                 let messagePass = res.data.msg
                                 commit('loginPassMessage', messagePass)
-                                // commit('setLoginUserMut', res.data.user)
-                                // console.log('res.data.user=> '+ JSON.stringify(res.data.user))
                             } else if (res.data.msg === '') {
                                 commit('setLoginUserMut', res.data.user)
-                                console.log('res.data.user=> ' + JSON.stringify(res.data.user))
+                                // console.log('setlgin/userId=> '+ JSON.stringify(res.data.user[0].userId))
+                                dispatch('costs/choiceCosts', res.data.user[0].userId, { root: true })
                             } else {
                                 console.log('失敗！！！')
                             }
@@ -93,17 +89,17 @@ export default {
             // commit('logoutMut')
             commit('reset')
             dispatch('requestUsers')
+            // commit('costs/reset')
         },
         //usersテーブルにユーザー追加------------------------------------
         sendNewMember({ commit }, params) {
-            console.log('userInfo=> ' + params)
             axios.post('/api/signIn', {
                 userId: params.userId,
                 userName: params.userName,
                 mail: params.mail,
                 password: params.password
             }).then((res) => {
-                console.log('res= ' + JSON.stringify(res))
+                console.log(res)
                 commit('sendNewMemberMut')
                 this.dispatch('requestUsers')
                 // this.$router.push('/login')
@@ -111,18 +107,16 @@ export default {
         },
         //Usersテーブルから完全削除-------------------------------------
         deleteUser({ commit, state }) {
-            console.log('state.setLogin_user' + state.setLogin_user)
             const userId = state.setLogin_user.userId
             axios.delete('/api/deleteUser?id=' + userId)
                 .then((res) => {
-                    console.log('res= ' + JSON.stringify(res))
+                    console.log(res)
                     commit('deleteUsermut')
                     this.dispatch('logout')
                 })
         },
         //Usersテーブルのデータを編集・更新------------------------------
         updateUserName({ commit }, params) {
-            console.log('store/params=> ' + params)
             axios.post('/api/updateUser', {
                 userId: params.userId,
                 userName: params.userName
@@ -150,17 +144,17 @@ export default {
         //     password: 'beta2beta2'
         //   }]
         // },
-        // setLogin_user(state) {
-        // return state.setLogin_user
-        // },
-        setLogin_user() {
-            return{
-            userId: '123456789000',
-            userName: 'ベタaaaaaaaaaaaaaaaaa',
-            mail: 'beta@gmail.com',
-            password: 'betabeta'
-          }
+        setLogin_user(state) {
+        return state.setLogin_user
         },
+        // setLogin_user() {
+        //     return{
+        //     userId: '123456789000',
+        //     userName: 'ベタaaaaaaaaaaaaaaaaa',
+        //     mail: 'beta@gmail.com',
+        //     password: 'betabeta'
+        //   }
+        // },
         getMessagePass( state ) {
         return state.messagePass;
         }

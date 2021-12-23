@@ -17,6 +17,7 @@
 
 .card__white {
   @include card__base(#f6f6f6);
+  border: 7px solid #c2baaf;
 }
 
 //allList/_year.vueのcard
@@ -38,7 +39,7 @@
   //   margin: 30px auto;
   margin: 0 auto;
   //border---------------------------
-  border: 3px solid #c2baaf;
+  border: 6px solid #c2baaf;
   border-radius: 10px;
 }
 .card__rectangle:hover {

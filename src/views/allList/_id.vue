@@ -2,13 +2,13 @@
     <div class="space__top__50 fadeIn__base">
         <div class="card__white center">
             <div class="center title__base">
-                {{fetchMonth[0].year}}年 {{fetchMonth[0].month}}月 光熱費
+                {{fetchMonth.year}}年 {{fetchMonth.month}}月 光熱費
             </div>
             <div class="move_line flex__space-between center input__group__nomove">
                 <div class="input--label"><img src="../../assets/watericon.png" class="input__icon__size">Water Cost</div>
                 <div>
                     <input 
-                     v-model="waterCost" 
+                     v-model="cost.waterCost" 
                      @change="totalCost_calc()"
                      class="input__none input__text" 
                      type="text" 
@@ -20,7 +20,7 @@
                 <div class="input--label"><img src="../../assets/fireicon.png" class="input__icon__size">Gas Cost</div>
                 <div>
                     <input 
-                     v-model="gasCost" 
+                     v-model="cost.gasCost" 
                      @change="totalCost_calc()"
                      class="input__none input__text" 
                      type="text" 
@@ -32,7 +32,7 @@
                 <div class="input--label"><img src="../../assets/eleicon.png" class="input__icon__size">Electricity Cost</div>
                 <div>
                     <input 
-                     v-model="eleCost" 
+                     v-model="cost.eleCost" 
                      @change="totalCost_calc()"
                      class="input__none input__text" 
                      type="text" 
@@ -41,8 +41,8 @@
                 </div>
             </div>
             <div class="text--bg__gray flex__space-around">
-                <div class="text__gray--bold">Total</div>
-                <div class="text__brown--bold">{{totalCost_calc}}</div>
+                <div class="text__brown--bold">Total</div>
+                <div class="text__brown--bold">{{this.cost.totalCost}}</div>
             </div>
             <div class="circle__back__update">
                 <button @click="updateCost" class="button__id__update">
@@ -56,38 +56,46 @@
 export default {
     data() {
         return {
-            waterCost: 0,
-            gasCost: 0,
-            eleCost: 0,
-            totalCost: 0
+            cost:{
+                costId: '',
+                year: '',
+                month: '',
+                color: '',
+                waterCost: 0,
+                gasCost: 0,
+                eleCost: 0,
+                totalCost: 0,
+                addDate: '',
+                userId: '',
+
+            }
         }
     },
     computed: {
         fetchMonth() {
-            let getMonth = []
+            // let getMonth = []
             this.$store.getters['costs/getCosts'].forEach(cost => {
                 if( cost.costId == this.$route.params.id) {
-                    getMonth.push(cost)
-                    this.waterCost = getMonth[0].waterCost
-                    this.gasCost = getMonth[0].gasCost
-                    this.eleCost = getMonth[0].eleCost
-                    this.totalCost = getMonth[0].totalCost
+                    this.cost = cost
                 }
             });
-            console.log(getMonth[0].waterCost)
-            return getMonth
+            console.log(this.cost)
+            return this.cost
         },
-        totalCost_calc() {
-            let total = null
-            total = Number(this.gasCost) + Number(this.waterCost) + Number(this.eleCost)
-            console.log(total)
-            return total
+        newTotalCost() {
+            return this.cost.totalCost
         }
 
     },
     methods: {
+        totalCost_calc() {
+            this.cost.totalCost = Number(this.cost.gasCost) + Number(this.cost.waterCost) + Number(this.cost.eleCost)
+            console.log(this.cost.totalCost)
+        },
         updateCost() {
-            
+            console.log(this.cost)
+            this.cost.addDate = new Date()
+            this.$store.dispatch('costs/updateCost', this.cost)
         }
     },
 }
@@ -118,6 +126,13 @@ color: #673a15;
 text-align: center;
 font-weight: bold;
 font-size: 20px;
+margin-bottom: 2px;
+}
+.input__text:hover {
+    border-radius: 10px;
+background-color: #c2baaf56;
+box-shadow: 0px 0px 8px 3px #c2baaf74;
+transition: 0.5s;
 }
 
 //totalCostの並び-------------------
@@ -125,6 +140,7 @@ font-size: 20px;
     background-color: #c2baaf59;
     padding: 15px;
     margin: 0px 40px;
+    box-shadow: 0px 0px 10px 2px #c2baaf74;
 }
 .text__brown--bold {
     color: #673a15;
@@ -139,4 +155,5 @@ font-size: 20px;
 .button__id__update {
     margin: 3px;
 }
+
 </style>

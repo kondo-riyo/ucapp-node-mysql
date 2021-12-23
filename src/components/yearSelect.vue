@@ -4,7 +4,7 @@
             <div class="title__year">YEAR</div>
             <div v-for="year in orderInfo" :key="year.index">
                 <router-link :to="{name: 'allList_year',params: {year:year}}">
-                    <div class="card__year" @click="sendYear(year)">
+                    <div class="card__year">
                         <div v-if="nowYear==year" class="text__now">NOW</div>
                         <div>
                             {{year}}

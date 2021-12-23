@@ -69,6 +69,7 @@ import PushModal from '../components/pushModal.vue'
               gasCost: null,
               totalCost: null,
               addDate: '',
+              userId: ''
             },
           validate_year: false,
           validate_month_a: false,
@@ -84,6 +85,9 @@ import PushModal from '../components/pushModal.vue'
     computed: {
       costsFromStore() {
         return this.$store.getters['costs/getCosts']
+      },
+      usersFromStore() {
+        return this.$store.state.users.setLogin_user
       }
     },
     methods:{
@@ -106,6 +110,8 @@ import PushModal from '../components/pushModal.vue'
             if( this.costs.month >= 1 && this.costs.month <=12) {
               if( !monthMatch.includes(false) ) {
                 if(water_check && gas_check && ele_check) {
+                  //userId------------------------------------
+                  this.costs.userId = this.usersFromStore[0].userId
                   //modalをオープンする-------------------------
                   this.colorPush()
                   //totalCost--------------------------------
@@ -115,10 +121,8 @@ import PushModal from '../components/pushModal.vue'
                   this.costs.costId = Math.floor(100000000000 + Math.random() * 900000000000)
                   //addDate----------------------------------
                   this.costs.addDate = new Date()
-                  console.log(this.costs)
                   //storeのactionのaddCostsに送る------------------------------
                   this.$store.dispatch('costs/addCosts',this.costs)
-                  console.log('送信成功')
                   //modalをオープン-----------------------------
                   this.showContent = true
                   this.pushModalInfo = this.costs
