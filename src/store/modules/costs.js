@@ -19,6 +19,42 @@ let costsDefaultState = () => {
         //         totalCost: 4700,
         //         addDate: '2021/11/11'
         // }
+        chartdata: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'water cost',
+                    data: [],
+                    fill: false,
+                    type: 'line',
+                    borderColor:'#7fbfff',
+                    lineTension: 0.3,
+                },
+                {
+                    label: 'gas cost',
+                    data: [],
+                    fill: false,
+                    type: 'line',
+                    borderColor:'#ff7f7f',
+                    lineTension: 0.3,
+                },
+                {
+                    label: 'element cost',
+                    data: [],
+                    fill: false,
+                    type: 'line',
+                    borderColor:'#ffde59',
+                    lineTension: 0.3,
+                },
+                {
+                    label: 'Total cost',
+                    backgroundColor:[],
+                    borderColor:[],
+                    data: [],
+                    borderWidth: 1
+                },
+            ]
+        },
     }
 }
 
@@ -43,6 +79,18 @@ export default {
         },
         choiceCostsMut(state, costs) {
             state.costs = costs
+        },
+        costGraphDataMut(state, graphpushCost) {
+            graphpushCost.forEach(cost => {
+                state.chartdata.labels.push(cost.month)
+                state.chartdata.datasets[0].data.push(cost.waterCost)
+                state.chartdata.datasets[1].data.push(cost.gasCost)
+                state.chartdata.datasets[2].data.push(cost.eleCost)
+                state.chartdata.datasets[3].data.push(cost.totalCost)
+                state.chartdata.datasets[3].backgroundColor.push('rgba('+cost.color+',0.2)')
+                state.chartdata.datasets[3].borderColor.push('rgba('+cost.color+',1)')                
+            });
+            // console.log('state.chartdata=> '+state.chartdata)
         }
     },
     actions: {
@@ -54,12 +102,15 @@ export default {
             })
             .catch((e) => alert(e))
         },
-        //Login後にuserIdが一致するcostのみ取得---------------------------
-        choiceCosts({ commit, state }, userId) {
+        //Login後にuserIdが一致するcostのみ取得 + 順番に並べ替え(年月)---------------------------
+        choiceCosts({ commit, state, dispatch }, userId) {
             let choice = state.allCosts.filter(cost => cost.userId === userId)
             console.log(state.allCosts)
-            console.log('store/choice=> ' + JSON.stringify(choice))
+            let sortCost = []
+            sortCost.push([...choice.sort((a,b)=> (a.year - b.year) || (a.month - b.month ))])
+            console.log('store/ChoiceCosts/sortCost=> ' + sortCost)
             commit('choiceCostsMut', choice)
+            dispatch('costGraphData', choice)
         },
         //Costsテーブルのデータを追加-----------------------------------
         addCosts({ commit }, costs) {
@@ -98,9 +149,32 @@ export default {
             })
 
         },
-        logout({ commit }) {
+        logout({ commit, dispatch }) {
             commit('reset')
-        }
+            dispatch('requestCosts')
+        },
+        //2021年(仮)のみをグラフに入れる
+        costGraphData({ commit }, choice) {
+            //newCost()-------------------------
+            let graphpushCost = []
+            choice.forEach(cost => {
+                console.log('costGraphData=> '+ cost)
+                if (cost.year === '2021') {
+                    graphpushCost.push(cost)
+                }
+            });
+            console.log('graphPushCost=> ' + graphpushCost)
+            commit('costGraphDataMut', graphpushCost)
+            // dispatch('labelsPush', graphpushCost)
+            // dispatch('waterPush', graphpushCost)
+            // dispatch('gasPush', graphpushCost)
+            // dispatch('elePush', graphpushCost)
+            // dispatch('totalPush', graphpushCost)
+            // dispatch('colorPush', graphpushCost)            
+        },
+        // labelsPush({ commit }, graphpushCost) {
+        //     gra
+        // }
     },
     getters: {
         getCosts(state) {

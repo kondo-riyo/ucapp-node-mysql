@@ -5,7 +5,20 @@ Vue.use(VueAxios, axios)
 
 let usersDefaultState = () => {
     return {
-        login_user: [],
+        // login_user: [],
+        login_user:
+          [{
+            userId: '123456789000',
+            userName: 'ベタ',
+            mail: 'beta@gmail.com',
+            password: 'betabeta'
+          },
+          {
+            userId: '111222333444',
+            userName: 'ベタ２',
+            mail: 'beta2@gmail.com',
+            password: 'beta2beta2'
+          }],
         setLogin_user: null,
         // setLogin_user: {
         //     userId: '123456789000',
@@ -23,13 +36,15 @@ export default {
     mutations: {
         //stateの値をリセットする
         reset(state) {
+            console.log('store/usersのreset')
         Object.assign(state, usersDefaultState())
         },
         requestUsersMut(state, user) {
         state.login_user = user
         },
         setLoginUserMut(state, user) {
-        state.setLogin_user = user
+            state.setLogin_user = user
+            console.log('setLogin_user')
         },
         loginPassMessage( state, messagePass) {
         state.messagePass = messagePass
@@ -47,47 +62,37 @@ export default {
     },
     actions: {
         //userテーブルの中身を全て取得-------------------------------
-        requestUsers({ commit }) {
+        async requestUsers({ commit }) {
             // let userData = []
-            axios.get('/api/users')
+            await axios.get('/api/users')
                 .then((res) => {
                     commit('requestUsersMut', res.data)
                 })
                 .catch((e) => alert(e))
         },
         //ログイン・使用するアカウントをstateに保持---------------------------------
-        setLoginUser({ state, commit, dispatch}, loginUser) {
-            //vueファイルから移動-------------
-            state.login_user.forEach(user => {
-                if (
-                    loginUser.mail === user.mail
-                ) {
-                    axios.post('/api/login', {
-                        mail: loginUser.mail,
-                        password: loginUser.password
-                    })
-                        .then((res) => {
-                            if (res.data.msg != '') {
-                                let messagePass = res.data.msg
-                                commit('loginPassMessage', messagePass)
-                            } else if (res.data.msg === '') {
-                                commit('setLoginUserMut', res.data.user)
-                                // console.log('setlgin/userId=> '+ JSON.stringify(res.data.user[0].userId))
-                                dispatch('costs/choiceCosts', res.data.user[0].userId, { root: true })
-                            } else {
-                                console.log('失敗！！！')
-                            }
-                        })
-                        .catch((e) => alert('storeのエラーだよ=> ' + e))
-                } else {
-                    console.log('アカウントがありません(usersテーブルに一致するものがないです)')
-                }
-            });
+        async setLoginUser({ commit, dispatch}, loginUser) {
+            await axios.post('/api/login', {
+                mail: loginUser.mail,
+                password: loginUser.password
+                })
+                .then((res) => {
+                    if (res.data.msg != '') {
+                        let messagePass = res.data.msg
+                        commit('loginPassMessage', messagePass)
+                    } else if (res.data.msg === '') {
+                        dispatch('costs/choiceCosts', res.data.user[0].userId, { root: true })
+                        commit('setLoginUserMut', res.data.user)
+                        } else {
+                        console.log('失敗！！！')
+                    }
+                })
+                // .catch((e) => alert('storeのエラーだよ=> ' + e))
         },
         //ログアウト---------------------------------------------------
-        logout({ commit, dispatch }) {
+        async logout({ commit, dispatch }) {
             // commit('logoutMut')
-            commit('reset')
+            await commit('reset')
             dispatch('requestUsers')
             // commit('costs/reset')
         },
