@@ -3,14 +3,14 @@
         <div id="content">
             <div class="title__year">YEAR</div>
             <div v-for="year in orderInfo" :key="year.index">
-                <router-link :to="{name: 'allList_year',params: {year:year}}">
-                    <div class="card__year">
+                <!-- <router-link :to="{name: 'allList_year',params: {year:year}}"> -->
+                    <div class="card__year" @click="sendYear(year)">
                         <div v-if="nowYear==year" class="text__now">NOW</div>
                         <div>
                             {{year}}
                         </div>
                     </div>
-                </router-link>
+                <!-- </router-link> -->
             </div>
         </div>
     </div>
@@ -26,9 +26,9 @@ export default {
         }
     },
     methods: {
-        // sendYear(year) {
-        //     this.$router.push({name:'allList_year', {year: ''}})
-        // }
+        sendYear(year) {
+            this.$router.push({name: 'allList_year',params: {year:year}})
+        }
     },
 }
 </script>

@@ -55,7 +55,6 @@ export default new Vuex.Store({
     //--------------------------
     // requestCostsMut(state, costs) {
     //   state.costs = costs
-    //   console.log('requestCostsMut=> '+JSON.stringify( state.costs ))
     // },
     // addCostsMut(state, costs) {
     //   state.costs.push(costs)
@@ -80,22 +79,18 @@ export default new Vuex.Store({
     //             if(
     //                 loginUser.mail === user.mail
     //             ) {
-    //               console.log('storeのloginUser=> '+JSON.stringify(loginUser.mail))
     //               axios.post('/api/login', {
     //                 mail: loginUser.mail,
     //                 password: loginUser.password
     //               })
     //                 .then((res) => {
-    //                   console.log('ログインres=> ' + JSON.stringify(res.data))
     //                   console.log(loginUser.password+' + '+res.data.password)
     //                   if (res.data.msg != '') {
     //                     let messagePass = res.data.msg
     //                     commit('loginPassMessage', messagePass)
     //                     // commit('setLoginUserMut', res.data.user)
-    //                     // console.log('res.data.user=> '+ JSON.stringify(res.data.user))
     //                   } else if(res.data.msg === '') {
     //                     commit('setLoginUserMut', res.data.user)
-    //                     console.log('res.data.user=> '+ JSON.stringify(res.data.user))
     //                   } else {
     //                     console.log('失敗！！！')
     //                   }
@@ -126,7 +121,6 @@ export default new Vuex.Store({
     //     mail: params.mail,
     //     password: params.password
     // }).then((res) => {
-    //     console.log('res= ' + JSON.stringify(res))
     //   commit('sendNewMemberMut')
     //   this.dispatch('requestUsers')
     //   this.$router.push('/login')
@@ -138,7 +132,6 @@ export default new Vuex.Store({
     //   const userId = state.setLogin_user.userId
     //   axios.delete('/api/deleteUser?id='+ userId)
     //     .then((res) => {
-    //       console.log('res= ' + JSON.stringify(res))
     //       commit('deleteUsermut')
     //       this.dispatch('logout')
     //   })
@@ -159,7 +152,6 @@ export default new Vuex.Store({
     //   axios.get('/api/costs')
     //     .then((res) => {
     //       commit('requestCostsMut', res.data)
-    //       console.log('requestCosts=> '+JSON.stringify(res.data))
     //     })
     //     .catch((e) => alert(e))
     // },
@@ -176,8 +168,6 @@ export default new Vuex.Store({
     //         totalCost: costs.totalCost,
     //         addDate: costs.addDate,
     //   }).then((res) => {
-    //     console.log('addCosts/res=> '+JSON.stringify(res))
-    //     console.log('addCosts/costs=> '+JSON.stringify(costs))
     //     commit('addCostsMut', costs)
     //     this.dispatch('requestCosts')
     //   })

@@ -84,7 +84,7 @@ export default {
     modalOpen(loginUser) {
         this.showContent = true
         this.mordalOrderInfo = loginUser
-        console.log('this.modalOrderInfo=> '+JSON.stringify(this.mordalOrderInfo))
+        console.log('this.modalOrderInfo=> '+this.mordalOrderInfo)
     },
     closeModal() {
       this.showContent = false;

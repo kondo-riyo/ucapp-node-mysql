@@ -34,6 +34,7 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
         connection.query('SELECT * FROM users',
             (error, results) => {
                 res.send(results);
+                console.log(results)
             }
         );
     });

@@ -72,8 +72,16 @@ export default {
             console.log('ログイン')
             if(this.mail != '' ) {
                 if(this.password != '') {
-                    let loginUser = {mail: this.mail, password: this.password}
-                    this.$store.dispatch('users/setLoginUser', loginUser)
+                    // if(this.login_user.mail === this.mail) {
+                        this.login_user.forEach(user => {
+                            if(user.mail === this.mail) {
+                                let loginUser = {mail: this.mail, password: this.password}
+                                this.$store.dispatch('users/setLoginUser', loginUser)
+                                // console.log(loginUser)
+                            }else {
+                                console.log('Login.vue アカウントがありません(usersテーブルに一致するものがないです)')
+                            }
+                        });
                 }else {
                     this.messagePass = 'パスワードを入力してください'
                 }
