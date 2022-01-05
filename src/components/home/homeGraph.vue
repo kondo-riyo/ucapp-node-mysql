@@ -12,7 +12,6 @@ export default {
     data() {
         return {
             selectYears: [],
-            choiceYear: '2021',
             newcosts:[],
             chartdata: {
                 // labels: [],
@@ -85,11 +84,17 @@ export default {
         return this.$store.getters['users/setLogin_user']
         },
         setChartDataFromStore() {
-            console.log('setChartDataFromStore')
             return this.$store.state.costs.chartdata
         }
         
-    }
+    },
+    methods: {
+        // async chartData() {
+        //     await Promise.all( this.$store.dispatch('costs/choiceCosts'))
+        //     console.log('setChartDataFromStore=> '+ )
+        //     return this.$store.state.costs.chartdata
+        // }
+    },
     // methods:{
         //yearを監視--------------------------------------------------------
         // selectYear() {
@@ -197,6 +202,7 @@ export default {
 <style lang="scss">
 .chart{
   max-width: 700px;
+  margin:0 auto;
 }
 
 </style>

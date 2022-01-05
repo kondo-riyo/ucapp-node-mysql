@@ -11,12 +11,8 @@
 </template>
 
 <script>
-// import { mapActions } from 'vuex'
-  // import Chart from '@/components/Chart.vue'
-// import Barchart from '../components/Barchart.js'
 import Login from '../views/Login.vue'
 import homeGraph from '../components/home/homeGraph.vue'
-// import { mapState } from 'vuex'
 import store from '../store'
 export default {
     name: 'Home',
@@ -27,100 +23,24 @@ export default {
       homeGraph
     },
     store,
-  data () {
-    // let newcosts=[...this.costs].sort((a, b) => a.month - b.month);
-    //   console.log(this.newcosts)
-    return {
-      // displaySwitch: false,
-      // selectYears: [],
-      // choiceYear: '2021',
-      // newcosts:[],
-      // chartdata: {
-      //   // labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-      //   labels: [],
-      //   datasets: [
-      //     {
-      //       // label: 'Bar Dataset',
-      //       // data: [],
-      //       label: 'water cost',
-      //       data: [],
-      //       fill: false,
-      //       type: 'line',
-      //       borderColor:'#7fbfff',
-      //       lineTension: 0.3,
-      //     },
-      //     {
-      //       label: 'gas cost',
-      //       data: [],
-      //       fill: false,
-      //       type: 'line',
-      //       borderColor:'#ff7f7f',
-      //       lineTension: 0.3,
-      //     },
-      //     {
-      //       label: 'element cost',
-      //       data: [],
-      //       fill: false,
-      //       type: 'line',
-      //       borderColor:'#ffde59',
-      //       lineTension: 0.3,
-      //     },
-      //     {
-      //       label: 'Total cost',
-      //       backgroundColor:[],
-      //       borderColor:[],
-      //       data: [],
-      //       borderWidth: 1
-      //     },
-      //   ]
-      // },
-      // options: {
-      //   scales: {
-      //     xAxes: [{
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: '月'
-      //       }
-      //     }],
-      //     yAxes: [{
-      //       ticks: {
-      //         labelString: '円',
-      //         beginAtZero: true,
-      //         stepSize: 1000,
-      //       }
-      //     }]
-      //   }
-      // },
-    }
+  // data () {
+  //   return {
+  //   }
+  // },
+  async fetch() {
+    console.log('setlogin_userFromStore=> '+this.setlogin_userFromStore)
+      if(this.setlogin_userFromStore.length != 0) {
+        await Promise.all(
+          this.$store.dispatch('costs/choiceCosts'),
+        )
+        console.log('到達してるよ')
+      }
+      
   },
-  // created() {
-  // // beforeMount() {
-  //   this.$store.dispatch('costs/requestCosts')
-  // },
-  // beforeMount() {
-  //   // updated() {
-  //   // mounted() {
-  //   // this.$store.dispatch('costs/requestCosts')
-  //   // this.selectYear()
-  //   this.newCost()
-  //   this.labelsPush()
-  //   this.waterPush()
-  //   this.gasPush()
-  //   this.elePush()
-  //   this.totalPush()
-  //   this.colorPush()
-  // },
   computed:{
     setlogin_userFromStore() {
       return this.$store.getters['users/setLogin_user']
     },
-    // async displaySwitch () {
-    //   await this.newCost()
-    //   return 
-    // }
-    // costsFromStore() {
-    //   return this.$store.state.costs.costs
-    // }
   },
   // watch:{
   //   //初期の読み込み

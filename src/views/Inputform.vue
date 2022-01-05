@@ -148,8 +148,9 @@ import PushModal from '../components/pushModal.vue'
           this.showContent = true
           console.log('this.showContent=> '+this.showContent)
         },
-        closeModal() {
+        async closeModal() {
           this.showContent = false;
+          await this.$store.dispatch('costs/choiceCosts')
           this.$router.push('/')
         },
         colorPush(){

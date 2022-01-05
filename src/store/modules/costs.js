@@ -69,9 +69,9 @@ export default {
         requestCostsMut(state, costs) {
         state.allCosts = costs
         },
-        addCostsMut(state, costs) {
-            console.log(state.costs)
-        state.costs.push(costs)
+        async addCostsMut(state, costs) {
+        await state.costs.push(costs)
+        console.log(JSON.stringify(state.costs))
         state.newPushCost = costs
         },
         updateCostMut(cost) {
@@ -103,17 +103,20 @@ export default {
             .catch((e) => alert(e))
         },
         //Login後にuserIdが一致するcostのみ取得 + 順番に並べ替え(年月)---------------------------
-        choiceCosts({ commit, state, dispatch }, userId) {
-            let choice = state.allCosts.filter(cost => cost.userId === userId)
+        async choiceCosts({ commit, state, dispatch }, userId) {
+            //requestCosts--------------------------
+            await dispatch('requestCosts')
             console.log(state.allCosts)
+            let choice = state.allCosts.filter(cost => cost.userId === userId)
             let sortCost = []
+            //データを年月順に並べ替え------------------
             sortCost.push([...choice.sort((a,b)=> (a.year - b.year) || (a.month - b.month ))])
             console.log('store/ChoiceCosts/sortCost=> ' + sortCost)
             commit('choiceCostsMut', choice)
-            dispatch('costGraphData', choice)
+            await dispatch('costGraphData', choice)
         },
         //Costsテーブルのデータを追加-----------------------------------
-        addCosts({ commit }, costs) {
+        addCosts({ commit, dispatch }, costs) {
         axios.post('/api/addCosts', {
                 costId: costs.costId,
                 year: costs.year,
@@ -128,7 +131,7 @@ export default {
         }).then((res) => {
             console.log(res)
             commit('addCostsMut', costs)
-            // this.dispatch('requestCosts')
+            dispatch('requestCosts')
         })
         },
         updateCost({ commit }, params) {
@@ -153,17 +156,17 @@ export default {
             commit('reset')
             dispatch('requestCosts')
         },
-        //2021年(仮)のみをグラフに入れる
+        //2020年(仮)のみをグラフに入れる
         costGraphData({ commit }, choice) {
             //newCost()-------------------------
             let graphpushCost = []
             choice.forEach(cost => {
                 console.log('costGraphData=> '+ cost)
-                if (cost.year === '2021') {
+                if (cost.year === '2020') {
                     graphpushCost.push(cost)
                 }
             });
-            console.log('graphPushCost=> ' + graphpushCost)
+            console.log('graphPushCost=> ' + JSON.stringify(graphpushCost))
             commit('costGraphDataMut', graphpushCost)
             // dispatch('labelsPush', graphpushCost)
             // dispatch('waterPush', graphpushCost)
