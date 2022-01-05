@@ -18,7 +18,7 @@ export default {
 <style lang="scss" scoped >
   .main {
     padding:0;
-    margin:0;
+    margin:0 auto;
     // height: 650px;
     max-height: auto;
   }

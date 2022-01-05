@@ -6,7 +6,6 @@ import createPersistedState from 'vuex-persistedstate'
 
 import users from './modules/users'
 import costs from './modules/costs'
-const { decycle, encycle } = require('json-cyclic');
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
