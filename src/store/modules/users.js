@@ -5,28 +5,16 @@ Vue.use(VueAxios, axios)
 
 let usersDefaultState = () => {
     return {
-        // login_user: [],
-        login_user:
-          [{
+        login_user: [],
+        // setLogin_user: null,
+        setLogin_user: {
             userId: '123456789000',
-            userName: 'ベタ',
+            userName: 'ベタaaaaaaaaaaaaaaaaa',
             mail: 'beta@gmail.com',
-            password: 'betabeta'
-          },
-          {
-            userId: '111222333444',
-            userName: 'ベタ２',
-            mail: 'beta2@gmail.com',
-            password: 'beta2beta2'
-          }],
-        setLogin_user: null,
-        // setLogin_user: {
-        //     userId: '123456789000',
-        //     userName: 'ベタaaaaaaaaaaaaaaaaa',
-        //     mail: 'beta@gmail.com',
-        //     password: 'betabeta'
-        // },
-        messagePass: ''
+            password: '$2b$10$.jEOqyGzNniOmJgG58M2kOQQAY9KRdvn4LbHfvonjIZ7OYU9LXS4u'
+        },
+        messagePass: '',
+        showContent: false
     }
 }
 
@@ -76,13 +64,15 @@ export default {
                 mail: loginUser.mail,
                 password: loginUser.password
                 })
-                .then((res) => {
+                .then(async (res) => {
                     if (res.data.msg != '') {
                         let messagePass = res.data.msg
                         commit('loginPassMessage', messagePass)
                     } else if (res.data.msg === '') {
-                        dispatch('costs/choiceCosts', res.data.user[0].userId, { root: true })
-                        commit('setLoginUserMut', res.data.user)
+                        // await dispatch('costs/requestCosts' )
+                        // await dispatch('costs/choiceCosts', res.data.user[0].userId, { root: true })
+                        await dispatch('costs/choiceCosts', res.data.user[0], { root: true })
+                        // commit('setLoginUserMut', res.data.user)
                         } else {
                         console.log('失敗！！！')
                     }
@@ -90,9 +80,10 @@ export default {
                 // .catch((e) => alert('storeのエラーだよ=> ' + e))
         },
         //ログアウト---------------------------------------------------
-        async logout({ commit, dispatch }) {
+        async logout({ commit, dispatch, state }) {
             // commit('logoutMut')
             await commit('reset')
+            console.log(state)
             dispatch('requestUsers')
             // commit('costs/reset')
         },

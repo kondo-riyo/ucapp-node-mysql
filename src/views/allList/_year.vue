@@ -16,6 +16,7 @@
                     <img src="../../assets/eleicon.png" class="icon__size__year">
                 </div>
                 <div>Total</div>
+                <div></div>
             </div>
         </div>
         <div v-for="cost in fetchYear" :key="cost.costId" class="base__body__year">
@@ -25,6 +26,9 @@
                 <div class="circle__back__red">{{cost.gasCost}}</div>
                 <div class="circle__back__yellow">{{cost.eleCost}}</div>
                 <div class="circle__back__base">{{cost.totalCost}}</div>
+            </div>
+            <div @click="deleteCost(cost)">
+                <img src="../../assets/dust_box.png" class="icon__size__dust_box">
             </div>
         </div>
     </div>
@@ -50,6 +54,11 @@ export default {
     methods: {
         send_id(costId) {
             this.$router.push({name: 'allList_id',params: {id:costId}})
+        },
+        deleteCost(cost) {
+            if(window.confirm(`${cost.year}年${cost.month}月分のデータを消去しますか？`)){
+                this.$store.dispatch('costs/deleteCost', cost.costId)
+            }
         }
     },
 }
@@ -73,8 +82,14 @@ export default {
 }
 .base__body__year {
     margin: 10px;
+    display: flex;
 }
 .icon__size__year {
     width: 60px;
+}
+.icon__size__dust_box {
+    cursor: pointer;
+    width: 40px;
+    margin: 15px 5px 5px 5px;
 }
 </style>

@@ -111,7 +111,7 @@ import PushModal from '../components/pushModal.vue'
               if( !monthMatch.includes(false) ) {
                 if(water_check && gas_check && ele_check) {
                   //userId------------------------------------
-                  this.costs.userId = this.usersFromStore[0].userId
+                  this.costs.userId = this.usersFromStore.userId
                   //modalをオープンする-------------------------
                   this.colorPush()
                   //totalCost--------------------------------
@@ -148,9 +148,9 @@ import PushModal from '../components/pushModal.vue'
           this.showContent = true
           console.log('this.showContent=> '+this.showContent)
         },
-        async closeModal() {
+        closeModal() {
           this.showContent = false;
-          await this.$store.dispatch('costs/choiceCosts')
+          // await this.$store.dispatch('costs/choiceCosts', this.usersFromStore)
           this.$router.push('/')
         },
         colorPush(){

@@ -118,13 +118,22 @@ app.post('/api/signIn', (req, res) => {
             res.send(result);
         });
     });
-    //costsテーブルの何かを変更(update)-----------------------------------
+    //costsテーブルのデータを変更(update)-----------------------------------
     app.post('/api/updateCost', (req, res) => {
         const params = req.body;
         const sqlUpdate = `UPDATE costs SET waterCost=?, gasCost=?, eleCost=?, totalCost=?, addDate=? WHERE costId=?`;
         connection.query(sqlUpdate, [params.waterCost, params.gasCost, params.eleCost, params.totalCost, params.addDate, params.costId], (err, result) => {
             res.send(result);
         })
+    });
+    //costsテーブルのcostデータを削除(delete)---------------------------------------
+    app.delete('/api/deleteCost', (req, res) => {
+        const params = req.query;
+        console.log(params)
+        const sqlDelete = `DELETE FROM costs WHERE costId=?`;
+        connection.query(sqlDelete, params.id, (err, result) => {
+            res.send(result);
+        });
     });
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
