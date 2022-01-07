@@ -62,7 +62,8 @@ export default {
   data(){
       return{
         //   badgemsg:13,
-          showContent: false,
+        //   showContent: false,
+          showContent: this.showContentFromStore,
           mordalOrderInfo: '',
           showCalendar: false,
           calendarInfo: ''
@@ -71,23 +72,29 @@ export default {
   },
   computed:{
     loginUserFromStore() {
+        // return this.$store.state.users.setLogin_user
         return this.$store.getters['users/setLogin_user']
     },
     costsFromStore() {
         return this.$store.getters['costs/getCosts']
+    },
+    showContentFromStore() {
+        return this.$store.state.users.showContent
     }
   },
   methods:{
-    logout() {
-        this.$store.dispatch('users/logout')
-    },
+    // logout() {
+    //     this.$store.dispatch('users/logout')
+    // },
     modalOpen(loginUser) {
-        this.showContent = true
+        // this.showContent = true
         this.mordalOrderInfo = loginUser
-        console.log('this.modalOrderInfo=> '+this.mordalOrderInfo)
+        console.log('this.modalOrderInfo=> '+JSON.stringify( this.mordalOrderInfo))
+        this.showContent = true
     },
     closeModal() {
       this.showContent = false;
+    //   console.log(this.showContent)
       this.showCalendar = false;
     },
     sendHome() {
@@ -97,7 +104,6 @@ export default {
         }
     },
     calendarOpen(costsFromStore) {
-        this.showCalendar = true
         //重複しない年をthis.calendarInfoに追加
         let years = []
         costsFromStore.forEach(cost => {
@@ -113,6 +119,7 @@ export default {
         });
         this.calendarInfo=[...years].sort((a, b) => b - a);
         console.log('this.calendarInfo=> '+this.calendarInfo)
+        this.showCalendar = true
     }
     // ...mapActions(["users/requestUsers","costs/requestCosts"])
   },

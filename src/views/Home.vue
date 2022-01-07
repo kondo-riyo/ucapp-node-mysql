@@ -27,21 +27,25 @@ export default {
   //   return {
   //   }
   // },
-  async fetch() {
-    console.log('setlogin_userFromStore=> '+this.setlogin_userFromStore)
-      if(this.setlogin_userFromStore.length != 0) {
-        await Promise.all(
-          this.$store.dispatch('costs/choiceCosts'),
-        )
-        console.log('到達してるよ')
-      }
+  // async fetch() {
+  //   console.log('setlogin_userFromStore=> '+this.setlogin_userFromStore)
+  //     if(this.setlogin_userFromStore.length != 0) {
+  //       await Promise.all(
+  //         this.$store.dispatch('costs/choiceCosts'),
+  //       )
+  //       console.log('到達してるよ')
+  //     }
       
+  // },
+  async fetch() {
+      await this.$store.dispatch('costs/choiceCosts')
+      console.log('到達してるよ')
   },
   computed:{
     setlogin_userFromStore() {
       return this.$store.getters['users/setLogin_user']
     },
-  },
+   },
   // watch:{
   //   //初期の読み込み
   //   startCost() {

@@ -17,9 +17,8 @@
                     <div class="text__a">PassWord</div>
                 </div>
                 <div v-show="!userStatus">
-                    <div class="text__b">{{orderInfo[0].userName}}</div>
-                    <div class="text__b">{{orderInfo[0].mail}}</div>
-                    <!-- <div class="text__b">{{orderInfo[0].password}}</div> -->
+                    <div class="text__b">{{orderInfo.userName}}</div>
+                    <div class="text__b">{{orderInfo.mail}}</div>
                     <div class="text__b">表示できません</div>
                 </div>
                 <div v-show="userStatus">
@@ -27,12 +26,6 @@
                     <input class="text__b" v-model="userInfo.mail"/>
                     <input class="text__b" v-model="userInfo.password"/>
                 </div>
-                <!-- <div> -->
-                    <!-- <div v-show="!userNameStatus" @click="openInput(orderInfo.userId, orderInfo.userName)"><img src="../assets/inputicon.png" class="inputicon"></div> -->
-                    <!-- <div v-show="userNameStatus"><button @click="updateUserName">update</button></div> -->
-                    <!-- <div><img src="../assets/inputicon.png" class="inputicon"></div>
-                    <div><img src="../assets/inputicon.png" class="inputicon"></div> -->
-                <!-- </div> -->
                 </div>
                 <div v-show="userStatus">
                     <button @click="updateUserName" class="button button__brown">
@@ -63,7 +56,8 @@ export default {
     props: [ 'orderInfo' ],
     data() {
         return {
-            showContent: false,
+            // showContent: false,
+            showContent: this.showContentFromStore,
             userInfo:{
                 userId: '',
                 userName: '',
@@ -73,21 +67,27 @@ export default {
             userStatus: false
         };
     },
+    // computed: {
+        // showContentFromStore() {
+        //     return this.$store.state.users.showContent
+        // }
+    // },
     methods: {
         deleteUser() {
             //ログインしているユーザーをデータベースから削除----------------------
             this.$store.dispatch('users/deleteUser')
         },
-        logout() {
+        async logout() {
             console.log('ログアウト')
-            this.$store.dispatch('users/logout')
-            this.$store.dispatch('costs/logout')
-            this.showContent = false
+            await this.$store.dispatch('users/logout')
+            await this.$store.dispatch('costs/logout')
+            // this.showContent = false
+            this.$router.push('/')
         },
         openInput(orderInfo) {
-            this.userInfo.userId = orderInfo[0].userId
-            this.userInfo.userName = orderInfo[0].userName
-            this.userInfo.mail = orderInfo[0].mail
+            this.userInfo.userId = orderInfo.userId
+            this.userInfo.userName = orderInfo.userName
+            this.userInfo.mail = orderInfo.mail
             this.userInfo.password = '変更できません'
             this.userStatus = true
             console.log('click!')

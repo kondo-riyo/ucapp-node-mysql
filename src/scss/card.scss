@@ -29,6 +29,7 @@
   font-weight: bold;
   background-color: $color;
   border-radius: 50%;
+  cursor: pointer;
 }
 .card__rectangle {
   width: 50%;
@@ -41,6 +42,7 @@
   //border---------------------------
   border: 6px solid #c2baaf;
   border-radius: 10px;
+  transition: 0.5s;
 }
 .card__rectangle:hover {
   background-color: #c2baaf7c;

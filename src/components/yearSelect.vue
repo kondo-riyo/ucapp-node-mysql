@@ -2,7 +2,7 @@
     <div id="overlay" @click.self="$emit('close')">
         <div id="content">
             <div class="title__year">YEAR</div>
-            <div v-for="year in orderInfo" :key="year.index">
+            <div v-for="year in orderInfo" :key="year">
                 <!-- <router-link :to="{name: 'allList_year',params: {year:year}}"> -->
                     <div class="card__year" @click="sendYear(year)">
                         <div v-if="nowYear==year" class="text__now">NOW</div>
@@ -56,7 +56,8 @@ export default {
   min-width: 350px;
   height: 100%;
   padding: 0;
-  background-color: rgba(240, 233, 224, 0.597);
+//   background-color: rgba(240, 233, 224, 0.597);
+  background-color: rgba(255, 255, 255, 0.063);
   color: #673A15;
   box-sizing: border-box;
   text-align: center;
@@ -90,6 +91,7 @@ export default {
     margin: 5px 30px;
     border-radius: 10px;
     // box-sizing: border-box;
+    transition: 0.5s;
 }
 .card__year:hover {
     background-color: #fcfcfcab;
