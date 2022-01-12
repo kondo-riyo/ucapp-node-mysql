@@ -9,14 +9,17 @@
   box-sizing: border-box;
   width: 100%;
   letter-spacing: 1px;
-  padding-left: 7em;
+  // padding-left: 7em;
+  text-align: center;
+  color: #673a15;
 }
 .cp_iptxt input[type="password"] {
   font: 12px/20px sans-serif #673a15;
   box-sizing: border-box;
   width: 100%;
   letter-spacing: 1px;
-  padding-left: 6em;
+  // padding-left: 6em;
+  text-align: center;
 }
 .cp_iptxt input[type="text"]:focus {
   outline: none;
@@ -67,10 +70,6 @@
   font-size: small;
   color: #da3c41;
   font-weight: bold;
-  //   transition: 1s;
-  //   animation: errText 20s ease 0s infinite normal;
-  //   animation-name: errText ;
-  //   animation-: ;
 }
 
 //v-modelある場合のinput-----------------------

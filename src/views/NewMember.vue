@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="bg__img flex">
         <div class="card__login fadeIn__base">
             <div class="flex">
                 <div class="input__group">
@@ -101,9 +101,18 @@ export default {
 @import '../scss/animation.scss';
 @import '../scss/card.scss';
 
+.bg__img {
+    // background-image: url(../assets/bg_orange.webp);
+    background-image: url(../assets/leaf2__back.jpg);
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    // margin-top: -30px;
+}
 .flex {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .link__newmember {
     text-align: center;

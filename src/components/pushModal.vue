@@ -2,7 +2,7 @@
     <div>
         <div id="overlay" @click.self="$emit('close')">
             <div id="content">
-                <div>{{orderInfo.year}}年{{orderInfo.month}}月分の光熱費を登録しました</div>
+                <div>{{orderInfo.year}}年{{orderInfo.month}}月 光熱費が登録されました</div>
                 <div>水道代 {{orderInfo.waterCost}}円</div>
                 <div>電気代 {{orderInfo.eleCost}}円</div>
                 <div>ガス代 {{orderInfo.gasCost}}円</div>
@@ -46,7 +46,7 @@ export default {
   min-width: 350px;
   height: auto;
   padding: 1em;
-  background-color: rgba(194, 186, 175, 0.24);
+  background-color: rgba(237, 231, 224, 0.6);
   color: #673A15;
 //   font-weight: bold;
   box-sizing: border-box;

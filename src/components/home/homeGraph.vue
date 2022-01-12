@@ -6,15 +6,21 @@
             >
                <div>ようこそ！{{setlogin_userFromStore.userName}}さん</div>
                <div>今年の光熱費はまだ登録されていません</div>
-               <div>
+               <div class="home_graph__btn">
                    <button
-                    class="square-button"
+                    class="button__brown"
+                    @click="send_inputForm"
                    >
                     光熱費の登録はこちら
                    </button>
+               </div>
             </div>
-         </div>
          <div v-show="setChartDataFromStore.showGraph">
+             <!-- {{setChartDataFromStore.datasets[0].data.year}} -->
+            <div class="home_graph__title">
+                <img src="../../assets/2.png" class="home_graph__icon">
+                {{setChartDataFromStore.year}} 年の光熱費
+            </div>
             <Barchart :data="setChartDataFromStore" :options="options" class="chart"/>
          </div>
     </div>
@@ -55,18 +61,24 @@ export default {
         setChartDataFromStore() {
             return this.$store.state.costs.chartdata
         }
-        
+    },
+    methods: {
+        send_inputForm() {
+            this.$router.push('/inputform')
+        }
     },
 }
 </script>
 <style lang="scss">
-    @import '../../scss/button.scss';
-    .home_graph {
-        display: flex;
-        justify-content: center;
-    }
+@import '../../scss/button.scss';
+.home_graph {
+    display: flex;
+    justify-content: center;
+}
 .chart{
-  max-width: 700px;
+  width: 70%;
+  min-width: 600px;
+//   height: 500px;
   margin:0 auto;
 }
 .home_graph__msg {
@@ -75,6 +87,21 @@ export default {
     font-size: 1.5rem;
     color: #673a15;
     font-weight: 700;
-    margin-top: 50px;
+    margin-top: 70px;
+}
+.home_graph__btn {
+    margin-top: 20px;
+}
+.home_graph__title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #673a15;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.home_graph__icon {
+    width: 5rem;
+    margin-bottom: -1.5rem;
 }
 </style>

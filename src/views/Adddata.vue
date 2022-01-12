@@ -34,13 +34,6 @@
         </tr>
         </v-card-text>
     </v-card>
-    <!-- <v-data-table
-        :headers="headers"
-        :items="newcosts"
-        :items-per-page="5"
-        class="elevation-1"
-    >
-    </v-data-table> -->
     </div>
 </div>
 </template>
@@ -53,18 +46,6 @@ export default {
     data(){
         return{
             newcosts:[],
-        //     headers: [
-        //   {
-        //     text: '月',
-        //     align: 'start',
-        //     sortable: true,
-        //     value: 'month',
-        //   },
-        //   { text: '水道', value: 'watercost' },
-        //   { text: 'ガス', value: 'gascost' },
-        //   { text: '電気', value: 'elecost' },
-        //   { text: '合計', value: 'totalcost' },
-        // ],
         }
     },
     created(){

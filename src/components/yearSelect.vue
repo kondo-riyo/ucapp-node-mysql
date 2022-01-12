@@ -1,16 +1,24 @@
 <template>
     <div id="overlay" @click.self="$emit('close')">
         <div id="content">
-            <div class="title__year">YEAR</div>
-            <div v-for="year in orderInfo" :key="year">
-                <!-- <router-link :to="{name: 'allList_year',params: {year:year}}"> -->
-                    <div class="card__year" @click="sendYear(year)">
-                        <div v-if="nowYear==year" class="text__now">NOW</div>
-                        <div>
-                            {{year}}
+            <div 
+             v-show="orderInfo.length === 0"
+             class="yearSelect__not"
+            >
+                ※ まだ登録された光熱費はありません
+            </div>
+            <div v-show="orderInfo.length !== 0">
+                <div class="title__year">YEAR</div>
+                <div v-for="year in orderInfo" :key="year">
+                    <!-- <router-link :to="{name: 'allList_year',params: {year:year}}"> -->
+                        <div class="card__year" @click="sendYear(year)">
+                            <div v-if="nowYear==year" class="text__now">NOW</div>
+                            <div>
+                                {{year}}
+                            </div>
                         </div>
-                    </div>
-                <!-- </router-link> -->
+                    <!-- </router-link> -->
+                </div>
             </div>
         </div>
     </div>
@@ -44,7 +52,7 @@ export default {
   height: 100%;
   background-color: rgba(255, 255, 255, 0.063);
   /*画面の右側に要素を表示させる設定*/
-  padding-top: 106px;
+//   padding-top: 150px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
@@ -56,13 +64,15 @@ export default {
   min-width: 350px;
   height: 100%;
   padding: 0;
-//   background-color: rgba(240, 233, 224, 0.597);
-  background-color: rgba(255, 255, 255, 0.063);
+  background-color: rgba(240, 233, 224, 0.597);
   color: #673A15;
   box-sizing: border-box;
   text-align: center;
   font-weight: bold;
   //アニメーション-----------------------
+//   margin-top: 150px;
+  padding-top: 150px;
+
   animation-name: slideIn ;
   animation-duration: 1s;
 
@@ -92,6 +102,7 @@ export default {
     border-radius: 10px;
     // box-sizing: border-box;
     transition: 0.5s;
+    cursor: pointer;
 }
 .card__year:hover {
     background-color: #fcfcfcab;
@@ -104,5 +115,8 @@ export default {
     color: #ffde59;
     font-size: 14px;
     margin-right: 10px;
+}
+.yearSelect__not {
+    margin-top: 20px;
 }
 </style>

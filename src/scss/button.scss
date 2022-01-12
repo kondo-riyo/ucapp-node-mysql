@@ -15,13 +15,14 @@
   overflow: hidden;
   box-shadow: 0px 0px 0px 5px #ef6258d4;
   border: dashed 2px #fff;
-  transition: 0.4s;
+  transition: 10s;
 }
 
 .button__circle__stitch:hover {
   // width: 90px;
   // height: 90px;
-  background: $base_red;
+  background-color: $base_red;
+  transform: rotate(360deg);
   //   box-shadow: 0px 0px 0px 5px #ef6258;
 }
 
@@ -29,13 +30,21 @@
   border-radius: 9999px;
   padding: 10px 15px;
   margin: 5px;
-  font-size: 12px;
+  font-size: 0.8rem;
 }
 .button__brown {
+  @include button;
   background-color: $base_brown;
   color: white;
+  transition: 0.5s;
 }
+.button__brown:hover {
+  background-color: $base_brown--50;
+  color: $base_brown;
+}
+
 .button__red {
+  @include button;
   width: 150px;
   height: 45px;
   background-color: $base_red;
@@ -46,24 +55,24 @@
 }
 .button__red:hover {
   background-color: $base_red--50;
-  color: $base_red;
+  color: red;
   // font-size: 15px;
   //   width: 110px;
   //   height: 47px;
   //   margin: 4px 0px;
 }
 
-//長方形型のボタン---------------
-.square-button {
-  @include button;
-  background-color: $base_brown;
-  color: white;
-  font-weight: bold;
-  padding: 0.5rem 1.5rem;
-  transition: 0.5s;
-}
-.square-button:hover {
-  // opacity: 0.2;
-  background-color: $base_brown--50;
-  color: $base_brown;
-}
+// //長方形型のボタン---------------
+// .square-button {
+//   @include button;
+//   background-color: $base_brown;
+//   color: white;
+//   font-weight: bold;
+//   padding: 0.5rem 1.5rem;
+//   transition: 0.5s;
+// }
+// .square-button:hover {
+//   // opacity: 0.2;
+//   background-color: $base_brown--50;
+//   color: $base_brown;
+// }
