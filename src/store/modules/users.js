@@ -6,13 +6,13 @@ Vue.use(VueAxios, axios)
 let usersDefaultState = () => {
     return {
         login_user: [],
-        // setLogin_user: null,
-        setLogin_user: {
-            userId: '123456789000',
-            userName: 'ベタaaaaaaaaaaaaaaaaa',
-            mail: 'beta@gmail.com',
-            password: '$2b$10$.jEOqyGzNniOmJgG58M2kOQQAY9KRdvn4LbHfvonjIZ7OYU9LXS4u'
-        },
+        setLogin_user: null,
+        // setLogin_user: {
+        //     userId: '123456789000',
+        //     userName: 'ベタaaaaaaaaaaaaaaaaa',
+        //     mail: 'beta@gmail.com',
+        //     password: '$2b$10$.jEOqyGzNniOmJgG58M2kOQQAY9KRdvn4LbHfvonjIZ7OYU9LXS4u'
+        // },
         messagePass: '',
         showContent: false
     }
@@ -47,6 +47,10 @@ export default {
         state.setLogin_user.userName = userName
         console.log('updateUserNameMut')
         },
+        modalOpenShowContent(state, show) {
+            state.showContent = show
+            console.log(state.showContent)
+        }
     },
     actions: {
         //userテーブルの中身を全て取得-------------------------------

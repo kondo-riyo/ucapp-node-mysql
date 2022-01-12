@@ -1,6 +1,7 @@
 @mixin card__base($color) {
   width: 50%;
   min-width: 500px;
+  max-width: 600px;
   height: auto;
   background-color: $color;
   padding: 20px;
@@ -12,11 +13,15 @@
 }
 
 .card__login {
-  @include card__base(#c2baaf38);
+  @include card__base(rgba(194, 186, 175, 0.22));
+  margin-left: 100px;
+}
+.card__inputForm {
+  @include card__base(rgba(194, 186, 175, 0.22));
 }
 
 .card__white {
-  @include card__base(#f6f6f6);
+  @include card__base(rgb(246, 246, 246));
   border: 7px solid #c2baaf;
 }
 
@@ -38,7 +43,7 @@
   background-color: #f6f6f6;
   padding: 8px;
   //   margin: 30px auto;
-  margin: 0 auto;
+  // margin: 0 auto;
   //border---------------------------
   border: 6px solid #c2baaf;
   border-radius: 10px;

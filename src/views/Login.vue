@@ -101,7 +101,8 @@ export default {
 @import '../scss/animation.scss';
 
 .bg__img {
-    background-image: url(../assets/bg_orange.webp);
+    // background-image: url(../assets/bg_orange.webp);
+    background-image: url(../assets/leaf2__back.jpg);
     background-size: cover;
     width: 100%;
     height: 100%;
@@ -113,7 +114,7 @@ export default {
     justify-content: center;
 }
 .link__login {
-    text-align: center;
+    text-align: center; 
     color: #ef6158;
     font-size: 15px;
     font-weight: bold;

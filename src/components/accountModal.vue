@@ -6,9 +6,12 @@
                     <div class="text__title">
                         アカウント情報
                     </div>
-                    <div title="アカウント情報を変更" v-show="!userStatus" @click="openInput(orderInfo)" class="icon">
+                    <div title="アカウント情報を変更" v-show="!userStatus" @click="openInput(orderInfo)" class="inputicon_back">
                         <img src="../assets/inputicon.png" class="inputicon">
                     </div>
+                </div>
+                <div v-show="userStatus">
+                    ※ アカウントの名前とメールアドレスを変更できます
                 </div>
                 <div class="flex">
                 <div class="">
@@ -22,9 +25,14 @@
                     <div class="text__b">表示できません</div>
                 </div>
                 <div v-show="userStatus">
-                    <input class="text__b" v-model="userInfo.userName"/>
-                    <input class="text__b" v-model="userInfo.mail"/>
-                    <input class="text__b" v-model="userInfo.password"/>
+                    <div>
+                        <input class="text__b account__input" v-model="userInfo.userName"/>
+                    </div>
+                    <div>
+                        <input class="text__b account__input" v-model="userInfo.mail"/>
+                    </div>
+                    <!-- <input class="text__b" v-model="userInfo.password"/> -->
+                    <div class="text__b">変更できません</div>
                 </div>
                 </div>
                 <div v-show="userStatus">
@@ -75,14 +83,18 @@ export default {
     methods: {
         deleteUser() {
             //ログインしているユーザーをデータベースから削除----------------------
+          if (confirm("アカウントを消去してよろしいでしょうか？")){
             this.$store.dispatch('users/deleteUser')
+          }
         },
         async logout() {
+          if (confirm("ログアウトしますか？")){
             console.log('ログアウト')
             await this.$store.dispatch('users/logout')
             await this.$store.dispatch('costs/logout')
             // this.showContent = false
             this.$router.push('/')
+          }
         },
         openInput(orderInfo) {
             this.userInfo.userId = orderInfo.userId
@@ -103,6 +115,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import "../scss/index.scss";
+
 #overlay {
   /*要素を重ねた時の順番*/
   z-index: 1;
@@ -142,19 +156,6 @@ export default {
     justify-content: center;
     padding: 30px;
 }
-// .button {
-//     border-radius: 20px;
-//     padding: 5px 15px 5px 15px;
-//     margin: 5px;
-// }
-// .button__brown {
-//     background-color: #673A15;
-//     color: white;
-// }
-// .button__red {
-//     background-color: #ef6158;
-//     color: white;
-// }
 .text__title {
     font: 20px sans-serif;
     font-weight: bold;
@@ -164,26 +165,58 @@ export default {
     font: 15px sans-serif;
     font-weight: bold;
     text-align: start;
+    padding: 5px;
+
 }
 .text__b {
     margin: 0px 10px;
     font: 15px sans-serif;
     font-weight: normal;
     text-align: start;
+    color: #673A15;
+    padding: 5px;
+}
+.account__input {
+    background-color: #f6f5f1;
+    border-radius: 10px;
+    // outline: 2px solid $base_brown;
+    // border: none;
+}
+.account__input:focus {
+    outline: 2px solid $base_brown;
+}
+// .margin--left {
+//     margin-left: 50px;
+// }
+.inputicon_back {
+    // background-color: $base_red;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.inputicon_back:hover {
+    background-color: $base_red--50;
 }
 .inputicon {
     width: 20px;
-    height: auto;
-    // margin-left: 10px;
-    padding: 0px 2px;
-    margin-left: 10px;
+    height: 20px;
+    // margin: 0 10px;
+    // padding: 0px 2px;
+    // margin: 0 auto;
+    transition: 0.5s;
 }
-.inputicon:hover {
-    width: 24px;
-    height: auto;
-    padding: 0px;
-    margin-left: 10px;
-    background-color: #ef6158;
-    border-radius: 50%;
-}
+// .inputicon:hover {
+//     // width: 24px;
+//     // height: auto;
+//     // padding: 1px;
+//     // margin-left: 10px;
+//     background-color: #ef6158;
+//     border-radius: 9999px;
+// }
 </style>

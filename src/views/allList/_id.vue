@@ -49,13 +49,22 @@
                     編集を登録
                 </button>
             </div>
+            <push-modal
+              :orderInfo="pushModalInfo"
+              v-show="showContent"
+                @close="closeModal"
+            ></push-modal>
         </div>
     </div>
 </template>
 <script>
+import PushModal from '../../components/pushModal.vue';
+
 export default {
     data() {
         return {
+            showContent: false,
+            pushModalInfo: '',
             cost:{
                 costId: '',
                 year: '',
@@ -67,9 +76,11 @@ export default {
                 totalCost: 0,
                 addDate: '',
                 userId: '',
-
             }
         }
+    },
+    components: {
+      PushModal
     },
     computed: {
         fetchMonth() {
@@ -92,11 +103,20 @@ export default {
             this.cost.totalCost = Number(this.cost.gasCost) + Number(this.cost.waterCost) + Number(this.cost.eleCost)
             console.log(this.cost.totalCost)
         },
-        updateCost() {
+        async updateCost() {
             console.log(this.cost)
             this.cost.addDate = new Date()
-            this.$store.dispatch('costs/updateCost', this.cost)
-        }
+            await this.$store.dispatch('costs/updateCost', this.cost)
+            this.showContent = true
+            console.log(this.cost)
+            this.pushModalInfo = this.cost
+            console.log(this.pushModalInfo)
+        },
+        closeModal() {
+          this.showContent = false;
+          // await this.$store.dispatch('costs/choiceCosts', this.usersFromStore)
+          this.$router.push('/')
+        },
     },
 }
 </script>

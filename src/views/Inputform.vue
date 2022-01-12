@@ -1,7 +1,7 @@
 <template>
 <div>
   <div>
-    <div class="card__login fadeIn__base space__top__50">
+    <div class="card__inputForm fadeIn__base space__top__50">
       <div class="center title__base">Utility Costs 光熱費登録</div>
       <div>
       <div class="cp_iptxt">
@@ -144,10 +144,10 @@ import PushModal from '../components/pushModal.vue'
             console.log(year_check)
           }
         },
-        openModal() {
-          this.showContent = true
-          console.log('this.showContent=> '+this.showContent)
-        },
+        // openModal() {
+        //   this.showContent = true
+        //   console.log('this.showContent=> '+this.showContent)
+        // },
         closeModal() {
           this.showContent = false;
           // await this.$store.dispatch('costs/choiceCosts', this.usersFromStore)

@@ -65,6 +65,9 @@ export default {
 </script>
 <style lang="scss">
 @import '../../scss/space.scss';
+// .alllist__year {
+//     margin: 0 auto;
+// }
 .flex__year {
     display: flex;
     justify-content: space-around;
@@ -81,8 +84,9 @@ export default {
     color: #673a15;
 }
 .base__body__year {
-    margin: 10px;
     display: flex;
+    justify-content: center;
+    margin: 10px auto;
 }
 .icon__size__year {
     width: 60px;
@@ -90,6 +94,6 @@ export default {
 .icon__size__dust_box {
     cursor: pointer;
     width: 40px;
-    margin: 15px 5px 5px 5px;
+    margin: 30px 0 0 20px;
 }
 </style>

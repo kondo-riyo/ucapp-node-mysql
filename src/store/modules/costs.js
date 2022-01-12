@@ -83,6 +83,7 @@ let costsDefaultState = () => {
         chartdata: {
             showGraph: false,
             labels: [],
+            year: null,
             datasets: [
                 {
                     label: 'water cost',
@@ -143,9 +144,9 @@ export default {
             state.costs = costs
         },
         //stateのchartdtata/datatsetsにデータを各々セットする----------------------
-        costGraphDataMut(state, graphpushCost) {
+        async costGraphDataMut(state, graphpushCost) {
             if (graphpushCost.length > 0) {
-                graphpushCost.forEach(cost => {
+                await graphpushCost.forEach(cost => {
                     state.chartdata.labels.push(cost.month)
                     state.chartdata.datasets[0].data.push(cost.waterCost)
                     state.chartdata.datasets[1].data.push(cost.gasCost)
@@ -155,6 +156,7 @@ export default {
                     state.chartdata.datasets[3].borderColor.push('rgba('+cost.color+',1)')                
                 });
                 state.chartdata.showGraph = true
+                state.chartdata.year = graphpushCost[0].year
             } else if (graphpushCost.length === 0) {
                 state.chartdata.showGraph = false
             }
@@ -250,7 +252,7 @@ export default {
         })
         },
         //costデータの更新-------------------------------------
-        updateCost({ commit }, params) {
+        updateCost({ commit, dispatch, rootState }, params) {
             axios.post('/api/updateCost', {
                 costId: params.costId,
                 year: params.year,
@@ -265,6 +267,7 @@ export default {
             }).then((res) => {
                 console.log(res)
                 commit('updateCostMut', params)
+                dispatch('choiceCosts', rootState.users.setLogin_user)
             })
 
         },
@@ -310,7 +313,7 @@ export default {
         },
         // getCosts() {
         //   return [ 
-            // {
+        //     {
         //         costId: '123456789000',
         //         year: '2021',
         //         month: '10',
@@ -370,7 +373,7 @@ export default {
         //       addDate: '2021/11/11',
         //         userId: '123456789000'
         //   }
-        //]
+        // ]
         // },
         getNewPushCost(state) {
         return state.newPushCost;
