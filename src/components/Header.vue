@@ -106,13 +106,10 @@ export default {
 </script>
 <style lang="scss">
 .header {
-    // opacity: 0.8;
     // background-color: rgba(194, 186, 175, 0.8);
     background: linear-gradient(to bottom, rgba(240, 233, 224, 1) 50%, rgba(194, 186, 175, 0));
     // background: linear-gradient(to bottom, rgba(194, 186, 175, 1) 50%, rgba(194, 186, 175, 0));
     width: 100%;
-    /* max-width: 500px; */
-    // height: 20%;
     height: 150px;
     display: flex;
     justify-content: space-between;
