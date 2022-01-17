@@ -1,8 +1,10 @@
 const express = require('express')
 const mysql = require('mysql');
 // const bodyParser = require('body-parser')
-
 const app = express()
+
+const port = process.env.PORT || 5000;
+
 const bcrypt = require('bcrypt');
 
 app.use(express.urlencoded({ extended: false }));
@@ -136,4 +138,6 @@ app.post('/api/signIn', (req, res) => {
         });
     });
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+// app.listen(3000, () => console.log('Example app listening on port 3000!'))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
