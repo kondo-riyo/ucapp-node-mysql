@@ -15,11 +15,19 @@ app.use('/js', express.static(__dirname + '/dist/js/'));
 app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'))
 
 //mysqlへのコネクションの準備
+    // ローカルでの接続
+    // const connection = mysql.createConnection({
+    //   host: 'localhost',
+    //   user: 'root',
+    //   password: '17939176',
+    //   database: 'ucapp_app_db'
+    // });
+    //ClearDBへの接続
     const connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '17939176',
-      database: 'ucapp_app_db'
+      host: 'us-cdbr-east-05.cleardb.net',
+      user: 'b50d3f3766370a',
+      password: '23b6c8c8',
+      database: 'heroku_422a08e57bf0ab7'
     });
 
 //MySQLへの接続ができていない時にエラーを表示
