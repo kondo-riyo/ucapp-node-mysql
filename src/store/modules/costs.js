@@ -7,66 +7,66 @@ let costsDefaultState = () => {
     return {
         allCosts: [],
         costs: [
-        //     {
-        //         costId: '123456789000',
-        //         year: '2021',
-        //         month: '10',
-        //         color: '185,155,0',
-        //         waterCost: 1200,
-        //         eleCost: 1500,
-        //         gasCost: 2000,
-        //         totalCost: 4700,
-        //         addDate: '2021/11/11',
-        //         userId: '123456789000'
-        //   },
-        //   {
-        //         costId: '123456789100',
-        //         year: '2020',
-        //         month: '11',
-        //         color: '185,0,0',
-        //         waterCost: 1000,
-        //         eleCost: 1000,
-        //         gasCost: 3000,
-        //         totalCost: 5000,
-        //         addDate: '2021/11/11',
-        //         userId: '123456789000'
-        //   },
-        //   {
-        //         costId: '123456789200',
-        //         year: '2019',
-        //         month: '8',
-        //         color: '185,0,0',
-        //         waterCost: 1000,
-        //         eleCost: 1600,
-        //         gasCost: 2000,
-        //         totalCost: 5000,
-        //         addDate: '2021/11/11',
-        //         userId: '123456789000'
-        //   },
-        //   {
-        //         costId: '123456789300',
-        //         year: '2020',
-        //         month: '9',
-        //         color: '185,0,0',
-        //         waterCost: 1500,
-        //         eleCost: 1000,
-        //         gasCost: 2100,
-        //         totalCost: 5000,
-        //         addDate: '2021/11/11',
-        //         userId: '123456789000'
-        //   },
-        //   {
-        //         costId: '123456789110',
-        //         year: '2021',
-        //         month: '12',
-        //         color: '185,120,0',
-        //         waterCost: 1800,
-        //         eleCost: 1600,
-        //         gasCost: 2000,
-        //         totalCost: 5400,
-        //       addDate: '2021/11/11',
-        //         userId: '123456789000'
-        //   }
+            {
+                costId: '123456789000',
+                year: '2021',
+                month: '10',
+                color: '185,155,0',
+                waterCost: 1200,
+                eleCost: 1500,
+                gasCost: 2000,
+                totalCost: 4700,
+                addDate: '2021/11/11',
+                userId: '123456789000'
+          },
+          {
+                costId: '123456789100',
+                year: '2020',
+                month: '11',
+                color: '185,0,0',
+                waterCost: 1000,
+                eleCost: 1000,
+                gasCost: 3000,
+                totalCost: 5000,
+                addDate: '2021/11/11',
+                userId: '123456789000'
+          },
+          {
+                costId: '123456789200',
+                year: '2019',
+                month: '8',
+                color: '185,0,0',
+                waterCost: 1000,
+                eleCost: 1600,
+                gasCost: 2000,
+                totalCost: 5000,
+                addDate: '2021/11/11',
+                userId: '123456789000'
+          },
+          {
+                costId: '123456789300',
+                year: '2020',
+                month: '9',
+                color: '185,0,0',
+                waterCost: 1500,
+                eleCost: 1000,
+                gasCost: 2100,
+                totalCost: 5000,
+                addDate: '2021/11/11',
+                userId: '123456789000'
+          },
+          {
+                costId: '123456789110',
+                year: '2021',
+                month: '12',
+                color: '185,120,0',
+                waterCost: 1800,
+                eleCost: 1600,
+                gasCost: 2000,
+                totalCost: 5400,
+              addDate: '2021/11/11',
+                userId: '123456789000'
+          }
         ],
         newPushCost: null,
         // newPushCost: {
