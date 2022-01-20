@@ -22,16 +22,4 @@ export default {
     // height: 650px;
     max-height: auto;
   }
-// .link {
-//   color:white;
-// }
-// .app {
-//   margin-top: 100px;
-// }
-// .center{
-//   display: block;
-//   margin-left: auto;
-//   margin-right: auto;
-//   align-items: center;
-// }
 </style>
