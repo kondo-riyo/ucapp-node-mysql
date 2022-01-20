@@ -90,7 +90,7 @@ export default {
 
         },
         sendLogin() {
-            this.$router.push('/login')
+            this.$router.push('/')
         },
     }
 }
