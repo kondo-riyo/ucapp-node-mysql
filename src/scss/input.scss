@@ -1,3 +1,5 @@
+@import "./index.scss";
+
 //input----------------------------
 .cp_iptxt {
   position: relative;
@@ -5,16 +7,16 @@
   margin: 40px 3% 10px 3%;
 }
 .cp_iptxt input[type="text"] {
-  font: 12px/20px sans-serif #673a15;
+  font: 12px/20px sans-serif $base_brown;
   box-sizing: border-box;
   width: 100%;
   letter-spacing: 1px;
   // padding-left: 7em;
   text-align: center;
-  color: #673a15;
+  color: $base_brown;
 }
 .cp_iptxt input[type="password"] {
-  font: 12px/20px sans-serif #673a15;
+  font: 12px/20px sans-serif $base_brown;
   box-sizing: border-box;
   width: 100%;
   letter-spacing: 1px;
@@ -30,7 +32,7 @@
 .ef {
   padding: 4px 0;
   border: 0;
-  border-bottom: 3px solid #c2baaf;
+  border-bottom: 3px solid $base_gray;
   background-color: transparent;
 }
 .ef ~ .focus_line {
@@ -70,6 +72,30 @@
   font-size: small;
   color: #da3c41;
   font-weight: bold;
+  margin-left: 12px;
 }
 
-//v-modelある場合のinput-----------------------
+//input Ver.2-----------------------
+.login__input {
+  position: relative;
+  width: 80%;
+  margin: 40px 3% 10px 3%;
+}
+.login__input input {
+  font: 15px/24px sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.3em;
+  transition: 0.3s;
+  letter-spacing: 1px;
+  // color: #aaaaaa;
+  color: $base_brown;
+  border: none;
+  border-bottom: 3px solid $base_gray;
+  background: transparent;
+  transition: 0.4s;
+}
+.login__input__ef :focus {
+  border-bottom: 3px solid $base_red;
+  outline: none;
+}

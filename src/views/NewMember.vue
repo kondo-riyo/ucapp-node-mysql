@@ -3,22 +3,22 @@
         <div class="card__login fadeIn__base">
             <div class="flex">
                 <div class="input__group">
-                    <div class="cp_iptxt">
-                        <input v-model="user_name" class="ef " type="text" placeholder="">
-                        <label>Name</label>
-                        <span class="focus_line"></span>
+                    <div class="login__input">
+                        <label class="login__input__ef" >
+                            <input v-model="user_name" type="text" placeholder="Name">
+                        </label>
                     </div>
                     <div v-show="validate_name">名前は10文字以下で入力してください</div>
-                    <div class="cp_iptxt">
-                        <input v-model="mail" class="ef" type="text" placeholder="">
-                        <label>MailAddress</label>
-                        <span class="focus_line"></span>
+                    <div class="login__input">
+                        <label class="login__input__ef" >
+                            <input v-model="mail" type="text" placeholder="MailAddress">
+                        </label>
                     </div>
                     <div v-show="validate_mail">メールアドレスを入力してください</div>
-                    <div class="cp_iptxt">
-                        <input v-model="password" class="ef" type="password" placeholder="">
-                        <label>PassWord</label>
-                        <span class="focus_line"></span>
+                    <div class="login__input">
+                        <label class="login__input__ef" >
+                            <input v-model="password" type="password" placeholder="PassWord">
+                        </label>
                     </div>
                     <div v-show="validate_pass">半角英数字６桁以上を入力してください</div>
                 </div>
@@ -77,7 +77,10 @@ export default {
                             password: this.password
                         }
                         // console.log(userInfo)
-                        this.$store.dispatch('users/sendNewMember', userInfo)
+                        if(confirm('新規アカウント登録してよろしいですか？')){
+                            this.$store.dispatch('users/sendNewMember', userInfo)
+                            this.$router.push('/')
+                        }
                     }else {
                         this.validate_pass = true
                     }
