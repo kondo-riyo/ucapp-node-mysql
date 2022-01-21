@@ -9,33 +9,33 @@
         <label>Year</label>
         <span class="focus_line"></span>
       </div>
-      <div v-show="validate_year">2000年からのデータを入力できます</div>
+      <div v-show="validate_year" class="err__msg">2000年以降のデータを入力できます</div>
       <div class="cp_iptxt">
         <input v-model="costs.month" class="ef " type="text" placeholder="">
         <label>Month</label>
         <span class="focus_line"></span>
       </div>
-      <div v-show="validate_month_a">正しい月を入力してください</div>
-      <div v-show="validate_month_b">{{costs.year}}年{{costs.month}}月の光熱費は入力済みです</div>
+      <div v-show="validate_month_a" class="err__msg">正しい月を入力してください</div>
+      <div v-show="validate_month_b" class="err__msg">{{costs.year}}年{{costs.month}}月の光熱費は入力済みです</div>
       <div class="cp_iptxt">
         <input v-model="costs.waterCost" class="ef " type="text" placeholder="">
         <label><img src="../assets/watericon.png" class="input__icon__size">Water Cost</label>
         <span class="focus_line"></span>
       </div>
-      <div v-show="validate_waterCost">10桁以下の数字を入力してください</div>
+      <div v-show="validate_waterCost" class="err__msg">10桁以下の数字を入力してください</div>
       <div class="cp_iptxt">
         <input v-model="costs.gasCost" class="ef " type="text" placeholder="">
         <label><img src="../assets/fireicon.png" class="input__icon__size">Gas Cost</label>
         <span class="focus_line"></span>
       </div>
-      <div v-show="validate_gasCost">10桁以下の数字を入力してください</div>
+      <div v-show="validate_gasCost" class="err__msg">10桁以下の数字を入力してください</div>
       <div class="cp_iptxt">
         <input v-model="costs.eleCost" class="ef " type="text" placeholder="">
         <label><img src="../assets/eleicon.png" class="input__icon__size">Electricity Cost</label>
         <span class="focus_line"></span>
       </div>
       </div>
-      <div v-show="validate_eleCost">10桁以下の数字を入力してください</div>
+      <div v-show="validate_eleCost" class="err__msg">10桁以下の数字を入力してください</div>
       <div class="center">
         <button @click="submit()" class="button button__red">
           登録
@@ -164,7 +164,7 @@ import PushModal from '../components/pushModal.vue'
 
 </script>
 <style lang="scss" scoped>
-  // @import '../scss/card.scss';
+  @import '../scss/index.scss';
 // .basecard {
 //     display: flex;
 //     align-content: center;
@@ -183,5 +183,11 @@ import PushModal from '../components/pushModal.vue'
 // }
 .input__icon__size {
   width: 20px;
+}
+.err__msg {
+  margin-left: 3rem;
+  color: $base_red;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 </style>
