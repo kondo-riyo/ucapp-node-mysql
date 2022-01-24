@@ -16,13 +16,19 @@
                </div>
             </div>
          <div v-show="setChartDataFromStore.showGraph">
-             <!-- {{setChartDataFromStore.datasets[0].data.year}} -->
             <div class="home_graph__title">
                 <img src="../../assets/2.png" class="home_graph__icon">
                 {{setChartDataFromStore.year}} 年の光熱費
             </div>
             <Barchart :data="setChartDataFromStore" :options="options" class="chart"/>
          </div>
+         <div
+            class="send_inputform"
+            @click="send_inputForm"
+         >
+            <div>
+                <img src="../../assets/sendAddData.png" class="send_inputform__icon">            </div>
+            </div>
     </div>
 </template>
 <script>
@@ -71,6 +77,7 @@ export default {
 </script>
 <style lang="scss">
 @import '../../scss/button.scss';
+@import '../../scss/index.scss';
 .home_graph {
     display: flex;
     justify-content: center;
@@ -78,11 +85,9 @@ export default {
 .chart{
   width: 70%;
   min-width: 600px;
-//   height: 500px;
   margin:0 auto;
 }
 .home_graph__msg {
-    // justify-content: center;
     text-align: center;
     font-size: 1.5rem;
     color: #673a15;
@@ -103,5 +108,36 @@ export default {
 .home_graph__icon {
     width: 5rem;
     margin-bottom: -1.5rem;
+}
+
+.send_inputform {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    width: 6rem;
+    height: 6rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    border-radius: 9999px;
+    //centerにする
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //アニメーション
+    animation:1.5s ease-in 1s infinite alternate forwards running blinking;
+}
+@keyframes blinking {
+  0% {
+    background-color: $base_brown;
+  }
+  100% {
+    background-color: $base_brown--25;
+  }
+}
+.send_inputform:hover {
+    animation-play-state: paused;
+}
+.send_inputform__icon {
+    width: 5rem;
 }
 </style>
