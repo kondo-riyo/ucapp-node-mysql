@@ -28,17 +28,19 @@ export default {
         Object.assign(state, usersDefaultState())
         },
         requestUsersMut(state, user) {
-        state.login_user = user
+            state.login_user = user
+            // console.log(state.login_user)
         },
         setLoginUserMut(state, user) {
             state.setLogin_user = user
-            console.log('setLogin_user')
+            // console.log('setLogin_user')
         },
         loginPassMessage( state, messagePass) {
         state.messagePass = messagePass
         },
-        sendNewMemberMut() {
-        console.log('sendNewMemberMut')
+        sendNewMemberMut(state, params) {
+            // console.log(params)
+            state.login_user.push(params)
         },
         deleteUserMut() {
         console.log('deleteUserMut')
@@ -100,8 +102,9 @@ export default {
                 password: params.password
             }).then((res) => {
                 console.log(res)
-                commit('sendNewMemberMut')
-                this.dispatch('requestUsers')
+                console.log(params)
+                commit('sendNewMemberMut', params)
+                // dispatch('requestUsers')
                 // this.$router.push('/login')
             })
         },

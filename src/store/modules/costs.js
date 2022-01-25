@@ -182,16 +182,9 @@ export default {
             console.log(user)
             axios.get('/api/costs')
                 .then( async (res) => {
-                    // //setLogin_userがnullの時はcommitに空を返す------------
-                    // if (rootState.users.setLogin_user === null) {
-                    //     commit('requestCostsMut', null) 
-                    // } else {
                     //ログインした時はcommitにres.dataを渡す----------------
                         commit('requestCostsMut', res.data)
 
-                        // console.log('state.allCosts=> ' + JSON.stringify(state.allCosts))
-                        // console.log('res.data=> '+JSON.stringify(res.data))
-                        // let choice = state.allCosts.filter(cost => cost.userId === user.userId)
                         //userIdの一致するCostsデータのみを取得-------------
                         let choice = res.data.filter(cost => cost.userId === user.userId)
                         //データを年月順に並べ替え--------------------------

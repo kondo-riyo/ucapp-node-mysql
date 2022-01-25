@@ -1,9 +1,9 @@
 <template>
-    <div class="space__rigth__300 space__top__50 fadeIn__base">
+    <div class="space__top__50 fadeIn__base">
         <!-- <div>
             {{fetchYear}}
         </div> -->
-        <div class="flex__center">
+        <div class="year__title">
             <div class="flex__year base__title__year">
                 <div>{{fetchYear[0].year}}</div>
                 <div>
@@ -16,8 +16,8 @@
                     <img src="../../assets/eleicon.png" class="icon__size__year">
                 </div>
                 <div>Total</div>
-                <div></div>
             </div>
+                <div class="icon__size__dust_box"></div>
         </div>
         <div v-for="cost in fetchYear" :key="cost.costId" class="base__body__year">
             <div class="flex__year card__rectangle" @click="send_id(cost.costId)">
@@ -77,13 +77,26 @@ export default {
     display: flex;
     justify-content: center;
 }
+.year__title {
+    // display: flex;
+    // justify-content: space-around;
+    // align-items: center;
+    // width: 560px;
+    width: 560px;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+
+}
 .base__title__year {
-    width: 50%;
-    padding: 0px;
+    width: 500px;
+    // width: 50%;
+    padding: 0 22px;
     font-weight: bold;
     color: #673a15;
 }
 .base__body__year {
+    width: 560px;
     display: flex;
     justify-content: center;
     margin: 10px auto;

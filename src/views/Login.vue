@@ -3,16 +3,16 @@
         <div class="card__login fadeIn__base">
                 <div class="flex">
                     <div class="input__group">
-                        <div class="cp_iptxt">
-                                <input v-model="mail" class="ef" type="text" placeholder="">
-                                <label>MailAddress</label>
-                                <span class="focus_line"></span>
+                        <div class="login__input">
+                                <label class="login__input__ef" >
+                                    <input v-model="mail" type="text" placeholder="MailAddress">
+                                </label>
                         </div>
                         <div class="err__text">{{messageMail}}</div>
-                        <div class="cp_iptxt">
-                            <input v-model="password" class="ef" type="password" placeholder="">
-                            <label>PassWord</label>
-                            <span class="focus_line"></span>
+                        <div class="login__input">
+                                <label class="login__input__ef" >
+                                    <input v-model="password" type="password" placeholder="PassWord">
+                                </label>
                         </div>
                         <div class="err__text">{{messagePass}}</div>
                     </div>
@@ -46,10 +46,6 @@ export default {
             messagePass: ''
         }
     },
-    // components: {
-    //     ValidationProvider,
-    //     ValidationObserver,
-    // },
     computed:{
         login_user() {
             return this.$store.getters['users/login_user']
