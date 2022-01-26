@@ -259,12 +259,24 @@ export default new Vuex.Store({
     //   return state.messagePass;
     // }
   // },
-//   plugins: [createPersistedState(
-//     { // ストレージのキーを指定
-//       key: 'ucapp_node_mysql',
-//       // ストレージの種類を指定
-//       storage: window.sessionStorage
-//     }
-// )]
-  plugins: [createPersistedState]
+  plugins: [createPersistedState(
+    { // ストレージのキーを指定
+      key: 'ucapp_node_mysql',
+      //管理対象のstateを指定
+      path: [
+        //users------------
+        'users.login_user',
+        'users.setLogin_user',
+        'users.showContent',
+        //costs------------
+        'costs.allCosts',
+        'costs.costs',
+        'costs.newPushCost',
+        'costs.chartdata'
+      ],
+      // ストレージの種類を指定
+      storage: window.sessionStorage
+    }
+)]
+  // plugins: [createPersistedState]
 })

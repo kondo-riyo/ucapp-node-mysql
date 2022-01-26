@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+// import createPersistedState from 'vuex-persistedstate'
 Vue.use(VueAxios, axios)
 
 let usersDefaultState = () => {
@@ -161,6 +162,13 @@ export default {
         getMessagePass( state ) {
         return state.messagePass;
         }
-    }
+    },
+//   plugins: [createPersistedState(
+//     { // ストレージのキーを指定
+//       key: 'ucapp_node_mysql',
+//       // ストレージの種類を指定
+//       storage: window.sessionStorage
+//     }
+// )]
 
 }
