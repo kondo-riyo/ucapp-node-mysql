@@ -86,7 +86,7 @@ let costsDefaultState = () => {
             year: null,
             datasets: [
                 {
-                    label: 'water cost',
+                    label: '水道',
                     data: [],
                     fill: false,
                     type: 'line',
@@ -94,7 +94,7 @@ let costsDefaultState = () => {
                     lineTension: 0.3,
                 },
                 {
-                    label: 'gas cost',
+                    label: 'ガス',
                     data: [],
                     fill: false,
                     type: 'line',
@@ -102,7 +102,7 @@ let costsDefaultState = () => {
                     lineTension: 0.3,
                 },
                 {
-                    label: 'element cost',
+                    label: '電気',
                     data: [],
                     fill: false,
                     type: 'line',
@@ -110,7 +110,7 @@ let costsDefaultState = () => {
                     lineTension: 0.3,
                 },
                 {
-                    label: 'Total cost',
+                    label: '合計',
                     backgroundColor:[],
                     borderColor:[],
                     data: [],

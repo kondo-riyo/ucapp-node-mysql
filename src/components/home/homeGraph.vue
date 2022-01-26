@@ -111,6 +111,7 @@ export default {
 }
 
 .send_inputform {
+    z-index: 1;
     position: fixed;
     right: 10px;
     bottom: 10px;

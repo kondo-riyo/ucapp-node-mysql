@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Header/>
+  <Header class="header"/>
   <Main class="main"/>
   </div>
 </template>
@@ -16,8 +16,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped >
+  .header {
+    z-index: 9998;
+    position: fixed;
+  }
   .main {
-    padding:0;
+    padding:100px 0 0 0;
     margin:0 auto;
     // height: 650px;
     max-height: auto;
