@@ -70,7 +70,6 @@ export default {
   methods:{
     modalOpen(loginUser) {
         this.mordalOrderInfo = loginUser
-        console.log('this.modalOrderInfo=> '+JSON.stringify( this.mordalOrderInfo))
         this.$store.commit('users/modalOpenShowContent', true)
     },
     closeModal() {
@@ -82,10 +81,10 @@ export default {
             this.$router.push('/').catch(err => {console.log('error =>'+ err)})
         }
     },
-    async calendarOpen(costsFromStore) {
+    async calendarOpen(costsStore) {
         //重複しない年をthis.calendarInfoに追加
         let years = []
-        await costsFromStore.forEach(cost => {
+        await costsStore.forEach(cost => {
                 if(years.length === 0) {
                     years.push(cost.year)
                 }else if(years.length != 0) {
@@ -97,7 +96,6 @@ export default {
                 }
         });
         this.calendarInfo=[...years].sort((a, b) => b - a);
-        console.log('this.calendarInfo=> '+this.calendarInfo)
         this.showCalendar = true
     }
   },
