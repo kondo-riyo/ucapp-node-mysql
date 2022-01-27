@@ -22,7 +22,7 @@
                     <year-select
                         :orderInfo="calendarInfo"
                         v-show="showCalendar"
-                        @close="closeModal"
+                        @close="closeCalendar"
                     ></year-select>
                 </div>
                 <div @click="modalOpen(loginUserFromStore)">
@@ -73,7 +73,9 @@ export default {
         this.$store.commit('users/modalOpenShowContent', true)
     },
     closeModal() {
-    this.$store.commit('users/modalOpenShowContent', false)
+      this.$store.commit('users/modalOpenShowContent', false)
+    },
+    closeCalendar() {
       this.showCalendar = false;
     },
     sendHome() {
