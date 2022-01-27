@@ -26,7 +26,12 @@ export default {
         //stateの値をリセットする
         reset(state) {
             console.log('store/usersのreset')
-        Object.assign(state, usersDefaultState())
+            // Object.assign(state, usersDefaultState())
+            state.login_user = []
+            state.setLogin_user = null
+            state.messagePass = ''
+            state.showContent = false
+            console.log(state)
         },
         requestUsersMut(state, user) {
             state.login_user = user
@@ -57,17 +62,17 @@ export default {
     },
     actions: {
         //userテーブルの中身を全て取得-------------------------------
-        async requestUsers({ commit }) {
+        requestUsers({ commit }) {
             // let userData = []
-            await axios.get('/api/users')
+            axios.get('/api/users')
                 .then((res) => {
                     commit('requestUsersMut', res.data)
                 })
                 .catch((e) => alert(e))
         },
         //ログイン・使用するアカウントをstateに保持---------------------------------
-        async setLoginUser({ commit, dispatch}, loginUser) {
-            await axios.post('/api/login', {
+        setLoginUser({ commit, dispatch}, loginUser) {
+            axios.post('/api/login', {
                 mail: loginUser.mail,
                 password: loginUser.password
                 })

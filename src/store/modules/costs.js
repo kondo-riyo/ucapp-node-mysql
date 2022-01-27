@@ -117,6 +117,10 @@ export default {
     mutations: {
         reset(state) {
             Object.assign(state, costsDefaultState())
+            // state.allCosts = []
+            // state.costs = []
+            // state.newPushCost = null
+            // Object.assign(state.chartdata, costsDefaultState.)
             console.log(state)
         },
         requestCostsMut(state, costs) {
