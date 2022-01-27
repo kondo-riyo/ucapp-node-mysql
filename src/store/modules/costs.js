@@ -70,17 +70,6 @@ let costsDefaultState = () => {
         //   }
         ],
         newPushCost: null,
-        // newPushCost: {
-        //         costId: '123456789000',
-        //         year: '2021',
-        //         month: '10',
-        //         color: '185,155,0',
-        //         waterCost: 1200,
-        //         eleCost: 1500,
-        //         gasCost: 2000,
-        //         totalCost: 4700,
-        //         addDate: '2021/11/11'
-        // }
         chartdata: {
             showGraph: false,
             labels: [],
@@ -128,14 +117,13 @@ export default {
     mutations: {
         reset(state) {
             Object.assign(state, costsDefaultState())
-            console.log('store/costsのreset=> '+JSON.stringify(state))
+            console.log(state)
         },
         requestCostsMut(state, costs) {
         state.allCosts = costs
         },
         async addCostsMut(state, costs) {
         await state.costs.push(costs)
-        console.log(JSON.stringify(state.costs))
         state.newPushCost = costs
         },
         updateCostMut(cost) {
@@ -169,11 +157,10 @@ export default {
     },
     actions: {
         //Costsテーブルの中身を全て取得------------------------------------
-        requestCosts({ commit, rootState }) {
+        requestCosts({ commit }) {
         axios.get('/api/costs')
             .then((res) => {
                 commit('requestCostsMut', res.data)
-                console.log( 'costs/setLogin_user=> '+JSON.stringify(rootState.users.setLogin_user))
             })
             .catch((e) => alert(e))
         },
@@ -202,7 +189,6 @@ export default {
                         //Home画面に2020年(仮)のデータを表示させるためのセット-------------------
                         let graphpushCost = []
                         sortCost.forEach(costs => {
-                            console.log('costGraphData=> ' + JSON.stringify(costs))
                             costs.forEach(cost => {
                                 console.log('costGraphData=> ' + cost.year)
                                 console.log(cost.year === String(nowYear))
@@ -212,7 +198,6 @@ export default {
                                 }
                             })
                         });
-                        console.log('graphPushCost=> ' + JSON.stringify(graphpushCost))
                         await commit('costGraphDataMut', graphpushCost)
 
                         // await dispatch('costGraphData', choice)
@@ -288,7 +273,6 @@ export default {
         //             graphpushCost.push(cost)
         //         }
         //     });
-        //     console.log('graphPushCost=> ' + JSON.stringify(graphpushCost))
         //     commit('costGraphDataMut', graphpushCost)
         //     // dispatch('labelsPush', graphpushCost)
         //     // dispatch('waterPush', graphpushCost)
