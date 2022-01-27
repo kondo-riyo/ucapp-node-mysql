@@ -129,10 +129,12 @@ export default {
 }
 @keyframes blinking {
   0% {
-    background-color: $base_brown;
+    // background-color: $base_brown;
+    background-color: $base_brown--25;
   }
   100% {
-    background-color: $base_brown--25;
+    // background-color: $base_brown--25;
+    background-color: $base_brown;
   }
 }
 .send_inputform:hover {
