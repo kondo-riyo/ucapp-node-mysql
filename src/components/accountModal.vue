@@ -92,7 +92,6 @@ export default {
             console.log('ログアウト')
             await this.$store.dispatch('users/logout')
             await this.$store.dispatch('costs/logout')
-            // this.showContent = false
             this.$router.push('/')
           }
         },
