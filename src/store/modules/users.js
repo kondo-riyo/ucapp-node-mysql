@@ -35,11 +35,9 @@ export default {
         },
         requestUsersMut(state, user) {
             state.login_user = user
-            // console.log(state.login_user)
         },
         setLoginUserMut(state, user) {
             state.setLogin_user = user
-            // console.log('setLogin_user')
         },
         loginPassMessage( state, messagePass) {
         state.messagePass = messagePass
