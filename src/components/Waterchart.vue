@@ -70,7 +70,6 @@ export default {
     this.labelsPush()
     this.waterPush()
     this.futurePush()
-    // this.borderColorPush()
   },
   computed:{
     ...mapState(["costs/costs"]),
@@ -82,12 +81,9 @@ export default {
       return this.newcosts
     },
     labelsPush(){
-        //  let pluslabels=''
           this.newcosts.forEach(el => {
-        //   pluslabels = `${el.year} / ${el.month}`
           this.chartdata.labels.push(el.month)
           console.log(el.year+''+el.month)
-          // console.log(this.labels)
         })
         return this.chartdata.labels 
     },
@@ -104,7 +100,6 @@ export default {
         })
         this.futurevalue=(this.futurevalue/this.newcosts.length)-400
         this.chartdata.datasets[0].data.push(this.futurevalue)
-        // console.log(this.futurevalue)
         let futurenum=this.chartdata.labels.length-1
         console.log('num '+futurenum)
         this.futuremonth=`${this.chartdata.labels[futurenum]+1} (目標)`
@@ -116,10 +111,6 @@ export default {
 
 </script>
 <style scoped>
-/* .chart{
-  width: 500px;
-  height: 500px;
-} */
 </style>
 
 
